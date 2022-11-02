@@ -6,13 +6,16 @@ using SimpleHardwareShop.Models;
 
 
 
-var db = HardwareShopContext.Instance();
+var db = new HardwareShopContext();
 
+Console.WriteLine($"Database path: {db.DbPath}");
 #if LoadInitialData
 DataLoader.Load(db);
 #endif
 
-var interactiveView = new InteractiveView(db);
-interactiveView.UserMenu();
+AuthenticationView.Menu(db);
+
+
+
 
 

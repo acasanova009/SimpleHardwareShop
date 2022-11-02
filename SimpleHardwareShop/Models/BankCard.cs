@@ -10,17 +10,23 @@ namespace SimpleHardwareShop.Models
 {
     public class BankCard
     {
+        public int Id { get; set; }
 
-        public int Account { get; set; }
+        public string? Name { get; set; } //EG. My Favorite Credit Card.  or BlackCardOnlyVacations
+
+        public int ApplicationUserId { get; set; }
+
+        //public ApplicationUser ApplicationUser { get; set; }
+        public string Account { get; set; }
         public DateTime ExpirationDate { get; set; }
 
         //public int Year { get; set; }
 
-        public int SecutiryCode { get; set; }
+        public int SecurityCode { get; set; }
 
         public override string ToString()
         {
-            return "BANK CARD: " + "Account: " + Account + " ExpirationDate:" + ExpirationDate;
+            return $"[BankCard] Id: {Id} Name: {Name} Account: {Account} ExpirationDate: {ExpirationDate}";
         }
 
 

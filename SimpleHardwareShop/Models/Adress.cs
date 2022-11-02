@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,22 @@ namespace SimpleHardwareShop.Models
     {
        
         [Required]
+        public int Id { get; set; }
+
+        public int ApplicationUserId { get; set; }
+
         public string StreetAdress { get; set; }
-        [Required]
+        
         public string PhoneNumber { get; set; }
 
-        [Required]
+        public string? AdditionalInformation { get; set; }
+
+        
         public int PostalCode { get; set; }
+
+        public string? RFC { get; set; }
+
+
 
         //public string City { get; set; }
         //[Required]
@@ -25,7 +36,13 @@ namespace SimpleHardwareShop.Models
 
         public override string ToString()
         {
-            return "Adress:"+StreetAdress+" P.C. "+PostalCode + "Phone:" + PhoneNumber;
+            string rfcString = "";
+            if (RFC is object)
+            {
+
+                rfcString = $" RFC: {RFC}";
+            }
+            return $"[Adress]: Id: {Id}  {StreetAdress}  P.C. {PostalCode}  Phone: {PhoneNumber}" + rfcString;
         }
     }
 }

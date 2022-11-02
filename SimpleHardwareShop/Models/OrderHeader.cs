@@ -13,9 +13,22 @@ namespace SimpleHardwareShop.Models
     public class OrderHeader
     {
         public int Id { get; set; }
-        public string ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
         public double OrderTotal { get; set; }
+
+
+        public int DeliveryAdressId { get; set; }
+        public Adress DeliveryAdress { get; set; }
+
+        public int? FiscalAdressId { get; set; }
+        public Adress? FiscalAdress { get; set; }
+
+
+        
+
+
+        public ICollection<OrderDetail>? OrderDetails { get; set; }
 
         public override string ToString()
         {

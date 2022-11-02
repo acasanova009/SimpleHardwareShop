@@ -13,7 +13,7 @@ namespace SimpleHardwareShop.Models
     {
         public int Id { get; set; }
         [Required]
-        public int OrderId { get; set; }
+        public int OrderHeaderId { get; set; }
         
         public OrderHeader OrderHeader { get; set; }
 
@@ -26,7 +26,7 @@ namespace SimpleHardwareShop.Models
 
         public override string ToString()
         {
-            return "ORDERDETAIL: " +" OrderId:" + OrderId + " Product:" + Product + " Count:" + Count + " Price:" + Price;
+            return "ORDERDETAIL: " +" OrderId:" + OrderHeaderId + " Product:" + Product + " Count:" + Count + " Price:" + Price;
         }
     }
 }

@@ -28,7 +28,8 @@ namespace SimpleHardwareShop.Models
         public override string ToString()
         {
 
-            return "PRODUCT " + " ID: " + Id+ "Name: " + Name + " Price:" + Price + " Stock:" + Stock + " RetailShop:" + RetailShop + " Serie:" + Serie;
+            //return "PRODUCT: " + " Id: " + Id+ Name + " Price:" + Price + " Stock:" + Stock + " RetailShop:" + RetailShop + " Serie:" + Serie;
+            return $"[Product]: Id:{Id} ${Price}   {Name}  Tienda: {RetailShop} Cantidad disponible:{Stock}";
             //return "PRODUCT " + "Name: " + Name ;
         }
 

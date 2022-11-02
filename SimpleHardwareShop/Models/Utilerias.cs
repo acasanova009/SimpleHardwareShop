@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SimpleHardwareShop.Models
 {
     
-    static class ShopInformation
+    static class Utilerias
     {
     }
 }

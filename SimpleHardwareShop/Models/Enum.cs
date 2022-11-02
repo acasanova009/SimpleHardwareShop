@@ -1,12 +1,12 @@
 ﻿
 public enum RetailShop
 {
-    PlazaDeLaComputacion,
-    Galerias
+    PlazaDeLaTecnologia,
+    Coyoacan
 }
 public enum UserType
 {
-    Customer,
+    Application,
     Employee,
     Manager
 }
