@@ -133,7 +133,10 @@ public static class InteractiveView
                         break;
                     case 7:
 
-                        applicationUserController.Read(userId);
+                        var user = applicationUserController.Read(userId);
+                        Console.Write(user);
+
+
                         break;
                     case 8:
                         

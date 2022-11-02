@@ -145,7 +145,7 @@ namespace SimpleHardwareShop.Controller
                 //.ToList();
 
         }
-        public void  Read(int userId)
+        public ApplicationUser?  Read(int userId)
         {
 
             var user = _db.ApplicationUsers
@@ -153,9 +153,9 @@ namespace SimpleHardwareShop.Controller
                 .Include(a => a.Adresses)
                 .FirstOrDefault(m=>userId==m.Id);
 
-
-
-            Console.Write(user);
+            return user;
+            
+            //Console.Write(user);
             
             //Console.WriteLine("Querying for a blog");
             //if (textFilter == null)

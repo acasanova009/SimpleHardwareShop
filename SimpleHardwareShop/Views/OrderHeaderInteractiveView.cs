@@ -34,8 +34,12 @@ public static class OrderHeaderInteractiveView
 
         var bankCardController = new BankCardController(db);
 
-        
+        var orderHeaderController = new OrderHeaderController(db);
 
+        var shoppingCartController = new ShoppingCartController(db);
+
+
+        bool userWantsFacturar = false;
 
 
 
@@ -50,8 +54,8 @@ public static class OrderHeaderInteractiveView
                 Console.WriteLine("******************************************************");
                 Console.WriteLine("1. Ver direcciones actuales.");
                 Console.WriteLine("2. Ingresar nueva direccion.");
-                Console.WriteLine("3. Seleccionar direccion de envio /default");
-                Console.WriteLine("4. Seleccionar direccion fiscal.(opcional) /default");
+                Console.WriteLine("3. Seleccionar direccion de envio la-default");
+                Console.WriteLine("4. Seleccionar direccion fiscal  (opcional) la-default");
                 Console.WriteLine("-------------------------------");
                 Console.WriteLine("5. Ver tarjetas de credito actuales.");
                 Console.WriteLine("6. Ingresar nueva tarjeta de credito.");
@@ -88,12 +92,13 @@ public static class OrderHeaderInteractiveView
 
                         if (fiscal is object && fiscal.Equals("1"))
                         {
-                            adressController.Create(AdressCreationView.Menu(userId, false));
+                            
+                            adressController.Create(AdressCreationView.Create(userId, false));
                         }
                         else
                         {
 
-                            adressController.Create(AdressCreationView.Menu(userId, false));
+                            adressController.Create(AdressCreationView.Create(userId, false));
                         }
 
 
@@ -127,6 +132,7 @@ public static class OrderHeaderInteractiveView
                             Console.WriteLine("Ingresar id de direccion.");
                             int adressid = Convert.ToInt32(Console.ReadLine());
                             applicationUserController.UpdateFiscalAdress(userId, adressid);
+                            userWantsFacturar = true;
 
                         }
                         catch (Exception)
@@ -173,11 +179,75 @@ public static class OrderHeaderInteractiveView
 
                     case 8:
 
-                        applicationUserController.Read(userId);
+                        var user = applicationUserController.Read(userId);
+                        
+                        
+                        var shoppingCart = shoppingCartController.Index(userId);
+                        double total = 0.0;
+                        if(shoppingCart is object)
+                        foreach (var item in shoppingCart)
+                            total += item.Count * item.Product!.Price;
+                        
+
+
+                        Console.Write(user);
+
+
 
 
                         break;
                     case 9:
+
+
+
+                        var userr = applicationUserController.Read(userId);
+
+                        bool canCompletePurchase = true;
+                        if(userr != null)
+                        {
+
+                            if (userWantsFacturar==true && userr.DefaultFiscalAdressId == null)
+                                canCompletePurchase = false;
+                            if (userr.DefaultDeliveryAdressId == null)
+                                canCompletePurchase = false;
+                            if (userr.DefaultBankCardId == null)
+                                canCompletePurchase = false;
+                        }
+
+
+                        if (canCompletePurchase == true)
+                        {
+                            var shoppingCartAnother = shoppingCartController.Index(userId);
+                            double totalAnother = 0.0;
+                            if (shoppingCartAnother is object)
+                                foreach (var item in shoppingCartAnother)
+                                {
+                                    
+                                    totalAnother += item.Count * item.Product!.Price;
+
+                                }   
+                            OrderHeader oh = orderHeaderController.Create(new OrderHeader(userId, totalAnother, (int)userr!.DefaultDeliveryAdressId!, userr.DefaultFiscalAdressId));
+                            //orderHeaderController.Read();
+
+
+
+                            if (shoppingCartAnother is object)
+                            foreach (var item in shoppingCartAnother)
+                            {
+                                    orderHeaderController.CreateDetails(new OrderDetail(oh.Id,item.Product!.Id,item.Count,item.Product.Price));
+
+
+                            }
+
+
+                        }
+
+
+
+
+
+
+
 
                         break;
 

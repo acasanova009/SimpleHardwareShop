@@ -19,21 +19,39 @@ namespace SimpleHardwareShop.Models
 
 
         public int DeliveryAdressId { get; set; }
-        public Adress DeliveryAdress { get; set; }
+        public Adress? DeliveryAdress { get; set; }
 
         public int? FiscalAdressId { get; set; }
         public Adress? FiscalAdress { get; set; }
 
-
         
 
 
+        
+
+        
         public ICollection<OrderDetail>? OrderDetails { get; set; }
 
         public override string ToString()
         {
             return "ORDER_HEADER: " + " ApplicationUser:" + ApplicationUser + " OrderTotal:" + OrderTotal;
             
+        }
+
+        public OrderHeader(int userId,double orderTotal,int deliveryAdress, int? fiscalAdress)
+        {
+            //var orderHeader = new OrderHeader
+            //{
+            ApplicationUserId = userId;
+            OrderTotal = orderTotal;
+            DeliveryAdressId = deliveryAdress;
+            FiscalAdressId = fiscalAdress;
+
+
+
+            //};
+
+            //return orderHeader;
         }
     }
 
