@@ -6,31 +6,88 @@ using System.Threading.Tasks;
 
 namespace SimpleHardwareShop.Models
 {
-    public class ApplicationUserA : ApplicationUser
+    public class CustomerUser : ApplicationUser
     {
 
         public int? DefaultBankCardId { get; set; }
-        public BankCard? DefaultBankCard { get; set; }
+
+        //[NotMapped]
+        //public BankCard? BankCard { get; set; }
+
+
         public int? DefaultDeliveryAdressId { get; set; }
-        public Adress? DefaultDeliveryAdress { get; set; }
+        //[NotMapped]
+        //public Adress? DefaultDeliveryAdress { get; set; }
 
         public int? DefaultFiscalAdressId { get; set; }
-        public Adress? DefaultFiscalAdress { get; set; }
+        //[NotMapped]
+        //public Adress? DefaultFiscalAdress { get; set; }
 
-
-        public ICollection<Adress>? Adresses { get; set; }  
+        //[NotMapped]
+        //[NotMapped]
+        public ICollection<Adress>? Adresses { get; set; }
 
         public ICollection<BankCard>? BankCards { get; set; }
-
+        //[NotMapped]
         public ICollection<OrderHeader>? OrderHeaders { get; set; }
 
 
         public override string ToString()
         {
-            return base.ToString();
+            var basicInfo = $"[Application User] Id:{Id} Name: {Name} UserName:{UserName}";
+
+
+
+
+            basicInfo += "\n";
+
+            if (BankCards is object)
+            {
+
+                foreach (var card in BankCards)
+                {
+                    if (card.Id == DefaultBankCardId)
+                    {
+                        basicInfo += $"\n TC/TD: {card.ToString()} ";
+
+                    }
+                    else
+                    {
+                        basicInfo += card.ToString();
+
+                        basicInfo += "\n";
+                    }
+                }
+            }
+            if (Adresses is object)
+            {
+
+                foreach (var a in Adresses)
+                {
+
+                    if (a.Id == DefaultDeliveryAdressId)
+                    {
+                        basicInfo += $"\n Direccion de envio: {a.ToString()} ";
+
+                    }
+
+                    if (a.Id == DefaultFiscalAdressId)
+                    {
+                        basicInfo += $"\n Direccion de facutracion: {a.ToString()} ";
+                    }
+
+
+                    //basicInfo += a.ToString();
+
+
+
+                }
+                basicInfo += "\n";
+            }
+
+            return basicInfo;
         }
 
-       
     }
 
 

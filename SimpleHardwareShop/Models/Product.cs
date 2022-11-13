@@ -19,6 +19,8 @@ namespace SimpleHardwareShop.Models
 
         public double Stock { get; set; }
 
+        public double DefaultStock { get; set; }
+
         public string Serie { get; set; }
 
         public string Inventory { get; set; }

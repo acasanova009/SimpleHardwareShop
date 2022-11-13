@@ -17,6 +17,7 @@ namespace SimpleHardwareShop.Views
         public static void Menu(HardwareShopContext db, int userId)
         {
             var applicationUserController = new ApplicationUserController(db);
+            var customerUserController = new CustomerUserController(db);
             var adressController = new AdressController(db);
 
             
@@ -72,7 +73,7 @@ namespace SimpleHardwareShop.Views
                         {
                             Console.WriteLine("Ingresar id de direccion.");
                             int adressid = Convert.ToInt32(Console.ReadLine());
-                            applicationUserController.UpdateDeliveryAdress(userId, adressid);
+                            customerUserController.UpdateDeliveryAdress(userId, adressid);
 
                         }
                         catch (Exception)
@@ -90,7 +91,7 @@ namespace SimpleHardwareShop.Views
                         {
                             Console.WriteLine("Ingresar id de direccion.");
                             int adressid = Convert.ToInt32(Console.ReadLine());
-                            applicationUserController.UpdateFiscalAdress(userId, adressid);
+                            customerUserController.UpdateFiscalAdress(userId, adressid);
                             
 
                         }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleHardwareShop.Migrations
 {
-    public partial class sama : Migration
+    public partial class Cus : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,14 +21,31 @@ namespace SimpleHardwareShop.Migrations
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
-                    UserType = table.Column<int>(type: "INTEGER", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
                     DefaultBankCardId = table.Column<int>(type: "INTEGER", nullable: true),
                     DefaultDeliveryAdressId = table.Column<int>(type: "INTEGER", nullable: true),
-                    DefaultFiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true)
+                    DefaultFiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true),
+                    RetailShop = table.Column<int>(type: "INTEGER", nullable: true),
+                    EmployeeType = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApplicationUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    BlogId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Url = table.Column<string>(type: "TEXT", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    RssUrl = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,6 +58,7 @@ namespace SimpleHardwareShop.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     Stock = table.Column<double>(type: "REAL", nullable: false),
+                    DefaultStock = table.Column<double>(type: "REAL", nullable: false),
                     Serie = table.Column<string>(type: "TEXT", nullable: false),
                     Inventory = table.Column<string>(type: "TEXT", nullable: false),
                     RetailShop = table.Column<int>(type: "INTEGER", nullable: false)
@@ -61,17 +79,17 @@ namespace SimpleHardwareShop.Migrations
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
                     AdditionalInformation = table.Column<string>(type: "TEXT", nullable: true),
                     PostalCode = table.Column<int>(type: "INTEGER", nullable: false),
-                    RFC = table.Column<string>(type: "TEXT", nullable: true)
+                    RFC = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Adresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Adresses_ApplicationUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Adresses_ApplicationUsers_CustomerUserId",
+                        column: x => x.CustomerUserId,
                         principalTable: "ApplicationUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -84,17 +102,17 @@ namespace SimpleHardwareShop.Migrations
                     ApplicationUserId = table.Column<int>(type: "INTEGER", nullable: false),
                     Account = table.Column<string>(type: "TEXT", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    SecurityCode = table.Column<int>(type: "INTEGER", nullable: false)
+                    SecurityCode = table.Column<int>(type: "INTEGER", nullable: false),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BankCards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BankCards_ApplicationUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_BankCards_ApplicationUsers_CustomerUserId",
+                        column: x => x.CustomerUserId,
                         principalTable: "ApplicationUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -133,7 +151,8 @@ namespace SimpleHardwareShop.Migrations
                     ApplicationUserId = table.Column<int>(type: "INTEGER", nullable: false),
                     OrderTotal = table.Column<double>(type: "REAL", nullable: false),
                     DeliveryAdressId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true)
+                    FiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,6 +174,11 @@ namespace SimpleHardwareShop.Migrations
                         principalTable: "ApplicationUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderHeaders_ApplicationUsers_CustomerUserId",
+                        column: x => x.CustomerUserId,
+                        principalTable: "ApplicationUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -186,14 +210,14 @@ namespace SimpleHardwareShop.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Adresses_ApplicationUserId",
+                name: "IX_Adresses_CustomerUserId",
                 table: "Adresses",
-                column: "ApplicationUserId");
+                column: "CustomerUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BankCards_ApplicationUserId",
+                name: "IX_BankCards_CustomerUserId",
                 table: "BankCards",
-                column: "ApplicationUserId");
+                column: "CustomerUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderHeaderId",
@@ -209,6 +233,11 @@ namespace SimpleHardwareShop.Migrations
                 name: "IX_OrderHeaders_ApplicationUserId",
                 table: "OrderHeaders",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderHeaders_CustomerUserId",
+                table: "OrderHeaders",
+                column: "CustomerUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderHeaders_DeliveryAdressId",
@@ -235,6 +264,9 @@ namespace SimpleHardwareShop.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BankCards");
+
+            migrationBuilder.DropTable(
+                name: "Blogs");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

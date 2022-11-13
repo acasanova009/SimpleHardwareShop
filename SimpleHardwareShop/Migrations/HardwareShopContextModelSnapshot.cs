@@ -29,6 +29,9 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<int>("ApplicationUserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("CustomerUserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -45,7 +48,7 @@ namespace SimpleHardwareShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CustomerUserId");
 
                     b.ToTable("Adresses");
                 });
@@ -56,14 +59,9 @@ namespace SimpleHardwareShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DefaultBankCardId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("DefaultDeliveryAdressId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("DefaultFiscalAdressId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -89,12 +87,11 @@ namespace SimpleHardwareShop.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserType")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.ToTable("ApplicationUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.BankCard", b =>
@@ -110,6 +107,9 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<int>("ApplicationUserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("CustomerUserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("TEXT");
 
@@ -121,9 +121,30 @@ namespace SimpleHardwareShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CustomerUserId");
 
                     b.ToTable("BankCards");
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.Blog", b =>
+                {
+                    b.Property<int>("BlogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("BlogId");
+
+                    b.ToTable("Blogs");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Blog");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.OrderDetail", b =>
@@ -162,6 +183,9 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<int>("ApplicationUserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("CustomerUserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("DeliveryAdressId")
                         .HasColumnType("INTEGER");
 
@@ -175,6 +199,8 @@ namespace SimpleHardwareShop.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
+                    b.HasIndex("CustomerUserId");
+
                     b.HasIndex("DeliveryAdressId");
 
                     b.HasIndex("FiscalAdressId");
@@ -187,6 +213,9 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("DefaultStock")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -242,22 +271,58 @@ namespace SimpleHardwareShop.Migrations
                     b.ToTable("ShoppingCarts");
                 });
 
+            modelBuilder.Entity("SimpleHardwareShop.Models.CustomerUser", b =>
+                {
+                    b.HasBaseType("SimpleHardwareShop.Models.ApplicationUser");
+
+                    b.Property<int?>("DefaultBankCardId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DefaultDeliveryAdressId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DefaultFiscalAdressId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue("CustomerUser");
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.EmployeeUser", b =>
+                {
+                    b.HasBaseType("SimpleHardwareShop.Models.ApplicationUser");
+
+                    b.Property<int>("EmployeeType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RetailShop")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue("EmployeeUser");
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.RssBlog", b =>
+                {
+                    b.HasBaseType("SimpleHardwareShop.Models.Blog");
+
+                    b.Property<string>("RssUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasDiscriminator().HasValue("RssBlog");
+                });
+
             modelBuilder.Entity("SimpleHardwareShop.Models.Adress", b =>
                 {
-                    b.HasOne("SimpleHardwareShop.Models.ApplicationUser", null)
+                    b.HasOne("SimpleHardwareShop.Models.CustomerUser", null)
                         .WithMany("Adresses")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerUserId");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.BankCard", b =>
                 {
-                    b.HasOne("SimpleHardwareShop.Models.ApplicationUser", null)
+                    b.HasOne("SimpleHardwareShop.Models.CustomerUser", null)
                         .WithMany("BankCards")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerUserId");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.OrderDetail", b =>
@@ -282,10 +347,14 @@ namespace SimpleHardwareShop.Migrations
             modelBuilder.Entity("SimpleHardwareShop.Models.OrderHeader", b =>
                 {
                     b.HasOne("SimpleHardwareShop.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("OrderHeaders")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SimpleHardwareShop.Models.CustomerUser", null)
+                        .WithMany("OrderHeaders")
+                        .HasForeignKey("CustomerUserId");
 
                     b.HasOne("SimpleHardwareShop.Models.Adress", "DeliveryAdress")
                         .WithMany()
@@ -323,18 +392,18 @@ namespace SimpleHardwareShop.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("SimpleHardwareShop.Models.ApplicationUser", b =>
+            modelBuilder.Entity("SimpleHardwareShop.Models.OrderHeader", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.CustomerUser", b =>
                 {
                     b.Navigation("Adresses");
 
                     b.Navigation("BankCards");
 
                     b.Navigation("OrderHeaders");
-                });
-
-            modelBuilder.Entity("SimpleHardwareShop.Models.OrderHeader", b =>
-                {
-                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

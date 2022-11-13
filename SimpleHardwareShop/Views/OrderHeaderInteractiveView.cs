@@ -25,10 +25,11 @@ public static class OrderHeaderInteractiveView
     public static void Menu(HardwareShopContext db,int userId)
 	{
         //_db = db;
-        //var _productController = new ProductController(db);
+        var productController = new ProductController(db);
         //var _shoppingCartController = new ShoppingCartController(db);
         var _orderHeaderController = new OrderHeaderController(db);
         var applicationUserController = new ApplicationUserController(db);
+        var customerUserController = new CustomerUserController(db);
 
         var adressController = new AdressController(db);
 
@@ -113,7 +114,7 @@ public static class OrderHeaderInteractiveView
                         {
                             Console.WriteLine("Ingresar id de direccion.");
                             int adressid = Convert.ToInt32(Console.ReadLine());
-                            applicationUserController.UpdateDeliveryAdress(userId, adressid);
+                            customerUserController.UpdateDeliveryAdress(userId, adressid);
 
                         }
                         catch (Exception)
@@ -131,7 +132,7 @@ public static class OrderHeaderInteractiveView
                         {
                             Console.WriteLine("Ingresar id de direccion.");
                             int adressid = Convert.ToInt32(Console.ReadLine());
-                            applicationUserController.UpdateFiscalAdress(userId, adressid);
+                            customerUserController.UpdateFiscalAdress(userId, adressid);
                             userWantsFacturar = true;
 
                         }
@@ -166,7 +167,7 @@ public static class OrderHeaderInteractiveView
                         {
                             Console.WriteLine("Ingresar id de TC/TD.");
                             int cardId = Convert.ToInt32(Console.ReadLine());
-                            applicationUserController.UpdateDefaultCard(userId,cardId);
+                            customerUserController.UpdateDefaultCard(userId,cardId);
 
                         }
                         catch (Exception)
@@ -179,18 +180,37 @@ public static class OrderHeaderInteractiveView
 
                     case 8:
 
+                        Console.WriteLine($"***************************************************************************************************************************");
+                        Console.WriteLine($"*                                   Resumen de la compra                                                                  *");
+                        Console.WriteLine($"*-------------------------------------------------------------------------------------------------------------------------*");
+                        Console.WriteLine($"*                                   Informacion Cliente                                                                   *");
+
                         var user = applicationUserController.Read(userId);
-                        
-                        
+
+
+                        Console.WriteLine(user);
+                        Console.WriteLine($"*-------------------------------------------------------------------------------------------------------------------------*");
+                        Console.WriteLine($"*                                  Ariticulos por comprar                                                                 *");
+
                         var shoppingCart = shoppingCartController.Index(userId);
                         double total = 0.0;
+
                         if(shoppingCart is object)
                         foreach (var item in shoppingCart)
+                        {
+
+                            Console.WriteLine(item);
                             total += item.Count * item.Product!.Price;
-                        
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine($"*Precio TOTAL es:                                                                                              ${total} ");
+
+                        Console.WriteLine($"***************************************************************************************************************************");
 
 
-                        Console.Write(user);
+
+
 
 
 
@@ -207,15 +227,28 @@ public static class OrderHeaderInteractiveView
                         {
 
                             if (userWantsFacturar==true && userr.DefaultFiscalAdressId == null)
+                            {
                                 canCompletePurchase = false;
+                                Console.WriteLine("El usuario desea facturar, pero falta direccion Fiscal.");
+
+
+                            }
                             if (userr.DefaultDeliveryAdressId == null)
+                            {
+                                Console.WriteLine(  "Falta seleccionar Direccion de Envio.");
                                 canCompletePurchase = false;
+                            }
                             if (userr.DefaultBankCardId == null)
+                            {
+                                Console.WriteLine("Falta seleccionar Tarjeta de Credito");
+                                        
                                 canCompletePurchase = false;
+
+                            }
                         }
 
 
-                        if (canCompletePurchase == true)
+                        if (canCompletePurchase == true && shoppingCartController.VerifyAvailableContents(userId))
                         {
                             var shoppingCartAnother = shoppingCartController.Index(userId);
                             double totalAnother = 0.0;
@@ -225,23 +258,32 @@ public static class OrderHeaderInteractiveView
                                     
                                     totalAnother += item.Count * item.Product!.Price;
 
-                                }   
-                            OrderHeader oh = orderHeaderController.Create(new OrderHeader(userId, totalAnother, (int)userr!.DefaultDeliveryAdressId!, userr.DefaultFiscalAdressId));
-                            //orderHeaderController.Read();
+                                }
+
+                            var myNewOrderHeader = OrderHeader.Create(userId, totalAnother, (int)userr!.DefaultDeliveryAdressId!, userr.DefaultFiscalAdressId);
+                            var orderHeaderId = orderHeaderController.Create(myNewOrderHeader);
+                            
+
+
 
 
 
                             if (shoppingCartAnother is object)
                             foreach (var item in shoppingCartAnother)
                             {
-                                    orderHeaderController.CreateDetails(new OrderDetail(oh.Id,item.Product!.Id,item.Count,item.Product.Price));
+                                    orderHeaderController.CreateDetails(OrderDetail.Create(orderHeaderId, item.Product!.Id,item.Count,item.Product.Price));
+                                    productController.Update(item);
 
 
                             }
 
+                            orderHeaderController.Save();
 
+                            
+                            shoppingCartController.Remove(userId);
+                            Console.WriteLine("Compra realizada, revisar-> menu de Compras anteriores.");
+                            return;
                         }
-
 
 
 

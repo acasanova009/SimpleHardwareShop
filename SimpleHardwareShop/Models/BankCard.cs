@@ -26,7 +26,7 @@ namespace SimpleHardwareShop.Models
 
         public override string ToString()
         {
-            return $"[BankCard] Id: {Id} Name: {Name} Account: {Account} ExpirationDate: {ExpirationDate}";
+            return $"[BankCard] Id: {Id} Name: {Name} Account: {Account}";
         }
 
 

@@ -34,24 +34,50 @@ namespace SimpleHardwareShop.Models
 
         public override string ToString()
         {
-            return "ORDER_HEADER: " + " ApplicationUser:" + ApplicationUser + " OrderTotal:" + OrderTotal;
+           var top = $"Orden: {Id}";
+            if(OrderDetails != null)
+            foreach (var orderDetail in OrderDetails)
+            {
+                    top += $"\n {orderDetail}";
+
+            }
+            top += $"\n  Total:............. ${OrderTotal}";
+       
+
+            return top;
             
         }
 
-        public OrderHeader(int userId,double orderTotal,int deliveryAdress, int? fiscalAdress)
+        //public OrderHeader(int userId, double orderTotal, int deliveryAdress, int? fiscalAdress)
+        //{
+        //    //var orderHeader = new OrderHeader
+        //    //{
+        //    ApplicationUserId = userId;
+        //    OrderTotal = orderTotal;
+        //    DeliveryAdressId = deliveryAdress;
+        //    FiscalAdressId = fiscalAdress;
+
+
+
+        //    //};
+
+        //    //return orderHeader;
+        //}
+
+        public static OrderHeader Create(int userId, double orderTotal, int deliveryAdress, int? fiscalAdress)
         {
-            //var orderHeader = new OrderHeader
-            //{
-            ApplicationUserId = userId;
-            OrderTotal = orderTotal;
-            DeliveryAdressId = deliveryAdress;
-            FiscalAdressId = fiscalAdress;
+            var orderHeader = new OrderHeader
+            {
+                ApplicationUserId = userId,
+                OrderTotal = orderTotal,
+                DeliveryAdressId = deliveryAdress,
+                FiscalAdressId = fiscalAdress,
 
 
 
-            //};
+            };
 
-            //return orderHeader;
+            return orderHeader;
         }
     }
 

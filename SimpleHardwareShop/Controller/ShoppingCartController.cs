@@ -53,6 +53,11 @@ namespace SimpleHardwareShop.Controller
                 }
             }
 
+            if (shoppingCarts.Count==0)
+            {
+                shoopingCartReadyToProceedToPurchase = false;
+            }
+
             return shoopingCartReadyToProceedToPurchase;
         }
         public void Upsert(int productId, int applicationUserId,int cantidadFinal = 1)
@@ -112,8 +117,18 @@ namespace SimpleHardwareShop.Controller
 
         }
 
+        public void Remove( int applicationUserId)
+        {
+            var shoppingCarts = _db.ShoppingCarts.Where(p=>p.ApplicationUserId==applicationUserId);
 
-        
+            _db.ShoppingCarts.RemoveRange(shoppingCarts);
+            _db.SaveChanges();
 
-    }
+        }
+
+
+
+
+
+        }
 }

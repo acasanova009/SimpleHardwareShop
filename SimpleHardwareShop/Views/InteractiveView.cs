@@ -17,7 +17,9 @@ public static class InteractiveView
         var productController = new ProductController(db);
         var shoppingCartController = new ShoppingCartController(db);
         var applicationUserController = new ApplicationUserController(db);
-        
+
+        var orderHeaderController = new OrderHeaderController(db);
+
 
         bool salir = false;
 
@@ -139,6 +141,9 @@ public static class InteractiveView
 
                         break;
                     case 8:
+
+                        orderHeaderController.Index(userId);
+
                         
                         break;
                     case 9:

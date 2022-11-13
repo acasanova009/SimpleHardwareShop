@@ -1,23 +1,24 @@
 ﻿using SimpleHardwareShop.Controller;
 using SimpleHardwareShop.Data;
-using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views;
-using System;
 
 
 
 public static class AuthenticationView
 {
 
-    
-    
+
+
     //private ShoppingCartController _shoppingCartController { get; set; }
 
-   
+
 
     public static void Menu(HardwareShopContext db)
-	{
+    {
         var applicationUserController = new ApplicationUserController(db);
+        var customerUserController = new CustomerUserController(db);
+        var employeeUserController = new EmployeeUserController(db);
+
 
         bool salir = false;
 
@@ -32,8 +33,9 @@ public static class AuthenticationView
 
                 Console.WriteLine("1. Iniciar sesion");
                 Console.WriteLine("2. Registrarme");
-                
+
                 Console.WriteLine("******************************************************");
+                Console.WriteLine("3. (Empleados) Iniciar sesion");
 
                 Console.WriteLine("Elige una de las opciones");
                 int opcion = Convert.ToInt32(Console.ReadLine());
@@ -47,38 +49,14 @@ public static class AuthenticationView
                         Console.WriteLine("Ingresar contraseña");
                         var password = Console.ReadLine();
 
-                        var applicationUser = applicationUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
+                        var customerUser = customerUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
 
-                        //ApplicationUser applicationUser = user;
 
-                        if (applicationUser is object)
+                        if (customerUser is object)
                         {
 
-                            
-                            switch (applicationUser.UserType)
-                            {
-                                case UserType.Application:
-                                    
-                                    InteractiveView.Menu(db,applicationUser.Id);
+                            InteractiveView.Menu(db, customerUser.Id);
 
-                                    break;
-                                case UserType.Employee:
-                                    break;
-                                case UserType.Manager:
-                                    break;
-                                default:
-                                    Console.WriteLine("User type not recognized");
-                                    break;
-                            }
-                            //if(applicationUser.GetType().IsAssignableFrom(typeof(ApplicationUser))){
-                            //    Console.WriteLine("Normal user");
-                            
-                            //}
-                            //else if (applicationUser.GetType().IsAssignableFrom(typeof(ApplicationUser)))
-                            //{
-
-                            //    Console.WriteLine("Αdmin/Employe");
-                            //}
                         }
                         else
                         {
@@ -90,7 +68,7 @@ public static class AuthenticationView
 
                     case 2:
 
-                        var application = ApplicationUserCreationView.Menu();
+                        var application = CustomerUserCreationView.Menu();
 
 
                         if (applicationUserController.Create(application))
@@ -112,35 +90,52 @@ public static class AuthenticationView
                         break;
 
                     case 3:
-                        //try
-                        //{
-                        //    Console.WriteLine("Ingresar id de producto a modificar.");
-                        //    int productId = Convert.ToInt32(Console.ReadLine());
-
-                        //    Console.WriteLine("Ingresar la cantidad final que deseas de este producto.");
-                        //    int cantidadFinal = Convert.ToInt32(Console.ReadLine());
 
 
-                        //    _shoppingCartController.Upsert(productId, user.Id,cantidadFinal);
-
-                        //}
-                        //catch(Exception ex)
-                        //{
-                        //    Console.WriteLine("Entener a valid id of a product.");
-
-                        //}
+                        Console.WriteLine("Ingresar correo/nombre de usuario.");
+                         mailOrUserName = Console.ReadLine();
+                        Console.WriteLine("Ingresar contraseña");
+                         password = Console.ReadLine();
 
 
+                        var employeeUser = employeeUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
+
+                        if (employeeUser is object)
+                        {
+
+                            switch (employeeUser.EmployeeType)
+                            {
+                                case EmployeeType.Manager:
+
+
+                                    InteractiveManagerView.Menu(db, employeeUser.Id);
+                                    break;
+                                case EmployeeType.Employee:
+
+
+                                    break;
+                                case EmployeeType.CFO:
+                                    break;
+                                default:
+                                    Console.WriteLine("User type not recognized");
+                                    break;
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Employee identification failed");
+                        }
 
                         break;
                     case 4:
-                          //_shoppingCartController.Index(user.Id);
+                        //_shoppingCartController.Index(user.Id);
 
 
                         break;
                     case 5:
                         Console.WriteLine("Has elegido salir de la aplicación");
-                        
+
                         break;
                     case 6:
                         Console.WriteLine("Has elegido salir de la aplicación");

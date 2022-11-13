@@ -26,9 +26,18 @@ namespace SimpleHardwareShop.Models
 
         public override string ToString()
         {
-            return "ORDERDETAIL: " + " OrderId:" + OrderHeaderId + " Product:" + Product + " Count:" + Count + " Price:" + Price;
+            return "OrderDetail: " + " OrderId:" + OrderHeaderId + " Product:" + Product + " Count:" + Count + " Price:" + Price;
         }
-        public OrderDetail(int orderHeaderId, int productId, int Count, double Price){
+        public static OrderDetail Create(int orderHeaderId, int productId, int count, double price)
+        {
+            OrderDetail orderDetail = new OrderDetail
+            {
+                OrderHeaderId=orderHeaderId,
+                ProductId=  productId,
+                Count= count,
+                Price= price
+            };
+            return orderDetail;
         
         }
 

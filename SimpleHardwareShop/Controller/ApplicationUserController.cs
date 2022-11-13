@@ -20,101 +20,7 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-
-        public void UpdateDefaultCard(int userid, int cardId)
-        {
-
-
-
-            var user = _db.ApplicationUsers.Where(a => a.Id == userid).SingleOrDefault();
-
-            if (user is object)
-            {
-                user.DefaultBankCardId = cardId;
-
-                _db.ApplicationUsers.Update(user);
-                _db.SaveChanges();
-
-            }
-            else
-            {
-                Console.WriteLine("Error in database");
-            }
-
-
-
-        }
-
-
-        public void UpdateDeliveryAdress(int userid, int adressId)
-        {
-
-
-
-            var user = _db.ApplicationUsers.Where(a => a.Id == userid).SingleOrDefault();
-
-            if(user is object)
-            {
-                user.DefaultDeliveryAdressId = adressId;
-
-                _db.ApplicationUsers.Update(user);
-                _db.SaveChanges();
-
-            }
-            else
-            {
-                Console.WriteLine("Error in database");
-            }
-            
-
-
-        }
-
-        public void UpdateFiscalAdress(int userid, int adressId)
-        {
-
-
-
-            var user = _db.ApplicationUsers.Where(a => a.Id == userid).SingleOrDefault();
-
-            if (user is object)
-            {
-                user.DefaultFiscalAdressId = adressId;
-
-                _db.ApplicationUsers.Update(user);
-                _db.SaveChanges();
-
-            }
-            else
-            {
-                Console.WriteLine("Error in database");
-            }
-
-
-
-        }
-
-        public ApplicationUser? AuthenticateUser(string emialOrUsername,string password)
-        {
-            var users = _db.ApplicationUsers
-                .Where(a => a.UserName.Equals(emialOrUsername) || a.Email.Equals(emialOrUsername))
-                .Where(a=>a.Password.Equals(password));
-
-            if (users.Count() > 1)
-            {
-                Console.WriteLine("Database Error, multiple users");
-                return null;
-            }
-            else if(users.Count() == 0)
-            {
-
-                return null;
-            }
-            else
-            {
-                return users.Single();
-            }
-        }
+      
         public bool Create(ApplicationUser application)
         {
             
@@ -145,10 +51,10 @@ namespace SimpleHardwareShop.Controller
                 //.ToList();
 
         }
-        public ApplicationUser?  Read(int userId)
+        public CustomerUser?  Read(int userId)
         {
 
-            var user = _db.ApplicationUsers
+            var user = _db.CustomerUsers
                 .Include(a => a.BankCards)
                 .Include(a => a.Adresses)
                 .FirstOrDefault(m=>userId==m.Id);

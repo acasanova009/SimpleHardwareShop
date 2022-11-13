@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleHardwareShop.Models
 {
-    public class ApplicationUser
+    public abstract class ApplicationUser
     {
 
 
@@ -28,8 +28,7 @@ namespace SimpleHardwareShop.Models
         [Required]
         public string Password { get; set; }
 
-        [Required]
-        public UserType UserType { get; set; }
+       
 
        
 
@@ -37,84 +36,84 @@ namespace SimpleHardwareShop.Models
 
 
 
-        public override string ToString()
-        {
-            var basicInfo = $"[Application User] Id:{Id} Name: {Name} UserType:{UserType} UserName:{UserName}";
+        //public override string ToString()
+        //{
+        //    var basicInfo = $"[Application User] Id:{Id} Name: {Name} UserType:{UserType} UserName:{UserName}";
 
            
 
 
-            basicInfo += "\n";
+        //    basicInfo += "\n";
 
-            if (BankCards is object)
-            {
+        //    if (BankCards is object)
+        //    {
                 
-                foreach (var card in BankCards)
-                {
-                    if (card.Id== DefaultBankCardId)
-                    {
-                        basicInfo += $"\n [Default Bank Card]-> {card.ToString()} ";
+        //        foreach (var card in BankCards)
+        //        {
+        //            if (card.Id== DefaultBankCardId)
+        //            {
+        //                basicInfo += $"\n TC/TD: {card.ToString()} ";
 
-                    }
-                    else
-                    {
-                        basicInfo += card.ToString();
+        //            }
+        //            else
+        //            {
+        //                basicInfo += card.ToString();
 
-                        basicInfo += "\n";
-                    }
-                }
-            }
-            if (Adresses is object)
-            {
+        //                basicInfo += "\n";
+        //            }
+        //        }
+        //    }
+        //    if (Adresses is object)
+        //    {
 
-                foreach (var a in Adresses)
-                {
+        //        foreach (var a in Adresses)
+        //        {
 
-                    if (a.Id == DefaultDeliveryAdressId)
-                    {
-                        basicInfo += $"\n [Default Delivery Adress]-> {a.ToString()} ";
+        //            if (a.Id == DefaultDeliveryAdressId)
+        //            {
+        //                basicInfo += $"\n Direccion de envio: {a.ToString()} ";
 
-                    }
+        //            }
                     
-                    if (a.Id == DefaultFiscalAdressId)
-                    {
-                        basicInfo += $"\n [Default Fiscal Adress]-> {a.ToString()} ";
-                    }
+        //            if (a.Id == DefaultFiscalAdressId)
+        //            {
+        //                basicInfo += $"\n Direccion de facutracion: {a.ToString()} ";
+        //            }
                     
 
-                    //basicInfo += a.ToString();
+        //            //basicInfo += a.ToString();
 
                     
                     
-                }
-                basicInfo += "\n";
-            }
+        //        }
+        //        basicInfo += "\n";
+        //    }
 
-            return basicInfo;
-        }
+        //    return basicInfo;
+        //}
 
         
-        public int? DefaultBankCardId { get; set; }
+        //public int? DefaultBankCardId { get; set; }
 
-        //[NotMapped]
-        //public BankCard? BankCard { get; set; }
+        ////[NotMapped]
+        ////public BankCard? BankCard { get; set; }
 
 
-        public int? DefaultDeliveryAdressId { get; set; }
-        //[NotMapped]
-        //public Adress? DefaultDeliveryAdress { get; set; }
+        //public int? DefaultDeliveryAdressId { get; set; }
+        ////[NotMapped]
+        ////public Adress? DefaultDeliveryAdress { get; set; }
 
-        public int? DefaultFiscalAdressId { get; set; }
-        //[NotMapped]
-        //public Adress? DefaultFiscalAdress { get; set; }
+        //public int? DefaultFiscalAdressId { get; set; }
+        ////[NotMapped]
+        ////public Adress? DefaultFiscalAdress { get; set; }
 
-        //[NotMapped]
-        //[NotMapped]
-        public ICollection<Adress>? Adresses { get; set; }
+        ////[NotMapped]
+        ////[NotMapped]
+        //public ICollection<Adress>? Adresses { get; set; }
         
-        public ICollection<BankCard>? BankCards { get; set; }
-        //[NotMapped]
-        public ICollection<OrderHeader>? OrderHeaders { get; set; }
+        //public ICollection<BankCard>? BankCards { get; set; }
+        ////[NotMapped]
+        //public ICollection<OrderHeader>? OrderHeaders { get; set; }
 
 
 

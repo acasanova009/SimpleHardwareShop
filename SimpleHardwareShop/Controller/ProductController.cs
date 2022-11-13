@@ -47,6 +47,35 @@ namespace SimpleHardwareShop.Controller
 
         }
 
+        public void Update()
+        {
+            var products = _db.Products.ToList();
+            foreach (var product in products)
+            {
+                product.Stock = product.DefaultStock;
+
+
+            }   
+            _db.UpdateRange(products);
+
+
+        }
+        
+        public void Update(ShoppingCart shoppingCartItem)
+        {
+            
+
+            var products = _db.Products.Where(a=>a.Id==shoppingCartItem.ProductId).ToList();
+
+            foreach (var product in products)
+            {
+                product.Stock -= shoppingCartItem.Count;
+
+
+            }
+            _db.UpdateRange(products);
+        }
+
 
 
         

@@ -23,6 +23,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Monitor de 24” HDMI, VGA",
                 Price = 5399,
                 Stock = 15,
+                DefaultStock = 15,
                 Serie = "AS24001",
                 Inventory = "SP01001",
                 RetailShop = RetailShop.Coyoacan
@@ -33,6 +34,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Monitor 21” VGA",
                 Price = 3650,
                 Stock = 10,
+                DefaultStock = 10,
                 Serie = "HP21002",
                 Inventory = "SP01002",
                 RetailShop = RetailShop.Coyoacan
@@ -43,6 +45,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Monitor 21” DP",
                 Price = 3599,
                 Stock = 9,
+                DefaultStock = 9,
                 Serie = "DE21003",
                 Inventory = "SP01003",
                 RetailShop = RetailShop.Coyoacan
@@ -53,6 +56,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "1 TB DD, 8 GB RAM, Intel Core i5",
                 Price = 17999,
                 Stock = 24,
+                DefaultStock = 24,
                 Serie = "DEOP001",
                 Inventory = "SP01004",
                 RetailShop = RetailShop.Coyoacan
@@ -63,6 +67,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "64 GB,10.9Pulgadas",
                 Price = 8999,
                 Stock = 15,
+                DefaultStock = 15,
                 Serie = "APG1001",
                 Inventory = "SP01005",
                 RetailShop = RetailShop.Coyoacan
@@ -73,6 +78,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Logitech K200,negro, USB",
                 Price = 350,
                 Stock = 22,
+                DefaultStock = 22,
                 Serie = "LGK2002",
                 Inventory = "SP01006",
                 RetailShop = RetailShop.Coyoacan
@@ -83,6 +89,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "1 TB DD, 8 GB RAM,AMD Ryzen 5",
                 Price = 16999,
                 Stock = 6,
+                DefaultStock = 6,
                 Serie = "HPSP005",
                 Inventory = "SP01007",
                 RetailShop = RetailShop.Coyoacan
@@ -93,6 +100,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "512 SSD, 1 TB DD, 16 GB RAM,Intel Core i7,Nvidia RTX 3050",
                 Price = 36999,
                 Stock = 11,
+                DefaultStock = 11,
                 Serie = "DEAW001",
                 Inventory = "SP01008",
                 RetailShop = RetailShop.Coyoacan
@@ -106,6 +114,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Monitor de 24”\r\nHDMI, VGA",
                 Price = 5399,
                 Stock = 15,
+                DefaultStock = 15,
                 Serie = "AS24001",
                 Inventory = "SP01001",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -116,6 +125,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Monitor 21” VGA",
                 Price = 3650,
                 Stock = 10,
+                DefaultStock = 10,
                 Serie = "HP21002",
                 Inventory = "SP01002",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -126,6 +136,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Monitor 21” DP",
                 Price = 3599,
                 Stock = 9,
+                DefaultStock = 9,
                 Serie = "DE21003",
                 Inventory = "SP01003",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -136,6 +147,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "1 TB DD, 8 GB RAM, Intel Core i5",
                 Price = 17999,
                 Stock = 24,
+                DefaultStock = 24,
                 Serie = "DEOP001",
                 Inventory = "SP01004",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -146,6 +158,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "64 GB,10.9Pulgadas",
                 Price = 8999,
                 Stock = 15,
+                DefaultStock = 15,
                 Serie = "APG1001",
                 Inventory = "SP01005",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -156,6 +169,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "Logitech K200,negro, USB",
                 Price = 350,
                 Stock = 22,
+                DefaultStock = 22,
                 Serie = "LGK2002",
                 Inventory = "SP01006",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -166,6 +180,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "1 TB DD, 8 GB RAM,AMD Ryzen 5",
                 Price = 16999,
                 Stock = 6,
+                DefaultStock = 6,
                 Serie = "HPSP005",
                 Inventory = "SP01007",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -176,6 +191,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Description = "512 SSD, 1 TB DD, 16 GB RAM,Intel Core i7,Nvidia RTX 3050",
                 Price = 36999,
                 Stock = 11,
+                DefaultStock = 11,
                 Serie = "DEAW001",
                 Inventory = "SP01008",
                 RetailShop = RetailShop.PlazaDeLaTecnologia
@@ -190,7 +206,7 @@ namespace SimpleHardwareShop.Data.Loader
              * 
              */
 
-            db.Add(new ApplicationUser
+            db.Add(new CustomerUser
             {
                 Name= "Leo",
                 LastName = "Malo",
@@ -198,14 +214,17 @@ namespace SimpleHardwareShop.Data.Loader
                 UserName = "Leo01",
                 Email = "uraeus@mac.com",
                 Password = "1234",
-                UserType = UserType.Application,
+
+                DefaultBankCardId= 1,
+                DefaultDeliveryAdressId= 1,
+                //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
                 
 
             });
 
-            db.Add(new ApplicationUser
+            db.Add(new CustomerUser
             {
                 Name = "Severo",
                 LastName = "Granados",
@@ -213,13 +232,13 @@ namespace SimpleHardwareShop.Data.Loader
                 UserName = "Severo01",
                 Email = "bhima@me.com",
                 Password = "1234",
-                UserType = UserType.Application,
+                //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
 
 
             });
-            db.Add(new ApplicationUser
+            db.Add(new CustomerUser
             {
                 Name = "Matías Mauricio",
                 LastName = "Castillo",
@@ -227,13 +246,13 @@ namespace SimpleHardwareShop.Data.Loader
                 UserName = "Matias01",
                 Email = "tbeck@optonline.net",
                 Password = "1234",
-                UserType = UserType.Application,
+                //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
 
 
             });
-            db.Add(new ApplicationUser
+            db.Add(new CustomerUser
             {
                 Name = "Victoriano",
                 LastName = "Tapia",
@@ -241,12 +260,58 @@ namespace SimpleHardwareShop.Data.Loader
                 UserName = "Victoriano01",
                 Email = "dleconte@outlook.com",
                 Password = "1234",
-                UserType = UserType.Application,
+                //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
 
 
             });
+
+            /*
+           * Employess
+           * 
+           * 
+           * 
+           */
+
+            db.Add(new EmployeeUser
+            {
+                Name = "Al",
+                LastName = "Tapia",
+                SecondLastName = "Cabanillas",
+                UserName = "Victoriano01",
+                Email = "dleconte@outlook.com",
+                Password = "123",
+
+                RetailShop = RetailShop.HeadQuarters,
+                EmployeeType = EmployeeType.Manager,
+
+                //UserType = UserType.Application,
+                //DeliveryAdressId =10,
+                //FiscalAdressId=10
+
+
+            });
+
+            db.Add(new EmployeeUser
+            {
+                Name = "Pedro",
+                LastName = "Tapia",
+                SecondLastName = "Cabanillas",
+                UserName = "Victoriano01",
+                Email = "dleconte@outlook.com",
+                Password = "123",
+
+                RetailShop = RetailShop.PlazaDeLaTecnologia,
+                EmployeeType = EmployeeType.Employee,
+
+                //UserType = UserType.Application,
+                //DeliveryAdressId =10,
+                //FiscalAdressId=10
+
+
+            });
+
 
 
             db.SaveChanges();

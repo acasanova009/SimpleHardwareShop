@@ -55,6 +55,9 @@ namespace SimpleHardwareShop.Data
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+        public DbSet<CustomerUser> CustomerUsers { get; set; }
+        public DbSet<EmployeeUser> EmployeeUsers { get; set; }
+
 
         public DbSet<Adress> Adresses { get; set; }
 
@@ -63,7 +66,8 @@ namespace SimpleHardwareShop.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
         public DbSet<OrderHeader> OrderHeaders { get; set; }
-
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<RssBlog> RssBlogs { get; set; }
 
 
 

@@ -32,7 +32,7 @@ namespace SimpleHardwareShop.Models
                 moreProductThanAvailabe = $"Error: Cantidad de producot disponble es {Product.Stock}, y en el cartito se tiene {Count}";
             }
 
-            return $"[ShoppingCartItem]: Id:{ProductId}  {Product?.Name}:     Amount:{Count} * ${Product?.Price} =  ${Count*Product?.Price} {moreProductThanAvailabe}";
+            return $"[Item]: Id:{ProductId}  {Product?.Name}:     Amount:{Count} * ${Product?.Price} =                                   ${Count*Product?.Price} {moreProductThanAvailabe}";
             //return "PRODUCT " + "Name: " + Name ;
         }
     }
