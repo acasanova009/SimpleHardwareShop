@@ -10,8 +10,120 @@ namespace SimpleHardwareShop.Data.Loader
 {
     public static class DataLoader
     {
+       
         public static void Load(HardwareShopContext db)
         {
+            DataLoader.LoadProduct(db);
+            DataLoader.LoadCustomers(db);
+            DataLoader.LoadEmployess(db);
+
+
+            //Dependent entries
+            DataLoader.LoadShoppingCarts(db);
+            DataLoader.LoadAdresses(db);
+            DataLoader.LoadBankCards(db);
+          
+
+            //Customer, product, and adress  dependent entities
+
+            /*
+            *OrderHeaders with  OrderDetails
+            * 
+            * 
+            * 
+            * 
+            */
+
+            //Order header id 
+            db.Add(new OrderHeader
+            {
+                //OrderHeader id = 1 dont uncomment
+                CustomerUserId= 1,
+                OrderTotal= 54045,
+                DeliveryAdressId= 1,
+                
+                
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 1,
+                ProductId = 5,
+                Count = 4,
+                Price  = 8999,
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 1,
+                ProductId = 6,
+                Count = 3,
+                Price = 350,
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 1,
+                ProductId = 7,
+                Count = 1,
+                Price = 16999,
+
+
+            });
+
+            //SECOND
+            db.Add(new OrderHeader
+            {
+                //OrderHeader id = 2 dont uncomment
+                CustomerUserId = 1,
+                OrderTotal = 54045,
+                DeliveryAdressId = 1,
+
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 1,
+                ProductId = 5,
+                Count = 4,
+                Price = 8999,
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 1,
+                ProductId = 6,
+                Count = 3,
+                Price = 350,
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 1,
+                ProductId = 7,
+                Count = 1,
+                Price = 16999,
+
+
+            });
+
+
+        }
+
+        public static void LoadProduct(HardwareShopContext db)
+        {
+
             /*
             * PRODUCTS
             * 
@@ -200,27 +312,22 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.SaveChanges();
 
-            /*
-             * CUSTOMERS
-             * 
-             * 
-             */
+        }
 
+        public static void LoadCustomers(HardwareShopContext db)
+        {
             db.Add(new CustomerUser
             {
-                Name= "Leo",
+                Name = "Leo",
                 LastName = "Malo",
                 SecondLastName = "Alba",
                 UserName = "Leo01",
                 Email = "uraeus@mac.com",
-                Password = "1234",
+                Password = "123",
 
-                DefaultBankCardId= 1,
-                DefaultDeliveryAdressId= 1,
-                //UserType = UserType.Application,
-                //DeliveryAdressId =10,
-                //FiscalAdressId=10
-                
+                DefaultBankCardId = 1,
+                DefaultDeliveryAdressId = 1,
+
 
             });
 
@@ -266,6 +373,11 @@ namespace SimpleHardwareShop.Data.Loader
 
 
             });
+
+        }
+
+        public static void LoadEmployess(HardwareShopContext db)
+        {
 
             /*
            * Employess
@@ -315,12 +427,21 @@ namespace SimpleHardwareShop.Data.Loader
 
 
             db.SaveChanges();
+        }
 
-           /*
-           * ADRESSES
-           * 
-           * 
-           */
+        public static void LoadAdresses(HardwareShopContext db)
+        {
+
+
+
+
+
+
+            /*
+            * ADRESSES
+            * 
+            * 
+            */
 
             db.Add(new Adress
             {
@@ -349,7 +470,7 @@ namespace SimpleHardwareShop.Data.Loader
                 ApplicationUserId = 2,
                 StreetAdress = "Chapultepec 484",
                 PhoneNumber = "55 2445 4565",
-                
+
                 PostalCode = 16507,
                 RFC = null
 
@@ -357,7 +478,13 @@ namespace SimpleHardwareShop.Data.Loader
 
 
 
+
             db.SaveChanges();
+        }
+
+
+        public static void LoadBankCards(HardwareShopContext db)
+        {
 
             /*
            * BANK CARDS
@@ -366,7 +493,7 @@ namespace SimpleHardwareShop.Data.Loader
            */
             db.Add(new BankCard
             {
-                Name ="MyFavorite CreditCard",
+                Name = "MyFavorite CreditCard",
                 ApplicationUserId = 1,
                 Account = "4565184598654859",
                 ExpirationDate = new DateTime(2025, 01, 01),
@@ -399,6 +526,11 @@ namespace SimpleHardwareShop.Data.Loader
             db.SaveChanges();
 
 
+        }
+
+        public static void LoadShoppingCarts(HardwareShopContext db)
+        {
+
             /*
             * Shopping Car Items
             * 
@@ -411,14 +543,14 @@ namespace SimpleHardwareShop.Data.Loader
             {
                 ProductId = 5,
                 Count = 5,
-                ApplicationUserId = 1,
+                CustomerUserId = 1,
 
             });
             db.Add(new ShoppingCart
             {
                 ProductId = 4,
                 Count = 2,
-                ApplicationUserId = 1,
+                CustomerUserId = 1,
 
             });
 
@@ -427,13 +559,13 @@ namespace SimpleHardwareShop.Data.Loader
             {
                 ProductId = 13,
                 Count = 1,
-                ApplicationUserId = 2,
+                CustomerUserId = 2,
 
             }); db.Add(new ShoppingCart
             {
                 ProductId = 16,
                 Count = 2,
-                ApplicationUserId = 2,
+                CustomerUserId = 2,
 
             });
 
@@ -443,21 +575,21 @@ namespace SimpleHardwareShop.Data.Loader
             {
                 ProductId = 1,
                 Count = 1,
-                ApplicationUserId = 3,
+                CustomerUserId = 3,
 
-            }); 
+            });
             db.Add(new ShoppingCart
             {
                 ProductId = 2,
                 Count = 2,
-                ApplicationUserId = 3,
+                CustomerUserId = 3,
 
             });
             db.Add(new ShoppingCart
             {
                 ProductId = 3,
                 Count = 3,
-                ApplicationUserId = 3,
+                CustomerUserId = 3,
 
             });
 
@@ -465,7 +597,7 @@ namespace SimpleHardwareShop.Data.Loader
             {
                 ProductId = 4,
                 Count = 4,
-                ApplicationUserId = 3,
+                CustomerUserId = 3,
 
             });
 
@@ -474,13 +606,12 @@ namespace SimpleHardwareShop.Data.Loader
             {
                 ProductId = 6,
                 Count = 6,
-                ApplicationUserId = 3,
+                CustomerUserId = 3,
 
             });
 
             db.SaveChanges();
+
         }
-
-
     }
 }

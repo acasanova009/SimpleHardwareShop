@@ -16,8 +16,8 @@ namespace SimpleHardwareShop.Models
         public Product? Product { get; set; }
         public int Count { get; set; }
 
-        public int ApplicationUserId { get; set; }
-        public ApplicationUser? ApplicationUser { get; set; }
+        public int CustomerUserId { get; set; }
+        public CustomerUser? CustomerUser { get; set; }
 
         //[NotMapped]
         //public double Price { get; set; }

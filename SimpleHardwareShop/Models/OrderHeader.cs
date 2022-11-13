@@ -13,8 +13,8 @@ namespace SimpleHardwareShop.Models
     public class OrderHeader
     {
         public int Id { get; set; }
-        public int ApplicationUserId { get; set; }
-        public ApplicationUser? ApplicationUser { get; set; }
+        public int CustomerUserId { get; set; }
+        public CustomerUser? CustomerUser { get; set; }
         public double OrderTotal { get; set; }
 
 
@@ -68,7 +68,7 @@ namespace SimpleHardwareShop.Models
         {
             var orderHeader = new OrderHeader
             {
-                ApplicationUserId = userId,
+                CustomerUserId = userId,
                 OrderTotal = orderTotal,
                 DeliveryAdressId = deliveryAdress,
                 FiscalAdressId = fiscalAdress,
