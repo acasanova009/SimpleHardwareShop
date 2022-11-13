@@ -14,7 +14,7 @@ namespace SimpleHardwareShop.Models
 
         public string? Name { get; set; } //EG. My Favorite Credit Card.  or BlackCardOnlyVacations
 
-        public int ApplicationUserId { get; set; }
+        public int CustomerUserId { get; set; }
 
         //public ApplicationUser ApplicationUser { get; set; }
         public string Account { get; set; }

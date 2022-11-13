@@ -16,6 +16,8 @@ Console.WriteLine($"Database path: {db.DbPath}");
 DataLoader.Load(db);
 #endif
 
+//DataLoader.LoadOrdersHeaderAndDetails( db );    
+
 AuthenticationView.Menu(db);
 
 

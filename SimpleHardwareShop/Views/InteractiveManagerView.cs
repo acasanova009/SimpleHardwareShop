@@ -3,8 +3,7 @@ using SimpleHardwareShop.Data;
 using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views;
 using System;
-
-
+using System.Xml.Schema;
 
 public static class InteractiveManagerView
 {
@@ -18,6 +17,8 @@ public static class InteractiveManagerView
         var productController = new ProductController(db);
 
         //var quotationController = new QuotationController(db);
+
+        var orderDetailController = new OrderDetailController(db);
 
 
 
@@ -75,52 +76,72 @@ public static class InteractiveManagerView
 
                         break;
                     case 4:
-                        //var shoppingCarts = shoppingCartController.Index(userId);
 
-                        //var total = 0.0;
-                        //if(shoppingCarts.Count>0)
-                        //{
+                        Console.WriteLine($"*********************************************************************************************");
+                        Console.WriteLine($"*                             REPORTE DE VENTAS GENERAL                                     *");
+                        var orderDetails = orderDetailController.Index();
+                        var totalEarned = 0.0;
 
-                        //    foreach (var item in shoppingCarts)
-                        //    {
+                        foreach (var order in orderDetails)
+                        {
+                            Console.WriteLine(order);
+                            totalEarned += order.Count * order.Price;
 
-                        //        if(item?.Product is object)
-                        //        total += item.Product.Price*item.Count;
-                        //        Console.WriteLine(item);
-                                
-
-                        //    }
-                        //    Console.WriteLine("-------------");
-                        //    Console.WriteLine($"Total: ${total}");
-                        //}
-                        //else
-                        //{
-                        //    Console.WriteLine("No items in cart.");
-                        //}
-
+                        }
+                        Console.WriteLine($"Total de ventas............................                                    ${totalEarned}");
+                        Console.WriteLine($"***********************************************************************************************");
 
 
                         break;
                     case 5:
 
-                        //if(shoppingCartController.VerifyAvailableContents(userId))
-                        //{
+                        Console.WriteLine($"*********************************************************************************************");
+                        Console.WriteLine($"*                             REPORTE DE VENTAS POR PRODUCTO                                *");
 
-                        //    OrderHeaderInteractiveView.Menu(db,userId);
+                        totalEarned = 0.0;
+                        for (int productId = 1; productId <= 16; productId++)
+                        {
 
+                            Console.WriteLine($"*                            ProductoId {productId}                                     *");
+                            var orderDetailsByProduct = orderDetailController.IndexByProduct(productId);
 
-                        //}
-                        //else
-                        //{
+                            foreach (var order in orderDetailsByProduct)
+                            {
+                                Console.WriteLine(order);
+                                totalEarned += order.Count * order.Price;
 
-                        //    Console.WriteLine("No es posible proceder a la compra, el carrito contiene mayor cantidad de la ofertada. Pero puede cotizar.");
-                        //}
+                            }
+                        }
+
+                        Console.WriteLine($"Total de ventas............................                                    ${totalEarned}");
+                        Console.WriteLine($"***********************************************************************************************");
 
 
 
 
                         break;
                     case 6:
+
+
+                        Console.WriteLine($"*********************************************************************************************");
+                        Console.WriteLine($"*                             REPORTE DE VENTAS POR SUCURSAL                                *");
+
+                        totalEarned = 0.0;
+                        
+
+                        Console.WriteLine($"*                            Tienda - Coyoacan                                               *");
+                        var orderDetailsByShop = orderDetailController.IndexByShop(RetailShop.Coyoacan);
+
+                        foreach (var order in orderDetailsByShop)
+                        {
+                            Console.WriteLine(order);
+                            totalEarned += order.Count * order.Price;
+
+                        }
+                        
+
+                        Console.WriteLine($"Total de ventas............................                                    ${totalEarned}");
+                        Console.WriteLine($"***********************************************************************************************");
                         break;
                     case 7:
 

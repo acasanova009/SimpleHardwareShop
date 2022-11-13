@@ -14,7 +14,7 @@ namespace SimpleHardwareShop.Models
         [Required]
         public int Id { get; set; }
 
-        public int ApplicationUserId { get; set; }
+        public int CustomerUserId { get; set; }
 
         public string StreetAdress { get; set; }
         

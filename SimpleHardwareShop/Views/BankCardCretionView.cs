@@ -19,7 +19,7 @@ namespace SimpleHardwareShop.Views
             try
             {
 
-                card.ApplicationUserId = userId;
+                card.CustomerUserId = userId;
 
                 Console.WriteLine("Ingresar 16 digitos de TC/TD: SIN ESPACIOS. ");
                 

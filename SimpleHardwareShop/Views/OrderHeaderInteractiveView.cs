@@ -281,7 +281,30 @@ public static class OrderHeaderInteractiveView
 
                             
                             shoppingCartController.Remove(userId);
+
+
+                            Console.WriteLine($"***************************************************************************************************************************");
+                            Console.WriteLine($"*                                   COMPRA EXITOSA                                                                        *");
+                           
+
+                             shoppingCart = shoppingCartController.Index(userId);
+                             total = 0.0;
+
+                            if (shoppingCart is object)
+                                foreach (var item in shoppingCart)
+                                {
+
+                                    Console.WriteLine(item);
+                                    total += item.Count * item.Product!.Price;
+                                }
+
+                            Console.WriteLine();
+                            Console.WriteLine($"*Total de orden fue:                                                                                              ${total} ");
+
+                            Console.WriteLine($"***************************************************************************************************************************");
                             Console.WriteLine("Compra realizada, revisar-> menu de Compras anteriores.");
+
+
                             return;
                         }
 

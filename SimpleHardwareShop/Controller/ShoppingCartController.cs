@@ -24,7 +24,7 @@ namespace SimpleHardwareShop.Controller
         {
             var shoppingCarts = _db.ShoppingCarts
                 .Include(p => p.Product)
-                .Where(s => s.ApplicationUserId == applicationUserId)
+                .Where(s => s.CustomerUserId == applicationUserId)
                 .ToList();
 
             return shoppingCarts;
@@ -38,7 +38,7 @@ namespace SimpleHardwareShop.Controller
             var shoopingCartReadyToProceedToPurchase = true;
             var shoppingCarts = _db.ShoppingCarts
                .Include(p => p.Product)
-               .Where(s => s.ApplicationUserId == applicationUserId)
+               .Where(s => s.CustomerUserId == applicationUserId)
                .ToList();
 
 
@@ -67,7 +67,7 @@ namespace SimpleHardwareShop.Controller
 
             
             var shoppingCart = _db.ShoppingCarts
-                .Where(s => s.ApplicationUserId == applicationUserId)
+                .Where(s => s.CustomerUserId == applicationUserId)
                 .Where(s=>s.ProductId==productId)
                 .FirstOrDefault();
 
@@ -104,7 +104,7 @@ namespace SimpleHardwareShop.Controller
 
                 shoppingCart = new ShoppingCart()
                 {
-                    ApplicationUserId = applicationUserId,
+                    CustomerUserId = applicationUserId,
                     //ProductId = productId,
                     Product = product,
                     Count = cantidadFinal
@@ -119,7 +119,7 @@ namespace SimpleHardwareShop.Controller
 
         public void Remove( int applicationUserId)
         {
-            var shoppingCarts = _db.ShoppingCarts.Where(p=>p.ApplicationUserId==applicationUserId);
+            var shoppingCarts = _db.ShoppingCarts.Where(p=>p.CustomerUserId ==applicationUserId);
 
             _db.ShoppingCarts.RemoveRange(shoppingCarts);
             _db.SaveChanges();

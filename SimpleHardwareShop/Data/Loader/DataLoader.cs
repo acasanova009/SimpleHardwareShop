@@ -10,22 +10,8 @@ namespace SimpleHardwareShop.Data.Loader
 {
     public static class DataLoader
     {
-       
-        public static void Load(HardwareShopContext db)
+        public static void LoadOrdersHeaderAndDetails(HardwareShopContext db)
         {
-            DataLoader.LoadProduct(db);
-            DataLoader.LoadCustomers(db);
-            DataLoader.LoadEmployess(db);
-
-
-            //Dependent entries
-            DataLoader.LoadShoppingCarts(db);
-            DataLoader.LoadAdresses(db);
-            DataLoader.LoadBankCards(db);
-          
-
-            //Customer, product, and adress  dependent entities
-
             /*
             *OrderHeaders with  OrderDetails
             * 
@@ -38,48 +24,6 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new OrderHeader
             {
                 //OrderHeader id = 1 dont uncomment
-                CustomerUserId= 1,
-                OrderTotal= 54045,
-                DeliveryAdressId= 1,
-                
-                
-
-            });
-
-            db.Add(new OrderDetail
-            {
-                OrderHeaderId = 1,
-                ProductId = 5,
-                Count = 4,
-                Price  = 8999,
-
-
-            });
-
-            db.Add(new OrderDetail
-            {
-                OrderHeaderId = 1,
-                ProductId = 6,
-                Count = 3,
-                Price = 350,
-
-
-            });
-
-            db.Add(new OrderDetail
-            {
-                OrderHeaderId = 1,
-                ProductId = 7,
-                Count = 1,
-                Price = 16999,
-
-
-            });
-
-            //SECOND
-            db.Add(new OrderHeader
-            {
-                //OrderHeader id = 2 dont uncomment
                 CustomerUserId = 1,
                 OrderTotal = 54045,
                 DeliveryAdressId = 1,
@@ -87,6 +31,7 @@ namespace SimpleHardwareShop.Data.Loader
 
 
             });
+            db.SaveChanges();
 
             db.Add(new OrderDetail
             {
@@ -118,7 +63,62 @@ namespace SimpleHardwareShop.Data.Loader
 
             });
 
+            //SECOND
+            db.Add(new OrderHeader
+            {
+                //OrderHeader id = 2 dont uncomment
+                CustomerUserId = 1,
+                OrderTotal = 4 * 5399 + 2 * 3650,
+                DeliveryAdressId = 1,
 
+
+
+            });
+            db.SaveChanges();
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 2,
+                ProductId = 1,
+                Count = 4,
+                Price = 5399,
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 2,
+                ProductId = 2,
+                Count = 2,
+                Price = 3650,
+
+
+            });
+
+            db.SaveChanges();
+
+
+        }
+
+
+        public static void Load(HardwareShopContext db)
+        {
+            DataLoader.LoadProduct(db);
+            DataLoader.LoadCustomers(db);
+            DataLoader.LoadEmployess(db);
+
+
+            //Dependent entries
+            DataLoader.LoadShoppingCarts(db);
+            DataLoader.LoadAdresses(db);
+            DataLoader.LoadBankCards(db);
+
+
+            //Customer, product, and adress  dependent entities
+
+            DataLoader.LoadOrdersHeaderAndDetails(db);
+            
         }
 
         public static void LoadProduct(HardwareShopContext db)
@@ -391,7 +391,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Name = "Al",
                 LastName = "Tapia",
                 SecondLastName = "Cabanillas",
-                UserName = "Victoriano01",
+                UserName = "Al",
                 Email = "dleconte@outlook.com",
                 Password = "123",
 
@@ -410,7 +410,7 @@ namespace SimpleHardwareShop.Data.Loader
                 Name = "Pedro",
                 LastName = "Tapia",
                 SecondLastName = "Cabanillas",
-                UserName = "Victoriano01",
+                UserName = "Pedro",
                 Email = "dleconte@outlook.com",
                 Password = "123",
 
@@ -445,7 +445,7 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new Adress
             {
-                ApplicationUserId = 1,
+                CustomerUserId = 1,
                 StreetAdress = "Insurgentse 3493",
                 PhoneNumber = "55 3409 9347",
                 AdditionalInformation = "Enfrente de La Paz",
@@ -456,7 +456,7 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new Adress
             {
-                ApplicationUserId = 1,
+                CustomerUserId = 1,
                 StreetAdress = "Copilco 3493",
                 PhoneNumber = "55 3409 9347",
                 AdditionalInformation = "UNAM",
@@ -467,7 +467,7 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new Adress
             {
-                ApplicationUserId = 2,
+                CustomerUserId = 2,
                 StreetAdress = "Chapultepec 484",
                 PhoneNumber = "55 2445 4565",
 
@@ -494,7 +494,7 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new BankCard
             {
                 Name = "MyFavorite CreditCard",
-                ApplicationUserId = 1,
+                CustomerUserId = 1,
                 Account = "4565184598654859",
                 ExpirationDate = new DateTime(2025, 01, 01),
                 SecurityCode = 542
@@ -504,7 +504,7 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new BankCard
             {
                 Name = "BlackCard for big expenses.",
-                ApplicationUserId = 2,
+                CustomerUserId = 2,
                 Account = "4584156418594852",
                 ExpirationDate = new DateTime(2027, 01, 01),
                 SecurityCode = 976
@@ -514,7 +514,7 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new BankCard
             {
                 Name = "DigitalCard",
-                ApplicationUserId = 3,
+                CustomerUserId = 3,
                 Account = "5849145625894785",
                 ExpirationDate = new DateTime(2024, 09, 05),
                 SecurityCode = 116

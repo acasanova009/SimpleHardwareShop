@@ -31,7 +31,7 @@ namespace SimpleHardwareShop.Controller
         public void Index(int applicationUserId)
         {
             var adresses = _db.Adresses
-                .Where(s => s.ApplicationUserId == applicationUserId)
+                .Where(s => s.CustomerUserId == applicationUserId)
                 .ToList();
 
 

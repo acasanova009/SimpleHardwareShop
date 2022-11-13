@@ -124,7 +124,7 @@ namespace SimpleHardwareShop.Views
             try
             {
 
-                card.ApplicationUserId = userId;
+                card.CustomerUserId = userId;
 
                 Console.WriteLine("Ingresar dirección. Calle y número. ");
                 

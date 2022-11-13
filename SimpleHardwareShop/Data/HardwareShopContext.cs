@@ -66,8 +66,7 @@ namespace SimpleHardwareShop.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
         public DbSet<OrderHeader> OrderHeaders { get; set; }
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<RssBlog> RssBlogs { get; set; }
+        
 
 
 
