@@ -2,11 +2,12 @@
 using SimpleHardwareShop.Data;
 using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views;
-using System;
+using SimpleHardwareShop.Views.Creation;
+//using System;
 
 
 
-public static class OrderHeaderInteractiveView
+public static class InteractiveOrderHeaderView
 {
 
     public static HardwareShopContext _db { get; set; }
@@ -25,18 +26,19 @@ public static class OrderHeaderInteractiveView
     public static void Menu(HardwareShopContext db,int userId)
 	{
         //_db = db;
-        var productController = new ProductController(db);
         //var _shoppingCartController = new ShoppingCartController(db);
-        var _orderHeaderController = new OrderHeaderController(db);
+        //var _orderHeaderController = new OrderHeaderController(db);
+        //var customerUserController = new CustomerUserController(db);
+        //var bankCardController = new BankCardController(db);
+        //var adressController = new AdressController(db);
+
+
+
+
+        var productController = new ProductController(db);
         var applicationUserController = new ApplicationUserController(db);
         var customerUserController = new CustomerUserController(db);
-
-        var adressController = new AdressController(db);
-
-        var bankCardController = new BankCardController(db);
-
         var orderHeaderController = new OrderHeaderController(db);
-
         var shoppingCartController = new ShoppingCartController(db);
 
 
@@ -53,19 +55,12 @@ public static class OrderHeaderInteractiveView
             {
                 Console.WriteLine("");
                 Console.WriteLine("******************************************************");
-                Console.WriteLine("1. Ver direcciones actuales.");
-                Console.WriteLine("2. Ingresar nueva direccion.");
-                Console.WriteLine("3. Seleccionar direccion de envio la-default");
-                Console.WriteLine("4. Seleccionar direccion fiscal  (opcional) la-default");
-                Console.WriteLine("-------------------------------");
-                Console.WriteLine("5. Ver tarjetas de credito actuales.");
-                Console.WriteLine("6. Ingresar nueva tarjeta de credito.");
-                Console.WriteLine("7. Seleccionar tarjeta de credito.");
-                Console.WriteLine("-------------------------------");
-                Console.WriteLine("8. Revisar detalles de compra.");
-                Console.WriteLine("9. Confirmar compra.");
-                Console.WriteLine("-------------------------------");
-                Console.WriteLine("10. Regresar");
+                Console.WriteLine("1. Definir direccion y metodo de pago.");
+                Console.WriteLine("2. Revisar detalles de compra.");
+                Console.WriteLine("------------------------------------------------------");
+                Console.WriteLine("3. Confirmar compra.");
+                Console.WriteLine("------------------------------------------------------");
+                Console.WriteLine("0. Regresar");
                 Console.WriteLine("******************************************************");
 
                 Console.WriteLine("");
@@ -78,119 +73,29 @@ public static class OrderHeaderInteractiveView
                 {
                     case 1:
 
-                        adressController.Index(userId);
+                        
 
+                        CustomerUserEditingView.Menu(db, userId);
 
-                        //applicationUserController.UpdateApplication(activeUser, AdressCreationView.Menu(activeUser.Id, true));
-
-
-                        break;
-
-                    case 2:
-
-                        Console.WriteLine("Queire ingresar direccion fiscal? Escribir 1.");
-                        var fiscal = Console.ReadLine();
-
-                        if (fiscal is object && fiscal.Equals("1"))
-                        {
-                            
-                            adressController.Create(AdressCreationView.Create(userId, false));
-                        }
-                        else
-                        {
-
-                            adressController.Create(AdressCreationView.Create(userId, false));
-                        }
-
-
-
-
-
-                        break;
-
-                    case 3:
-
-                        try
-                        {
-                            Console.WriteLine("Ingresar id de direccion.");
-                            int adressid = Convert.ToInt32(Console.ReadLine());
-                            customerUserController.UpdateDeliveryAdress(userId, adressid);
-
-                        }
-                        catch (Exception)
-                        {
-
-                            
-                        }
-
-
-
-                        break;
-                    case 4:
-
-                        try
-                        {
-                            Console.WriteLine("Ingresar id de direccion.");
-                            int adressid = Convert.ToInt32(Console.ReadLine());
-                            customerUserController.UpdateFiscalAdress(userId, adressid);
-                            userWantsFacturar = true;
-
-                        }
-                        catch (Exception)
-                        {
-
-
-                        }
-
-
-
-                        break;
-                    case 5:
-
-                        bankCardController.Index(userId);
-
-                        break;
-                    case 6:
-
-
-                        bankCardController.Create(BankCardCretionView.Menu(userId));
                         
 
 
-
-
-
-                        break;
-                    case 7:
-
-                        try
-                        {
-                            Console.WriteLine("Ingresar id de TC/TD.");
-                            int cardId = Convert.ToInt32(Console.ReadLine());
-                            customerUserController.UpdateDefaultCard(userId,cardId);
-
-                        }
-                        catch (Exception)
-                        {
-
-
-                        }
-
                         break;
 
-                    case 8:
 
-                        Console.WriteLine($"***************************************************************************************************************************");
-                        Console.WriteLine($"*                                   Resumen de la compra                                                                  *");
-                        Console.WriteLine($"*-------------------------------------------------------------------------------------------------------------------------*");
-                        Console.WriteLine($"*                                   Informacion Cliente                                                                   *");
+                    case 2:
 
-                        var user = applicationUserController.Read(userId);
+                        Console.WriteLine($"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        Console.WriteLine($"+                                   Resumen de la compra                                                                  +");
+                        Console.WriteLine($"+-------------------------------------------------------------------------------------------------------------------------+");
+                        Console.WriteLine($"+                                   Informacion Cliente                                                                   +");
+
+                        var user = customerUserController.Read(userId);
 
 
                         Console.WriteLine(user);
-                        Console.WriteLine($"*-------------------------------------------------------------------------------------------------------------------------*");
-                        Console.WriteLine($"*                                  Ariticulos por comprar                                                                 *");
+                        Console.WriteLine($"+-------------------------------------------------------------------------------------------------------------------------+");
+                        Console.WriteLine($"+                                  Ariticulos por comprar                                                                 +");
 
                         var shoppingCart = shoppingCartController.Index(userId);
                         double total = 0.0;
@@ -204,9 +109,9 @@ public static class OrderHeaderInteractiveView
                         }
 
                         Console.WriteLine();
-                        Console.WriteLine($"*Precio TOTAL es:                                                                                              ${total} ");
+                        Console.WriteLine($"+Precio TOTAL es:                                                                                              ${total}   +");
 
-                        Console.WriteLine($"***************************************************************************************************************************");
+                        Console.WriteLine($"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
 
 
@@ -216,15 +121,17 @@ public static class OrderHeaderInteractiveView
 
 
                         break;
-                    case 9:
+                    case 3:
 
 
 
-                        var userr = applicationUserController.Read(userId);
+                        var userr = customerUserController.Read(userId);
 
                         bool canCompletePurchase = true;
                         if(userr != null)
                         {
+
+                          
 
                             if (userWantsFacturar==true && userr.DefaultFiscalAdressId == null)
                             {
@@ -316,12 +223,12 @@ public static class OrderHeaderInteractiveView
 
                         break;
 
-                    case 10:
+                    case 0:
+                        Console.WriteLine("Has elegido regresar");
                         salir = true;
-
                         break;
                     default:
-                        Console.WriteLine("Elige una opcion entre 1 y 6");
+                        Console.WriteLine("Elige una opcion del menu");
                         break;
                 }
 

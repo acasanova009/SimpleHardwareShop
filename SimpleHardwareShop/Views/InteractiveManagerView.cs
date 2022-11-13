@@ -1,22 +1,20 @@
 ﻿using SimpleHardwareShop.Controller;
 using SimpleHardwareShop.Data;
-using SimpleHardwareShop.Models;
-using SimpleHardwareShop.Views;
+using SimpleHardwareShop.Views.Creation;
 using System;
-using System.Xml.Schema;
 
 public static class InteractiveManagerView
 {
 
-    
-  
+
+
 
     public static void Menu(HardwareShopContext db, int userId)
-	{
+    {
         var employeeUserController = new EmployeeUserController(db);
         var productController = new ProductController(db);
 
-        //var quotationController = new QuotationController(db);
+        var cotizacionDetailController = new CotizacionDetailController(db);
 
         var orderDetailController = new OrderDetailController(db);
 
@@ -41,10 +39,10 @@ public static class InteractiveManagerView
                 Console.WriteLine("5. Reporte - Por producto");
                 Console.WriteLine("6. Reporte - Por sucursal");
                 Console.WriteLine("7. Reporte - Cotización");
-                
-                
+
+
                 Console.WriteLine("******************************************************");
-                Console.WriteLine("8. Cerrar sesión");
+                Console.WriteLine("0. Cerrar sesión");
                 Console.WriteLine("");
 
 
@@ -64,9 +62,9 @@ public static class InteractiveManagerView
 
                         employeeUserController.Create(EmployeeUserCreationView.Menu());
 
-                        
 
-                        
+
+
                         break;
 
                     case 3:
@@ -127,7 +125,7 @@ public static class InteractiveManagerView
                         Console.WriteLine($"*                             REPORTE DE VENTAS POR SUCURSAL                                *");
 
                         totalEarned = 0.0;
-                        
+
 
                         Console.WriteLine($"*                            Tienda - Coyoacan                                               *");
                         var orderDetailsByShop = orderDetailController.IndexByShop(RetailShop.Coyoacan);
@@ -136,17 +134,32 @@ public static class InteractiveManagerView
                         {
                             Console.WriteLine(order);
                             totalEarned += order.Count * order.Price;
-
                         }
-                        
 
-                        Console.WriteLine($"Total de ventas............................                                    ${totalEarned}");
+
+                        Console.WriteLine($"Total de ventas............................                                      ${totalEarned}");
                         Console.WriteLine($"***********************************************************************************************");
                         break;
                     case 7:
 
-                        //var user = applicationUserController.Read(userId);
-                        //Console.Write(user);
+                        Console.WriteLine($"*********************************************************************************************");
+                        Console.WriteLine($"*                             REPORTE DE COTIZACIONES                                       *");
+
+                        totalEarned = 0.0;
+
+
+                        Console.WriteLine($"*                            Tienda - Coyoacan                                               *");
+                        var cotizaciones = cotizacionDetailController.Index();
+
+                        foreach (var cotizacion in cotizaciones)
+                        {
+                            Console.WriteLine(cotizacion);
+                            totalEarned += cotizacion.Count * cotizacion.Price;
+
+                        }
+
+                        Console.WriteLine($"Total de ventas esperadas............................                           ${totalEarned}*");
+                        Console.WriteLine($"***********************************************************************************************");
 
 
                         break;
@@ -157,11 +170,13 @@ public static class InteractiveManagerView
                         Console.WriteLine("Has elegido cerrar sesion");
                         salir = true;
                         break;
-                        
-                    case 9:
+
+                    case 0:
+                        Console.WriteLine("Has elegido regresar");
+                        salir = true;
                         break;
                     default:
-                        Console.WriteLine("Elige una opcion entre 1 y 9");
+                        Console.WriteLine("Elige una opcion del menu");
                         break;
                 }
 

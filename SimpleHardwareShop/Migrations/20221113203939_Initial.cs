@@ -101,6 +101,29 @@ namespace SimpleHardwareShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CotizacionDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Count = table.Column<int>(type: "INTEGER", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false),
+                    YaSeEnvioAlCliente = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CotizacionDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CotizacionDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCarts",
                 columns: table => new
                 {
@@ -194,9 +217,26 @@ namespace SimpleHardwareShop.Migrations
                 column: "CustomerUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUsers_Email",
+                table: "ApplicationUsers",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUsers_UserName",
+                table: "ApplicationUsers",
+                column: "UserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BankCards_CustomerUserId",
                 table: "BankCards",
                 column: "CustomerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CotizacionDetails_ProductId",
+                table: "CotizacionDetails",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderHeaderId",
@@ -238,6 +278,9 @@ namespace SimpleHardwareShop.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BankCards");
+
+            migrationBuilder.DropTable(
+                name: "CotizacionDetails");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

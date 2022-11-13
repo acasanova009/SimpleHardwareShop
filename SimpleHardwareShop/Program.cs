@@ -18,7 +18,7 @@ DataLoader.Load(db);
 
 //DataLoader.LoadOrdersHeaderAndDetails( db );    
 
-AuthenticationView.Menu(db);
+InteractiveAuthenticationView.Menu(db);
 
 
 

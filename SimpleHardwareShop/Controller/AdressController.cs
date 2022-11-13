@@ -19,13 +19,21 @@ namespace SimpleHardwareShop.Controller
             _db=db;
 
         }
-        public void Create(Adress adress)
+        public int Create(Adress adress)
         {
-            
-                _db.Adresses.Add(adress);
+
+            var trackingEntity =  _db.Adresses.Add(adress);
                 _db.SaveChanges();
 
-            
+
+            return trackingEntity.Entity.Id;
+
+        }
+
+        public void Remove(Adress adress)
+        {
+            _db.Remove(adress);
+            _db.SaveChanges();
         }
 
         public void Index(int applicationUserId)
@@ -36,6 +44,18 @@ namespace SimpleHardwareShop.Controller
 
 
             adresses.ForEach(s => Console.WriteLine(s));
+
+
+        }
+        public Adress Read(int userId, int adressId)
+        {
+            return  _db.Adresses
+                .Where(s => s.CustomerUserId == userId)
+                .Where(s => s.Id == adressId)
+                .Single();
+
+
+            
 
 
         }

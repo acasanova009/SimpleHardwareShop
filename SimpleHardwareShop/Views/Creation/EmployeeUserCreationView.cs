@@ -6,18 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleHardwareShop.Views
+namespace SimpleHardwareShop.Views.Creation
 {
     public static class EmployeeUserCreationView
-    { 
+    {
 
         public static EmployeeUser Menu()
         {
             EmployeeUser employee = new EmployeeUser();
 
-            
+
             Console.WriteLine("Ingresar Nombre de pila");
-            employee.Name = Console.ReadLine()?? "Nombre default";
+            employee.Name = Console.ReadLine() ?? "Nombre default";
 
             Console.WriteLine("Ingresar Apellido Paterno");
             employee.LastName = Console.ReadLine() ?? "Apellido P default";
@@ -37,16 +37,16 @@ namespace SimpleHardwareShop.Views
 
             employee.EmployeeType = EmployeeType.Employee;
 
-            
 
-           
+
+
             try
             {
                 Console.WriteLine("Tipo de emplado");
                 Console.WriteLine("1. Empleado normal");
                 Console.WriteLine("2. Gerente");
                 Console.WriteLine("3. CFO");
-                    
+
                 Console.WriteLine("Elige una de las opciones");
                 int opcion = Convert.ToInt32(Console.ReadLine());
 
@@ -66,7 +66,7 @@ namespace SimpleHardwareShop.Views
                         Console.WriteLine("Seleccion final es CFO");
                         employee.EmployeeType = EmployeeType.CFO;
                         break;
-                        
+
                     default:
                         employee.EmployeeType = EmployeeType.Employee;
                         Console.WriteLine("Se selecciono automaticamente Empleado normal");
@@ -78,7 +78,7 @@ namespace SimpleHardwareShop.Views
             {
                 Console.WriteLine(e.Message);
             }
-            
+
 
 
 

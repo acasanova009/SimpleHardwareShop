@@ -19,13 +19,17 @@ namespace SimpleHardwareShop.Controller
             _db=db;
 
         }
-        public void Create(BankCard bankCard)
+        public int Create(BankCard bankCard)
         {
-            
-                _db.BankCards.Add(bankCard);
-                _db.SaveChanges();
 
-            
+            var trackingEntity = _db.BankCards.Add(bankCard);
+                _db.SaveChanges();
+                              
+
+
+            return trackingEntity.Entity.Id;
+
+
         }
 
         public void Index(int applicationUserId)

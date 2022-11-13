@@ -126,6 +126,19 @@ namespace SimpleHardwareShop.Controller
 
         }
 
+        public void Update(int oldUserId, int newUserId)
+        {
+            var shoppingCartItems = _db.ShoppingCarts.Where(a => a.CustomerUserId == oldUserId).ToList();
+
+            foreach (var item in shoppingCartItems)
+            {
+                item.CustomerUserId = newUserId;
+
+            }
+            _db.UpdateRange(shoppingCartItems);
+            _db.SaveChanges();
+        }
+
 
 
 

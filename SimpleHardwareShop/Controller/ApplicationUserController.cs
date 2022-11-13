@@ -20,77 +20,35 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-      
-        public bool Create(ApplicationUser application)
+        public void Update(ApplicationUser application)
         {
-            
-            var users =  _db.ApplicationUsers.Where(a => a.UserName.Equals(application.UserName)|| a.Email.Equals(application.Email)).ToList();
-
-            if (users.Any())
-            {
-                return false;
-
-            }
-            else
-            {
-
-                _db.ApplicationUsers.Add(application);
-                _db.SaveChanges();
-                return true;
-            }
-
-
-
-
-
-
-
-                //var shoppingCarts = _db.ShoppingCarts
-                //.Where(s => s.ApplicationUserId == applicationUserId)
-                //.Include(p => p.Product)
-                //.ToList();
-
+            _db.ApplicationUsers.Update(application);
+            _db.SaveChanges();
         }
-        public CustomerUser?  Read(int userId)
+
+        public ApplicationUser Index(int userId)
         {
 
-            var user = _db.CustomerUsers
-                .Include(a => a.BankCards)
-                .Include(a => a.Adresses)
-                .FirstOrDefault(m=>userId==m.Id);
+            var user = _db.ApplicationUsers
+                .FirstOrDefault(m => userId == m.Id);
 
-            return user;
-            
-            //Console.Write(user);
-            
-            //Console.WriteLine("Querying for a blog");
-            //if (textFilter == null)
-            //{
+            return user!;
+        }
 
-            //    var products = _db.Products.Where(p =>
-            //    p.Stock > 0).ToList();
-            //    products.ForEach(p => Console.WriteLine(p));
-            //}
-            //else
-            //{
-            //    var products = _db.Products.Where(p =>
-            //        p.Price > 15000
-            //    p.Name.Contains(textFilter) ||
-            //    p.Description.Contains(textFilter) ||
-            //    p.Serie.Contains(textFilter) ||
-            //    p.Inventory.Contains(textFilter) ||
-            //    p.Price.ToString().Contains(textFilter)
+        public void Remove(int oldUserId)
+        {
+            var temporalUser = _db.ApplicationUsers.Where(a => a.Id == oldUserId).SingleOrDefault();
 
-            //    ).ToList();
-            //    products.ForEach(p => Console.WriteLine(p));
+            if (temporalUser != null)
+            {
+                _db.Remove(temporalUser);
 
-            //}
-
+            }
         }
 
 
 
-        
+
 
     }
 }

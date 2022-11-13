@@ -319,10 +319,10 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new CustomerUser
             {
                 Name = "Leo",
-                LastName = "Malo",
-                SecondLastName = "Alba",
+                LastName = "Herrera",
+                SecondLastName = "Garcia",
                 UserName = "Leo01",
-                Email = "uraeus@mac.com",
+                Email = "leo@mac.com",
                 Password = "123",
 
                 DefaultBankCardId = 1,
@@ -333,12 +333,12 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new CustomerUser
             {
-                Name = "Severo",
-                LastName = "Granados",
+                Name = "Diego",
+                LastName = "Hernandez",
                 SecondLastName = "Iglesia",
                 UserName = "Severo01",
-                Email = "bhima@me.com",
-                Password = "1234",
+                Email = "diego01@me.com",
+                Password = "123",
                 //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
@@ -347,12 +347,12 @@ namespace SimpleHardwareShop.Data.Loader
             });
             db.Add(new CustomerUser
             {
-                Name = "Matías Mauricio",
+                Name = "Matias",
                 LastName = "Castillo",
                 SecondLastName = "Barrera",
                 UserName = "Matias01",
-                Email = "tbeck@optonline.net",
-                Password = "1234",
+                Email = "matias01@prodigy.net",
+                Password = "123",
                 //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
@@ -365,8 +365,8 @@ namespace SimpleHardwareShop.Data.Loader
                 LastName = "Tapia",
                 SecondLastName = "Cabanillas",
                 UserName = "Victoriano01",
-                Email = "dleconte@outlook.com",
-                Password = "1234",
+                Email = "victoriano01@outlook.com",
+                Password = "123",
                 //UserType = UserType.Application,
                 //DeliveryAdressId =10,
                 //FiscalAdressId=10
@@ -388,11 +388,11 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new EmployeeUser
             {
-                Name = "Al",
-                LastName = "Tapia",
-                SecondLastName = "Cabanillas",
-                UserName = "Al",
-                Email = "dleconte@outlook.com",
+                Name = "Alfonso",
+                LastName = "Gonzalez",
+                SecondLastName = "Casanova",
+                UserName = "Alfonso01",
+                Email = "alfonso@hardware.com",
                 Password = "123",
 
                 RetailShop = RetailShop.HeadQuarters,
@@ -408,10 +408,10 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new EmployeeUser
             {
                 Name = "Pedro",
-                LastName = "Tapia",
-                SecondLastName = "Cabanillas",
-                UserName = "Pedro",
-                Email = "dleconte@outlook.com",
+                LastName = "Gonzalez",
+                SecondLastName = "Perez",
+                UserName = "Pedro01",
+                Email = "pedro01@outlook.com",
                 Password = "123",
 
                 RetailShop = RetailShop.PlazaDeLaTecnologia,
@@ -472,6 +472,17 @@ namespace SimpleHardwareShop.Data.Loader
                 PhoneNumber = "55 2445 4565",
 
                 PostalCode = 16507,
+                RFC = null
+
+            });
+
+            db.Add(new Adress
+            {
+                CustomerUserId = 3,
+                StreetAdress = "Pacifico 484",
+                PhoneNumber = "55 4848 5454",
+
+                PostalCode = 14007,
                 RFC = null
 
             });
@@ -542,6 +553,14 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new ShoppingCart
             {
                 ProductId = 5,
+                Count = 5,
+                CustomerUserId = 1,
+
+            });
+
+            db.Add(new ShoppingCart
+            {
+                ProductId = 12,
                 Count = 5,
                 CustomerUserId = 1,
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace SimpleHardwareShop.Models
 {
+
+    [Index(nameof(UserName), IsUnique = true)]
+    [Index(nameof(Email), IsUnique = true)]
     public abstract class ApplicationUser
     {
 
@@ -21,11 +25,13 @@ namespace SimpleHardwareShop.Models
         [Required]
 
         public string SecondLastName { get; set; }
+        
+        public string? UserName { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string? Email { get; set; }
         [Required]
-        public string Email { get; set; }
-        [Required]
+
+        [MinLength(6, ErrorMessage = "The password must be at least 8 characters long")]
         public string Password { get; set; }
 
        

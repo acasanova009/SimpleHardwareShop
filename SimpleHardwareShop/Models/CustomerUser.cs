@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ namespace SimpleHardwareShop.Models
 {
     public class CustomerUser : ApplicationUser
     {
-
+        //public bool  { get; set; }
         public int? DefaultBankCardId { get; set; }
 
         //[NotMapped]

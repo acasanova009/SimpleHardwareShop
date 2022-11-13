@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleHardwareShop.Views
+namespace SimpleHardwareShop.Views.Creation
 {
     public static class BankCardCretionView
-    { 
+    {
 
         public static BankCard Menu(int userId)
         {
@@ -22,8 +22,8 @@ namespace SimpleHardwareShop.Views
                 card.CustomerUserId = userId;
 
                 Console.WriteLine("Ingresar 16 digitos de TC/TD: SIN ESPACIOS. ");
-                
-                card.Account = Console.ReadLine()??"";
+
+                card.Account = Console.ReadLine() ?? "";
 
                 Console.WriteLine("Ingresar nombre de TC/TD ");
 
@@ -46,7 +46,7 @@ namespace SimpleHardwareShop.Views
                 Console.WriteLine("Wrong format in TC/TD");
 
             }
-                return card;
+            return card;
 
         }
     }

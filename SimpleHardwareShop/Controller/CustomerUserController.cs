@@ -16,7 +16,29 @@ namespace SimpleHardwareShop.Controller
 
         public CustomerUserController(HardwareShopContext db)
         {
-            _db=db;
+            _db = db;
+
+        }
+
+
+        public void Index(string textFilter = "")
+        {
+
+            var customerUsers = _db.CustomerUsers
+            .Where(p =>
+
+                p.Name.Contains(textFilter) ||
+                p.LastName.Contains(textFilter) ||
+                p.SecondLastName.Contains(textFilter) ||
+                p.UserName.Contains(textFilter) ||
+                p.Email.Contains(textFilter)
+
+                )
+            .ToList();
+
+            customerUsers.ForEach(p => Console.WriteLine(p));
+
+
 
         }
 
@@ -53,8 +75,9 @@ namespace SimpleHardwareShop.Controller
 
 
             var user = _db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
+            var bankCard = _db.BankCards.Where(a => a.CustomerUserId == userid).Where(a => a.Id == cardId).Single();
 
-            if (user is object)
+            if (user is object && bankCard is object)
             {
                 user.DefaultBankCardId = cardId;
 
@@ -78,8 +101,9 @@ namespace SimpleHardwareShop.Controller
 
 
             var user = _db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
+            var adress = _db.Adresses.Where(a => a.CustomerUserId == userid).Where(a => a.Id == adressId).Single();
 
-            if(user is object)
+            if (user is object && adress is object)
             {
                 user.DefaultDeliveryAdressId = adressId;
 
@@ -91,7 +115,7 @@ namespace SimpleHardwareShop.Controller
             {
                 Console.WriteLine("Error in database");
             }
-            
+
 
 
         }
@@ -102,9 +126,11 @@ namespace SimpleHardwareShop.Controller
 
 
             var user = _db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
+            var adress = _db.Adresses.Where(a => a.CustomerUserId == userid).Where(a => a.Id == adressId).Single();
 
-            if (user is object)
+            if (user is object && adress is object)
             {
+
                 user.DefaultFiscalAdressId = adressId;
 
                 _db.ApplicationUsers.Update(user);
@@ -120,10 +146,10 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public bool Create(ApplicationUser application)
+        public bool Create(CustomerUser customer)
         {
-            
-            var users =  _db.ApplicationUsers.Where(a => a.UserName.Equals(application.UserName)|| a.Email.Equals(application.Email)).ToList();
+
+            var users = _db.CustomerUsers.Where(a => a.UserName.Equals(customer.UserName) || a.Email.Equals(customer.Email)).ToList();
 
             if (users.Any())
             {
@@ -133,63 +159,42 @@ namespace SimpleHardwareShop.Controller
             else
             {
 
-                _db.ApplicationUsers.Add(application);
+                _db.CustomerUsers.Add(customer);
                 _db.SaveChanges();
                 return true;
             }
 
 
 
-
-
-
-
-                //var shoppingCarts = _db.ShoppingCarts
-                //.Where(s => s.ApplicationUserId == applicationUserId)
-                //.Include(p => p.Product)
-                //.ToList();
-
         }
-        public CustomerUser?  Read(int userId)
+
+        public int CreateTemporal(CustomerUser customer)
+        {
+
+            var trackingEntity = _db.CustomerUsers.Add(customer);
+
+            _db.SaveChanges();
+
+            return trackingEntity.Entity.Id;
+        }
+
+
+
+        public CustomerUser? Read(int userId)
         {
 
             var user = _db.CustomerUsers
                 .Include(a => a.BankCards)
                 .Include(a => a.Adresses)
-                .FirstOrDefault(m=>userId==m.Id);
+                .FirstOrDefault(m => userId == m.Id);
 
             return user;
-            
-            //Console.Write(user);
-            
-            //Console.WriteLine("Querying for a blog");
-            //if (textFilter == null)
-            //{
 
-            //    var products = _db.Products.Where(p =>
-            //    p.Stock > 0).ToList();
-            //    products.ForEach(p => Console.WriteLine(p));
-            //}
-            //else
-            //{
-            //    var products = _db.Products.Where(p =>
-            //        p.Price > 15000
-            //    p.Name.Contains(textFilter) ||
-            //    p.Description.Contains(textFilter) ||
-            //    p.Serie.Contains(textFilter) ||
-            //    p.Inventory.Contains(textFilter) ||
-            //    p.Price.ToString().Contains(textFilter)
-
-            //    ).ToList();
-            //    products.ForEach(p => Console.WriteLine(p));
-
-            //}
 
         }
 
-
-
-        
-
     }
+
+
+    
 }

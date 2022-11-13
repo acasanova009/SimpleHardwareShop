@@ -6,18 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleHardwareShop.Views
+namespace SimpleHardwareShop.Views.Creation
 {
     public static class CustomerUserCreationView
-    { 
+    {
 
-        public static CustomerUser Menu()
+        public static CustomerUser Menu(CustomerUser? customer= null)
         {
-            CustomerUser customer = new CustomerUser();
 
             
+            customer??= new CustomerUser();
+
+
             Console.WriteLine("Ingresar Nombre de pila");
-            customer.Name = Console.ReadLine()?? "Nombre default";
+            customer.Name = Console.ReadLine() ?? "Nombre default";
 
             Console.WriteLine("Ingresar Apellido Paterno");
             customer.LastName = Console.ReadLine() ?? "Apellido P default";
@@ -33,14 +35,9 @@ namespace SimpleHardwareShop.Views
             customer.Email = Console.ReadLine() ?? "correo@gmail.com";
 
             Console.WriteLine("Ingresar contraseña");
-            customer.Password = Console.ReadLine() ?? "123";
+            customer.Password = Console.ReadLine() ?? "12345678";
 
-            //customer.UserType = EmployeeUser.Application;
-
-            //customer.AdressId = 1;
-            //customer.FiscalAdressId = 1;
-            //customer.RFC = "my favorite RFC";
-
+          
 
 
             return customer;

@@ -13,8 +13,9 @@ namespace SimpleHardwareShop
         public static async Task WriteText(string a)
         {
             string text =
-                "A class is the most powerful data type in C#. Like a structure, " +
-                "a class defines the data and behavior of the data type. ";
+                "Cotizacion Final:" +
+                //"a class defines the data and behavior of the data type. "+
+                a;
 
             await File.WriteAllTextAsync("WriteText.txt", text);
         }

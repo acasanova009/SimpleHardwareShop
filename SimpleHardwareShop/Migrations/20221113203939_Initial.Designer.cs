@@ -11,7 +11,7 @@ using SimpleHardwareShop.Data;
 namespace SimpleHardwareShop.Migrations
 {
     [DbContext(typeof(HardwareShopContext))]
-    [Migration("20221113145122_Initial")]
+    [Migration("20221113203939_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,6 +88,12 @@ namespace SimpleHardwareShop.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
                     b.ToTable("ApplicationUsers");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
@@ -120,6 +126,34 @@ namespace SimpleHardwareShop.Migrations
                     b.HasIndex("CustomerUserId");
 
                     b.ToTable("BankCards");
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.CotizacionDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("YaSeEnvioAlCliente")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CotizacionDetails");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.OrderDetail", b =>
@@ -286,6 +320,17 @@ namespace SimpleHardwareShop.Migrations
                         .HasForeignKey("CustomerUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.CotizacionDetail", b =>
+                {
+                    b.HasOne("SimpleHardwareShop.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.OrderDetail", b =>

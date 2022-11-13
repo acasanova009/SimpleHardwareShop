@@ -31,8 +31,13 @@ namespace SimpleHardwareShop.Models
         {
 
             //return "PRODUCT: " + " Id: " + Id+ Name + " Price:" + Price + " Stock:" + Stock + " RetailShop:" + RetailShop + " Serie:" + Serie;
-            return $"[Product]: Id:{Id} ${Price}   {Name}  Tienda: {RetailShop} Cantidad disponible:{Stock}";
+            return $"[Producto]: Id:{Id} ${Price} Tienda: {RetailShop}  Stock:{Stock}/{DefaultStock} ******* {Name} ------------------Detalles: {Description} ";
             //return "PRODUCT " + "Name: " + Name ;
+        }
+
+        public string ToStringMin()
+        {
+            return $"[Producto]: Id:{Id} ${Price} Tienda: {RetailShop}   {Name}";
         }
 
 
