@@ -93,7 +93,7 @@ public static class InteractiveOrderHeaderView
                         var user = customerUserController.Read(userId);
 
 
-                        Console.WriteLine(user);
+                        Console.WriteLine(user.ToStringResumenCompras());
                         Console.WriteLine($"+-------------------------------------------------------------------------------------------------------------------------+");
                         Console.WriteLine($"+                                  Ariticulos por comprar                                                                 +");
 
@@ -187,6 +187,8 @@ public static class InteractiveOrderHeaderView
                             orderHeaderController.Save();
 
                             
+                            shoppingCart = shoppingCartController.Index(userId);
+
                             shoppingCartController.Remove(userId);
 
 
@@ -194,7 +196,6 @@ public static class InteractiveOrderHeaderView
                             Console.WriteLine($"*                                   COMPRA EXITOSA                                                                        *");
                            
 
-                             shoppingCart = shoppingCartController.Index(userId);
                              total = 0.0;
 
                             if (shoppingCart is object)

@@ -87,7 +87,7 @@ namespace SimpleHardwareShop.Controller
             }
             else
             {
-                Console.WriteLine("Error in database");
+                Console.WriteLine("Id de tarjeta bancaria no existe");
             }
 
 
@@ -113,7 +113,7 @@ namespace SimpleHardwareShop.Controller
             }
             else
             {
-                Console.WriteLine("Error in database");
+                Console.WriteLine("Id de direccion no existe");
             }
 
 
@@ -139,7 +139,7 @@ namespace SimpleHardwareShop.Controller
             }
             else
             {
-                Console.WriteLine("Error in database");
+                Console.WriteLine("Id de direccion no existe");
             }
 
 
@@ -168,14 +168,26 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public int CreateTemporal(CustomerUser customer)
+        public int CreateTemporal(CustomerUser newCustomerTemporal)
         {
+            var customerAlready = _db.CustomerUsers.Where(a=>a.UserName== newCustomerTemporal.UserName).SingleOrDefault();
+            var customerId = 0;
+            if (customerAlready == null)
+            {
 
-            var trackingEntity = _db.CustomerUsers.Add(customer);
 
-            _db.SaveChanges();
+                var trackingEntity = _db.CustomerUsers.Add(newCustomerTemporal);
+                _db.SaveChanges();
+                customerId = trackingEntity.Entity.Id;
+            }
+            else
+            {
+                customerId = customerAlready.Id;
+            }
+           
 
-            return trackingEntity.Entity.Id;
+
+            return customerId;
         }
 
 

@@ -18,31 +18,50 @@ namespace SimpleHardwareShop.Views.Creation
 
             try
             {
-
-                card.CustomerUserId = userId;
-
-                Console.WriteLine("Ingresar 16 digitos de TC/TD: SIN ESPACIOS. ");
-
-                card.Account = Console.ReadLine() ?? "";
-
                 Console.WriteLine("Ingresar nombre de TC/TD ");
 
                 card.Name = Console.ReadLine() ?? "";
 
+                card.CustomerUserId = userId;
+
+
+                card.Account = "";
+                while (card.Account.Length != 16)
+                {
+
+                    Console.WriteLine("Ingresar 16 digitos de TC/TD:  ");
+                    card.Account = Console.ReadLine() ?? "";
+                    card.Account = card.Account.Replace(" ", "");
+
+                }
+
+
+
+
                 Console.WriteLine("Ingresar año de vencimiento eg. 2024.");
                 int year = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Ingresar mes de vencimiento eg. 08.");
+                Console.WriteLine("Ingresar mes de vencimiento para sep eg. 9.");
                 int month = Convert.ToInt32(Console.ReadLine());
 
-                card.ExpirationDate = new DateTime(1, month, year);
+                card.ExpirationDate = new DateTime(year, month, 1);
 
-                Console.WriteLine("Ingresar codigo de seguridad");
-                card.SecurityCode = Convert.ToInt32(Console.ReadLine());
+
+                card.SecurityCode = "";
+                while (card.SecurityCode.Length != 3)
+                {
+
+                    Console.WriteLine("Ingresar codigo de seguridad");
+                    card.SecurityCode = Console.ReadLine() ?? "";
+                    card.SecurityCode = card.SecurityCode.Replace(" ", "");
+
+                }
 
 
             }
             catch (Exception ex)
             {
+
+                Console.WriteLine(ex.Message);
                 Console.WriteLine("Wrong format in TC/TD");
 
             }

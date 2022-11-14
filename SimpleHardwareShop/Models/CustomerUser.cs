@@ -32,9 +32,19 @@ namespace SimpleHardwareShop.Models
         public ICollection<OrderHeader>? OrderHeaders { get; set; }
 
 
-        public override string ToString()
+        public string ToStringResumenCompras()
         {
-            var basicInfo = $"[Application User] Id:{Id} Name: {Name} UserName:{UserName}";
+            //Call in resumen de compras.
+            var basicInfo = $"[Application User] Id:{Id} NombreUsuario:{UserName}";
+            basicInfo += "\n";
+            basicInfo += $"Nombre:           {Name}";
+            basicInfo += "\n";
+            basicInfo += $"Apellido Paterno: {LastName}";
+            basicInfo += "\n";
+            basicInfo += $"Apellido Materno: {SecondLastName}";
+            basicInfo += "\n";
+            basicInfo += $"Correo:           {Email}";
+
 
 
 
@@ -48,17 +58,23 @@ namespace SimpleHardwareShop.Models
                 {
                     if (card.Id == DefaultBankCardId)
                     {
-                        basicInfo += $"\n TC/TD: {card.ToString()} ";
+                        basicInfo += $"\n Default Bank Card: {card.ToString()} ";
 
                     }
-                    else
-                    {
-                        basicInfo += card.ToString();
+                    //else
+                    //{
+                    //    basicInfo += card.ToString();
 
-                        basicInfo += "\n";
-                    }
+                    //    basicInfo += "\n";
+                    //}
                 }
             }
+            else
+            {
+                basicInfo += "No hay tarjetas de credito registradas.";
+            }
+            basicInfo += "\n";
+            basicInfo += "\n";
             if (Adresses is object)
             {
 
@@ -76,6 +92,88 @@ namespace SimpleHardwareShop.Models
                         basicInfo += $"\n Direccion de facutracion: {a.ToString()} ";
                     }
 
+
+                    //basicInfo += a.ToString();
+
+
+
+                }
+                basicInfo += "\n";
+            }
+            else
+            {
+                basicInfo += "No hay direcciones registradas.";
+            }
+
+            return basicInfo;
+        }
+
+        public override string ToString()
+        {
+            //Call in resumen de compras.
+           
+            var basicInfo = $"[Application User] Id:{Id} NombreUsuario:{UserName}";
+            basicInfo += "\n";
+            basicInfo += $"Nombre:           {Name}";
+            basicInfo += "\n";
+            basicInfo += $"Apellido Paterno: {LastName}";
+            basicInfo += "\n";
+            basicInfo += $"Apellido Materno: {SecondLastName}";
+            basicInfo += "\n";
+            basicInfo += $"Correo:           {Email}";
+
+            basicInfo += "\n";
+
+
+            basicInfo += "\n";
+
+            if (BankCards is object)
+            {
+
+                basicInfo += "Tarjetas de credito/debito:";
+                basicInfo += "\n";
+
+                foreach (var card in BankCards)
+                {
+                    if (card.Id == DefaultBankCardId)
+                    {
+                        basicInfo += $"\n Default Bank Card: {card.ToString()} ";
+
+                    }
+                    else
+                    {
+                        basicInfo += $"\n Otras Bank Card: {card.ToString()} ";
+                    }
+                    
+                }
+            }
+           
+            basicInfo += "\n";
+            
+            basicInfo += "\n";
+            if (Adresses is object)
+            {
+
+                basicInfo += "Direcciones registradas:";
+                basicInfo += "\n";
+                foreach (var a in Adresses)
+                {
+
+                    if (a.Id == DefaultDeliveryAdressId)
+                    {
+                        basicInfo += $"\n Direccion de envio default: {a.ToString()} ";
+
+                    }else 
+
+                    if (a.Id == DefaultFiscalAdressId)
+                    {
+                        basicInfo += $"\n Direccion de facutracion default: {a.ToString()} ";
+                    }
+                    else
+                    {
+                        basicInfo += $"\n Otras direcciones: {a.ToString()} ";
+                    }
+                    
 
                     //basicInfo += a.ToString();
 

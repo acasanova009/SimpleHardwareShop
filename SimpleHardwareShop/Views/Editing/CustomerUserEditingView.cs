@@ -83,10 +83,18 @@ public static class CustomerUserEditingView
                 {
                     case 1:
 
-                        adressController.Index(userId);
+                        var direcciones = adressController.Index(userId);
+                        if (direcciones is object &&  direcciones.Count > 0)
+                        {
+                            direcciones.ForEach(s => Console.WriteLine(s));
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay direcciones registradas.");
+                        }
 
 
-                        
 
 
                         break;
@@ -167,6 +175,10 @@ public static class CustomerUserEditingView
                                 adressController.Remove(adressToRemove);
 
                             }
+                            else
+                            {
+                                Console.WriteLine("Direccion de envio no existe, ingresar Id correcto");
+                            }
 
 
                         }
@@ -179,13 +191,24 @@ public static class CustomerUserEditingView
                         break;
                     case 6:
 
-                        bankCardController.Index(userId);
+                        var bankCards = bankCardController.Index(userId);
+                        if (bankCards is object  && bankCards.Count > 0)
+                        {
+                            bankCards.ForEach(s => Console.WriteLine(s));
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay tarjetas de credito registradas.");
+
+                        }
 
                         break;
                     case 7:
 
 
-                        bankCardController.Create(BankCardCretionView.Menu(userId));
+                        var bankId = bankCardController.Create(BankCardCretionView.Menu(userId));
+                        customer!.DefaultBankCardId = bankId;
+                        applicationUserController.Update(customer);
                         
 
 

@@ -36,14 +36,12 @@ namespace SimpleHardwareShop.Controller
             _db.SaveChanges();
         }
 
-        public void Index(int applicationUserId)
+        public List<Adress> Index(int applicationUserId)
         {
-            var adresses = _db.Adresses
-                .Where(s => s.CustomerUserId == applicationUserId)
-                .ToList();
+            var addresse  = _db.Adresses.Where(s => s.CustomerUserId == applicationUserId).ToList();
+            return addresse;
 
-
-            adresses.ForEach(s => Console.WriteLine(s));
+            
 
 
         }

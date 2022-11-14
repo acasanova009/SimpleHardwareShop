@@ -38,7 +38,7 @@ namespace SimpleHardwareShop.Models
             if(OrderDetails != null)
             foreach (var orderDetail in OrderDetails)
             {
-                    top += $"\n {orderDetail}";
+                    top += $"\n {orderDetail.ToStringComprasAnteriores()}";
 
             }
             top += $"\n  Total:............. ${OrderTotal}";

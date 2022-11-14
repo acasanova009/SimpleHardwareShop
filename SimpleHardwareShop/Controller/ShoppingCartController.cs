@@ -42,7 +42,7 @@ namespace SimpleHardwareShop.Controller
                .ToList();
 
 
-            shoppingCarts.ForEach(s => Console.WriteLine(s));
+            //shoppingCarts.ForEach(s => Console.WriteLine(s));
 
             foreach (var item in shoppingCarts)
             {

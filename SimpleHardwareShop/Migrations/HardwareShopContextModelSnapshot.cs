@@ -81,7 +81,6 @@ namespace SimpleHardwareShop.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -116,8 +115,9 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SecurityCode")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SecurityCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

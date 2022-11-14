@@ -1,4 +1,5 @@
-﻿using SimpleHardwareShop.Controller;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using SimpleHardwareShop.Controller;
 using SimpleHardwareShop.Data;
 using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views.Creation;
@@ -11,7 +12,86 @@ public static class InteractiveCustomerView
 
     
   
+    public static int CurrentOrNewUserOrLogin(ShoppingCartController shoppingCartController, ApplicationUserController applicationUserController,  CustomerUserController customerUserController, int userId, HardwareShopContext db)
+    {
+        CustomerUser? userr = customerUserController.Read(userId);
+        if (userr!.UserName == null)
+        {
+            try
+            {
+                Console.WriteLine("Ya tiene cuenta registrada? Escribir 1.");
+                Console.WriteLine("1. Si, deseo ingresar a mi cuenta.");
+                Console.WriteLine("2. Soy nuevo cliente, quiero registrarme.");
 
+                Console.WriteLine("Elige una de las opciones");
+                var anotherOption = Convert.ToInt32(Console.ReadLine());
+
+                if (anotherOption == 1)
+                {
+
+                    CustomerUser? customerUser = null;
+                    while (customerUser is not object)
+                    {
+                        customerUser = InteractiveAuthenticationView.AuthenticateCustomerUser(db, customerUserController);
+                        
+                        
+                        if(customerUser is object)
+                        {
+
+                            shoppingCartController.Update(userId, customerUser.Id);
+                            applicationUserController.Remove(userId);
+                            userId= customerUser.Id;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Credenciales incorrectas, intentar de nuevo");
+                            Console.WriteLine("-------------------------------------------------");
+                            Console.WriteLine("Desea seguir intentando?");
+                            Console.WriteLine("1. Si. deseo ingresar a mi cuenta.");
+                            Console.WriteLine("2. No recuerdo mis datos, quiero hacer un nuevo usuario.");
+
+                            Console.WriteLine("Elige una de las opciones");
+                            var option = Convert.ToInt32(Console.ReadLine());
+                            if (option!=1)
+                            {
+
+                                //CHICLE
+                                Console.WriteLine("Para continuar a la compra, tienes que registrarte");
+                                var customer = CustomerUserCreationView.Menu(userr);
+                                applicationUserController.Update(customer);
+                                break;
+
+                            }
+
+                        }
+
+
+                    }
+
+
+                }
+                else
+
+                {
+                    Console.WriteLine("Para continuar a la compra, tienes que registrarte");
+                    var customer = CustomerUserCreationView.Menu(userr);
+                    applicationUserController.Update(customer);
+                }
+
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+                
+            }
+
+
+
+
+        }
+
+        return userId;
+    }
     public static void Menu(HardwareShopContext db, int userId)
 	{
         
@@ -98,6 +178,8 @@ public static class InteractiveCustomerView
                         var total = 0.0;
                         if(shoppingCarts.Count>0)
                         {
+                            Console.WriteLine("Carrito de compras contiene:");
+                            Console.WriteLine();
 
                             foreach (var item in shoppingCarts)
                             {
@@ -113,7 +195,7 @@ public static class InteractiveCustomerView
                         }
                         else
                         {
-                            Console.WriteLine("No items in cart.");
+                            Console.WriteLine("No hay artículos en el carrito.");
                         }
 
 
@@ -121,64 +203,8 @@ public static class InteractiveCustomerView
                         break;
                     case 5:
 
-                        var userr = customerUserController.Read(userId);
-                        if (userr!.UserName == null)
-                        {
-                           
+                        userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
 
-                            
-
-                            try
-                            {
-                                Console.WriteLine("Ya tiene cuenta registrada? Escribir 1.");
-                                Console.WriteLine("1. Si, deseo ingresar a mi cuenta.");
-                                Console.WriteLine("2. No, quiero registrarme.");
-
-                                Console.WriteLine("Elige una de las opciones");
-                                var anotherOption = Convert.ToInt32(Console.ReadLine());
-
-                                if (anotherOption != 1)
-                                {
-                                    Console.WriteLine("Para continuar a la compra, tienes que registrarte");
-                                    var customer = CustomerUserCreationView.Menu(userr);
-                                    applicationUserController.Update(customer);
-                                }
-                                else
-                                {
-                                    var customerUser = InteractiveAuthenticationView.AuthenticateCustomerUser(db, customerUserController);
-
-                                    
-                                    if (customerUser is object)
-                                    {
-                                        //userId = customerUser.Id;
-
-                                        shoppingCartController.Update(userId, customerUser.Id);
-                                        applicationUserController.Remove(userId);
-
-
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Correo, nombre de usuario o contaseña incorrectas");
-                                        break;
-
-                                    }
-
-
-                                }
-
-
-
-                            catch (FormatException e)
-                            {
-                                Console.WriteLine(e.Message);
-                                break;
-                            }
-                            
-
-                            
-
-                        }
 
                         if (shoppingCartController.VerifyAvailableContents(userId))
                         {
@@ -190,7 +216,7 @@ public static class InteractiveCustomerView
                         else
                         {
                             Console.WriteLine("No hay productos en el carro.");
-                            Console.WriteLine("o No el carrito contiene mayor cantidad de la ofertada.");
+                            Console.WriteLine("o el carrito contiene mayor cantidad de la ofertada.");
                         }
 
 
@@ -198,8 +224,9 @@ public static class InteractiveCustomerView
 
                         break;
                     case 6:
+                        userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
 
-                        
+
                         var currentShoppingCartList = shoppingCartController.Index(userId);
 
                         if (currentShoppingCartList is object)
@@ -221,15 +248,23 @@ public static class InteractiveCustomerView
 
                         break;
                     case 7:
+                        userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
 
                         var user = customerUserController.Read(userId);
                         Console.Write(user);
 
                         break;
                     case 8:
+                         userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
 
-                        orderHeaderController.Index(userId);
-                                                
+
+                        var orderHeaders = orderHeaderController.Index(userId);
+
+                        orderHeaders.ForEach(orderH => Console.WriteLine(orderH));
+
+                        break;
+                    case 9:
+                        userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
                         break;
                     case 0:
                         Console.WriteLine("Has elegido regresar");

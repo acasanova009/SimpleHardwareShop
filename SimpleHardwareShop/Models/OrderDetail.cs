@@ -28,6 +28,10 @@ namespace SimpleHardwareShop.Models
         {
             return "OrderDetail: " + " OrderId:" + OrderHeaderId + " Product:" + Product + " Count:" + Count + " Price:" + Price;
         }
+        public string ToStringComprasAnteriores()
+        {
+            return "OrderDetail:  Product:" + Product.Name + " Count:" + Count + " Price:" + Price;
+        }
         public static OrderDetail Create(int orderHeaderId, int productId, int count, double price)
         {
             OrderDetail orderDetail = new OrderDetail

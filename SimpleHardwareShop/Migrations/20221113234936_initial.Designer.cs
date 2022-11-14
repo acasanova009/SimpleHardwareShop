@@ -11,8 +11,8 @@ using SimpleHardwareShop.Data;
 namespace SimpleHardwareShop.Migrations
 {
     [DbContext(typeof(HardwareShopContext))]
-    [Migration("20221113203939_Initial")]
-    partial class Initial
+    [Migration("20221113234936_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,7 +83,6 @@ namespace SimpleHardwareShop.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -118,8 +117,9 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SecurityCode")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SecurityCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

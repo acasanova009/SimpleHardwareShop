@@ -32,14 +32,14 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public void Index(int applicationUserId)
+        public List<BankCard> Index(int applicationUserId)
         {
             var adresses = _db.BankCards
                 .Where(s => s.CustomerUserId == applicationUserId)
                 .ToList();
+            return adresses;
 
-
-            adresses.ForEach(s => Console.WriteLine(s));
+            
 
 
         }

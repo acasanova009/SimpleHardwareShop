@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleHardwareShop.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace SimpleHardwareShop.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     SecondLastName = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
@@ -87,7 +87,7 @@ namespace SimpleHardwareShop.Migrations
                     CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false),
                     Account = table.Column<string>(type: "TEXT", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    SecurityCode = table.Column<int>(type: "INTEGER", nullable: false)
+                    SecurityCode = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -21,7 +21,7 @@ namespace SimpleHardwareShop.Controller
             _db=db;
 
         }
-        public void Index(int userId)
+        public List<OrderHeader> Index(int userId)
         {
             var  includableQueryable = _db.OrderHeaders
                                 .Where(e => e.CustomerUserId == userId)
@@ -37,7 +37,9 @@ namespace SimpleHardwareShop.Controller
             //.FirstOrDefaultAsync(m => m.ID == id);
             //OrderBy(e => e.Id == userId).
 
-            orders.ForEach(p => Console.WriteLine(p));
+            return orders;
+
+          
 
             //Console.WriteLine(orders);
 

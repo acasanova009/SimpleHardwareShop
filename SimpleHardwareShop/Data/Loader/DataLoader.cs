@@ -508,7 +508,7 @@ namespace SimpleHardwareShop.Data.Loader
                 CustomerUserId = 1,
                 Account = "4565184598654859",
                 ExpirationDate = new DateTime(2025, 01, 01),
-                SecurityCode = 542
+                SecurityCode = "422"
 
             });
 
@@ -518,7 +518,7 @@ namespace SimpleHardwareShop.Data.Loader
                 CustomerUserId = 2,
                 Account = "4584156418594852",
                 ExpirationDate = new DateTime(2027, 01, 01),
-                SecurityCode = 976
+                SecurityCode = "987"
 
             });
 
@@ -528,7 +528,7 @@ namespace SimpleHardwareShop.Data.Loader
                 CustomerUserId = 3,
                 Account = "5849145625894785",
                 ExpirationDate = new DateTime(2024, 09, 05),
-                SecurityCode = 116
+                SecurityCode = "223"
 
             });
 

@@ -31,7 +31,7 @@ namespace SimpleHardwareShop.Models
         public string? Email { get; set; }
         [Required]
 
-        [MinLength(6, ErrorMessage = "The password must be at least 8 characters long")]
+        [MinLength(8, ErrorMessage = "The password must be at least 8 characters long")]
         public string Password { get; set; }
 
        

@@ -21,8 +21,8 @@ namespace SimpleHardwareShop.Models
         public DateTime ExpirationDate { get; set; }
 
         //public int Year { get; set; }
+        public string SecurityCode { get; set; }
 
-        public int SecurityCode { get; set; }
 
         public override string ToString()
         {
