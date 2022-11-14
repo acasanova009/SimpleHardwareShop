@@ -25,6 +25,7 @@ public static class CustomerUserEditingView
 
     public static void Menu(HardwareShopContext db,int userId)
 	{
+        Console.Clear();
         //_db = db;
         var productController = new ProductController(db);
         //var _shoppingCartController = new ShoppingCartController(db);
@@ -238,6 +239,7 @@ public static class CustomerUserEditingView
 
 
                     case 0:
+                        Console.Clear();
                         Console.WriteLine("Has elegido regresar");
                         salir = true;
                         break;

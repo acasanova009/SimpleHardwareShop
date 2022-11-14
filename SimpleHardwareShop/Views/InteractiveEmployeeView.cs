@@ -11,6 +11,8 @@ public static class InteractiveEmployeeView
 
     public static void Menu(HardwareShopContext db, int userId)
     {
+
+        Console.Clear();
         //var employeeUserController = new EmployeeUserController(db);
         //var productController = new ProductController(db);
 
@@ -51,6 +53,7 @@ public static class InteractiveEmployeeView
                 Console.WriteLine("Elige una de las opciones");
                 int opcion = Convert.ToInt32(Console.ReadLine());
 
+                Console.Clear();
                 switch (opcion)
                 {
                     case 1:
@@ -203,6 +206,8 @@ public static class InteractiveEmployeeView
                         break;
 
                     case 0:
+
+                        Console.Clear();
                         Console.WriteLine("Has elegido regresar");
                         salir = true;
                         break;

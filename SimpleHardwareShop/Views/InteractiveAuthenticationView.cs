@@ -54,6 +54,8 @@ public static class InteractiveAuthenticationView
                 Console.WriteLine("Elige una de las opciones");
                 int opcion = Convert.ToInt32(Console.ReadLine());
 
+                Console.Clear();
+                Console.WriteLine("Loading...");
                 switch (opcion)
                 {
                     case 1:
@@ -62,13 +64,13 @@ public static class InteractiveAuthenticationView
                             Name = "Usuario no registrado",
                             LastName = "",
                             SecondLastName = "",
-                            //UserName = "",
+                            UserName = "default01",
                             Email = "default@mail.com",
                             Password = "12345678",
                         };
 
                         var temporalId = customerUserController.CreateTemporal(temporalUser);
-
+                       
                         InteractiveCustomerView.Menu(db, temporalId);
 
                         break;
@@ -79,7 +81,7 @@ public static class InteractiveAuthenticationView
 
                         if (customerUser is object)
                         {
-
+                          
                             InteractiveCustomerView.Menu(db, customerUser.Id);
 
                         }
@@ -115,11 +117,12 @@ public static class InteractiveAuthenticationView
                             {
                                 case EmployeeType.Manager:
 
-
+                                   
                                     InteractiveManagerView.Menu(db, employeeUser.Id);
                                     break;
                                 case EmployeeType.Employee:
 
+                                    
                                     InteractiveEmployeeView.Menu(db, employeeUser.Id);
 
 
@@ -141,7 +144,8 @@ public static class InteractiveAuthenticationView
                     
                    
                     case 0:
-                        Console.WriteLine("Has elegido regresar");
+                        Console.Clear();
+                        Console.WriteLine("Has elegido salir de la aplicacion");
                         salir = true;
                         break;
                     default:
@@ -167,7 +171,7 @@ public static class InteractiveAuthenticationView
             }
             else
             {
-                Console.WriteLine("Usuario ya existe");
+                Console.WriteLine("Usuario ya existe, porfavor ingresr con su cuenta.");
 
             }
         }

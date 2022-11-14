@@ -85,30 +85,7 @@ namespace SimpleHardwareShop.Controller
 
             return user;
             
-            //Console.Write(user);
-            
-            //Console.WriteLine("Querying for a blog");
-            //if (textFilter == null)
-            //{
-
-            //    var products = _db.Products.Where(p =>
-            //    p.Stock > 0).ToList();
-            //    products.ForEach(p => Console.WriteLine(p));
-            //}
-            //else
-            //{
-            //    var products = _db.Products.Where(p =>
-            //        p.Price > 15000
-            //    p.Name.Contains(textFilter) ||
-            //    p.Description.Contains(textFilter) ||
-            //    p.Serie.Contains(textFilter) ||
-            //    p.Inventory.Contains(textFilter) ||
-            //    p.Price.ToString().Contains(textFilter)
-
-            //    ).ToList();
-            //    products.ForEach(p => Console.WriteLine(p));
-
-            //}
+         
 
         }
 

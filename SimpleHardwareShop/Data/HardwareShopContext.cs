@@ -21,23 +21,6 @@ namespace SimpleHardwareShop.Data
             var path = Environment.GetFolderPath(folder);
             DbPath = System.IO.Path.Join(path, database);
         }
-        //protected HardwareShopContext()
-        //{
-        //}
-        //public static HardwareShopContext Instance()
-        //{
-        //    Uses lazy initialization.
-        //    Note: this is not thread safe.
-        //    if (_instance == null)
-        //    {
-        //        var folder = Environment.SpecialFolder.LocalApplicationData;
-        //        var path = Environment.GetFolderPath(folder);
-        //        _instance = new HardwareShopContext();
-
-        //        _instance.DbPath = System.IO.Path.Join(path, database);
-        //    }
-        //    return _instance;
-        //}
 
         static string database = "HardwareShopDatabase.db";
 

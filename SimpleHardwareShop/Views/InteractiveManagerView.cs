@@ -11,6 +11,7 @@ public static class InteractiveManagerView
 
     public static void Menu(HardwareShopContext db, int userId)
     {
+        Console.Clear();
         var employeeUserController = new EmployeeUserController(db);
         var productController = new ProductController(db);
 
@@ -48,6 +49,7 @@ public static class InteractiveManagerView
 
                 Console.WriteLine("Elige una de las opciones");
                 int opcion = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
 
                 switch (opcion)
                 {
@@ -163,16 +165,18 @@ public static class InteractiveManagerView
 
 
                         break;
-                    case 8:
+                    //case 8:
 
-                        //orderHeaderController.Index(userId);
+                    //    //orderHeaderController.Index(userId);
 
-                        Console.WriteLine("Has elegido cerrar sesion");
-                        salir = true;
-                        break;
+                    //    Console.WriteLine("Has elegido cerrar sesion");
+                    //    salir = true;
+                    //    break;
 
                     case 0:
+                        Console.Clear();
                         Console.WriteLine("Has elegido regresar");
+
                         salir = true;
                         break;
                     default:
