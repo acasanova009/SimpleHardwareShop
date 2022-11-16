@@ -16,14 +16,23 @@ namespace SimpleHardwareShop.Views
 
         
 
-        public static Adress Create(int userId, bool isFiscalAdress = false)
+        public static Adress Create(int userId, bool isFiscalAdress = false, bool isCustomerAdress= true)
         {
-            Adress card = new Adress();
+            Adress card = new();
 
             try
             {
 
-                card.CustomerUserId = userId;
+                if (isCustomerAdress)
+                {
+                    card.CustomerUserId = userId;
+
+                }
+                else
+                {
+
+                    card.EmployeeUserId = userId;
+                }
 
                 Console.WriteLine("Ingresar dirección. Calle y número. ");
 
@@ -55,7 +64,7 @@ namespace SimpleHardwareShop.Views
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Wrong format in Adress creation");
+                Console.WriteLine("Wrong format in Adress creation " + ex.ToString());
 
             }
             return card;

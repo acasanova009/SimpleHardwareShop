@@ -45,6 +45,16 @@ namespace SimpleHardwareShop.Controller
 
 
         }
+
+        public List<Adress> IndexEmployee(int applicationUserId)
+        {
+            var addresse = _db.Adresses.Where(s => s.EmployeeUserId == applicationUserId).ToList();
+            return addresse;
+
+
+
+
+        }
         public Adress Read(int userId, int adressId)
         {
             return  _db.Adresses
@@ -52,11 +62,9 @@ namespace SimpleHardwareShop.Controller
                 .Where(s => s.Id == adressId)
                 .Single();
 
-
-            
-
-
         }
+
+
 
     }
 }

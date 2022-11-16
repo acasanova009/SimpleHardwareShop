@@ -23,9 +23,11 @@ namespace SimpleHardwareShop.Controller
         }
         public List<OrderHeader> Index(int userId)
         {
-            var  includableQueryable = _db.OrderHeaders
+            var includableQueryable = _db.OrderHeaders
                                 .Where(e => e.CustomerUserId == userId)
                                 .Include(e => e.OrderDetails);
+                                
+
             var orders = includableQueryable
                     .ThenInclude(m => m.Product).AsNoTracking().ToList();
             //;

@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleHardwareShop.Migrations
 {
+    /// <inheritdoc />
     public partial class initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -18,7 +20,7 @@ namespace SimpleHardwareShop.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     SecondLastName = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
@@ -26,7 +28,8 @@ namespace SimpleHardwareShop.Migrations
                     DefaultDeliveryAdressId = table.Column<int>(type: "INTEGER", nullable: true),
                     DefaultFiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true),
                     RetailShop = table.Column<int>(type: "INTEGER", nullable: true),
-                    EmployeeType = table.Column<int>(type: "INTEGER", nullable: true)
+                    EmployeeType = table.Column<int>(type: "INTEGER", nullable: true),
+                    EmployeeAdressId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,7 +62,8 @@ namespace SimpleHardwareShop.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EmployeeUserId = table.Column<int>(type: "INTEGER", nullable: true),
                     StreetAdress = table.Column<string>(type: "TEXT", nullable: false),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
                     AdditionalInformation = table.Column<string>(type: "TEXT", nullable: true),
@@ -73,8 +77,12 @@ namespace SimpleHardwareShop.Migrations
                         name: "FK_Adresses_ApplicationUsers_CustomerUserId",
                         column: x => x.CustomerUserId,
                         principalTable: "ApplicationUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Adresses_ApplicationUsers_EmployeeUserId",
+                        column: x => x.EmployeeUserId,
+                        principalTable: "ApplicationUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -110,7 +118,8 @@ namespace SimpleHardwareShop.Migrations
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false),
                     Count = table.Column<int>(type: "INTEGER", nullable: false),
                     Price = table.Column<double>(type: "REAL", nullable: false),
-                    YaSeEnvioAlCliente = table.Column<bool>(type: "INTEGER", nullable: false)
+                    YaSeEnvioAlCliente = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -156,10 +165,11 @@ namespace SimpleHardwareShop.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true),
                     OrderTotal = table.Column<double>(type: "REAL", nullable: false),
                     DeliveryAdressId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true)
+                    FiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,8 +189,7 @@ namespace SimpleHardwareShop.Migrations
                         name: "FK_OrderHeaders_ApplicationUsers_CustomerUserId",
                         column: x => x.CustomerUserId,
                         principalTable: "ApplicationUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -217,10 +226,9 @@ namespace SimpleHardwareShop.Migrations
                 column: "CustomerUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUsers_Email",
-                table: "ApplicationUsers",
-                column: "Email",
-                unique: true);
+                name: "IX_Adresses_EmployeeUserId",
+                table: "Adresses",
+                column: "EmployeeUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUsers_UserName",
@@ -274,6 +282,7 @@ namespace SimpleHardwareShop.Migrations
                 column: "ProductId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

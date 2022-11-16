@@ -23,7 +23,7 @@ namespace SimpleHardwareShop.Controller
         }
         public List<OrderDetail> Index()
         {
-            return _db.OrderDetails.ToList();
+            return _db.OrderDetails.Include(e=>e.Product).ToList();
 
 
 

@@ -11,13 +11,14 @@ using SimpleHardwareShop.Data;
 namespace SimpleHardwareShop.Migrations
 {
     [DbContext(typeof(HardwareShopContext))]
-    [Migration("20221113234936_initial")]
+    [Migration("20221116004956_initial")]
     partial class initial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
             modelBuilder.Entity("SimpleHardwareShop.Models.Adress", b =>
                 {
@@ -28,7 +29,10 @@ namespace SimpleHardwareShop.Migrations
                     b.Property<string>("AdditionalInformation")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CustomerUserId")
+                    b.Property<int?>("CustomerUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("EmployeeUserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PhoneNumber")
@@ -48,6 +52,8 @@ namespace SimpleHardwareShop.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerUserId");
+
+                    b.HasIndex("EmployeeUserId");
 
                     b.ToTable("Adresses");
                 });
@@ -83,12 +89,10 @@ namespace SimpleHardwareShop.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -96,6 +100,8 @@ namespace SimpleHardwareShop.Migrations
                     b.ToTable("ApplicationUsers");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.BankCard", b =>
@@ -139,6 +145,9 @@ namespace SimpleHardwareShop.Migrations
 
                     b.Property<int>("CustomerUserId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
@@ -189,7 +198,7 @@ namespace SimpleHardwareShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CustomerUserId")
+                    b.Property<int?>("CustomerUserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("DeliveryAdressId")
@@ -197,6 +206,9 @@ namespace SimpleHardwareShop.Migrations
 
                     b.Property<int?>("FiscalAdressId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<double>("OrderTotal")
                         .HasColumnType("REAL");
@@ -295,6 +307,10 @@ namespace SimpleHardwareShop.Migrations
                 {
                     b.HasBaseType("SimpleHardwareShop.Models.ApplicationUser");
 
+                    b.Property<int?>("EmployeeAdressId")
+                        .IsRequired()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("EmployeeType")
                         .HasColumnType("INTEGER");
 
@@ -308,9 +324,11 @@ namespace SimpleHardwareShop.Migrations
                 {
                     b.HasOne("SimpleHardwareShop.Models.CustomerUser", null)
                         .WithMany("Adresses")
-                        .HasForeignKey("CustomerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerUserId");
+
+                    b.HasOne("SimpleHardwareShop.Models.EmployeeUser", null)
+                        .WithMany("Adresses")
+                        .HasForeignKey("EmployeeUserId");
                 });
 
             modelBuilder.Entity("SimpleHardwareShop.Models.BankCard", b =>
@@ -356,9 +374,7 @@ namespace SimpleHardwareShop.Migrations
                 {
                     b.HasOne("SimpleHardwareShop.Models.CustomerUser", "CustomerUser")
                         .WithMany("OrderHeaders")
-                        .HasForeignKey("CustomerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerUserId");
 
                     b.HasOne("SimpleHardwareShop.Models.Adress", "DeliveryAdress")
                         .WithMany()
@@ -408,6 +424,11 @@ namespace SimpleHardwareShop.Migrations
                     b.Navigation("BankCards");
 
                     b.Navigation("OrderHeaders");
+                });
+
+            modelBuilder.Entity("SimpleHardwareShop.Models.EmployeeUser", b =>
+                {
+                    b.Navigation("Adresses");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,7 +13,7 @@ namespace SimpleHardwareShop.Models
     public class OrderHeader
     {
         public int Id { get; set; }
-        public int CustomerUserId { get; set; }
+        public int? CustomerUserId { get; set; }
         public CustomerUser? CustomerUser { get; set; }
         public double OrderTotal { get; set; }
 
@@ -25,6 +25,7 @@ namespace SimpleHardwareShop.Models
         public Adress? FiscalAdress { get; set; }
 
         
+        public DateTime OrderDate { get; set; }
 
 
         
@@ -72,6 +73,7 @@ namespace SimpleHardwareShop.Models
                 OrderTotal = orderTotal,
                 DeliveryAdressId = deliveryAdress,
                 FiscalAdressId = fiscalAdress,
+                OrderDate= DateTime.Now,
 
 
 
@@ -83,7 +85,8 @@ namespace SimpleHardwareShop.Models
 
 
     //[Required]
-    //public DateTime OrderDate { get; set; }
+
+    //public DateTime ExpirationDate { get; set; }
     //public DateTime ShippingDate { get; set; }
     //public string? OrderStatus { get; set; }
     //public string? PaymentStatus { get; set; }

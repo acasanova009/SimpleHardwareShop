@@ -43,33 +43,42 @@ namespace SimpleHardwareShop.Controller
             }
         }
 
-        public void Index()
+        public EmployeeUser Index(int userId)
+        {
+
+            var user = _db.EmployeeUsers
+                .FirstOrDefault(m => userId == m.Id);
+
+            return user!;
+        }
+        public List<EmployeeUser> Index()
         {
             
-            {
-                var employee = _db.EmployeeUsers.ToList();
-                employee.ForEach(p => Console.WriteLine(p));
+            
+                return _db.EmployeeUsers.Include(a=>a.Adresses).ToList();
+                
 
-            }
+            
 
         }
 
-        public bool Create(EmployeeUser employee)
+        public int Create(EmployeeUser employee)
         {
-            
+
+
             var users =  _db.EmployeeUsers.Where(a => a.UserName.Equals(employee.UserName)|| a.Email.Equals(employee.Email)).ToList();
 
             if (users.Any())
             {
-                return false;
+                return 0;
 
             }
             else
             {
 
-                _db.ApplicationUsers.Add(employee);
+                var trackingEntity = _db.ApplicationUsers.Add(employee);
                 _db.SaveChanges();
-                return true;
+                return trackingEntity.Entity.Id;
             }
 
 
@@ -79,8 +88,7 @@ namespace SimpleHardwareShop.Controller
         {
 
             var user = _db.EmployeeUsers
-                //.Include(a => a.BankCards)
-                //.Include(a => a.Adresses)
+                .Include(a => a.Adresses)
                 .FirstOrDefault(m=>userId==m.Id);
 
             return user;
@@ -89,9 +97,39 @@ namespace SimpleHardwareShop.Controller
 
         }
 
+      
+
+        public bool Update(EmployeeUser application)
+        {
+
+            
+                _db.ApplicationUsers.Update(application);
+                _db.SaveChanges();
+                return true;
+            
+        }
+
+        public bool UpdateUpdateUserName(EmployeeUser application)
+        {
+
+            var users = _db.ApplicationUsers.Where(a => a.UserName.Equals(application.UserName)).ToList();
+
+            if (users.Any())
+            {
+                return false;
+
+            }
+            else
+            {
+                _db.ApplicationUsers.Update(application);
+                _db.SaveChanges();
+                return true;
+            }
+        }
 
 
-        
+
+
 
     }
 }

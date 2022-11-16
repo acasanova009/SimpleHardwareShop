@@ -12,19 +12,28 @@ namespace SimpleHardwareShop.Controller
     public class CustomerUserController
     {
 
-        public HardwareShopContext _db { get; set; }
+        private HardwareShopContext Db { get; set; }
 
         public CustomerUserController(HardwareShopContext db)
         {
-            _db = db;
+            Db = db;
 
+        }
+
+        public CustomerUser Index(int userId)
+        {
+
+            var user = Db.CustomerUsers
+                .FirstOrDefault(m => userId == m.Id);
+
+            return user!;
         }
 
 
         public void Index(string textFilter = "")
         {
 
-            var customerUsers = _db.CustomerUsers
+            var customerUsers = Db.CustomerUsers
             .Where(p =>
 
                 p.Name.Contains(textFilter) ||
@@ -45,19 +54,14 @@ namespace SimpleHardwareShop.Controller
 
         public CustomerUser? AuthenticateUser(string emialOrUsername, string password)
         {
-            var users = _db.CustomerUsers
+            var users = Db.CustomerUsers
                 .Where(a => a.UserName.Equals(emialOrUsername) || a.Email.Equals(emialOrUsername))
                 .Where(a => a.Password.Equals(password))
 
                 ;
 
 
-            if (users.Count() > 1)
-            {
-                Console.WriteLine("Database Error, multiple users");
-                return null;
-            }
-            else if (users.Count() == 0)
+            if (!users.Any())
             {
 
                 return null;
@@ -74,15 +78,15 @@ namespace SimpleHardwareShop.Controller
 
 
 
-            var user = _db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
-            var bankCard = _db.BankCards.Where(a => a.CustomerUserId == userid).Where(a => a.Id == cardId).Single();
+            var user = Db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
+            var bankCard = Db.BankCards.Where(a => a.CustomerUserId == userid).Where(a => a.Id == cardId).Single();
 
-            if (user is object && bankCard is object)
+            if (user is not null && bankCard is not null)
             {
                 user.DefaultBankCardId = cardId;
 
-                _db.ApplicationUsers.Update(user);
-                _db.SaveChanges();
+                Db.ApplicationUsers.Update(user);
+                Db.SaveChanges();
 
             }
             else
@@ -100,15 +104,15 @@ namespace SimpleHardwareShop.Controller
 
 
 
-            var user = _db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
-            var adress = _db.Adresses.Where(a => a.CustomerUserId == userid).Where(a => a.Id == adressId).Single();
+            var user = Db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
+            var adress = Db.Adresses.Where(a => a.CustomerUserId == userid).Where(a => a.Id == adressId).Single();
 
-            if (user is object && adress is object)
+            if (user is not null && adress is not null)
             {
                 user.DefaultDeliveryAdressId = adressId;
 
-                _db.ApplicationUsers.Update(user);
-                _db.SaveChanges();
+                Db.ApplicationUsers.Update(user);
+                Db.SaveChanges();
 
             }
             else
@@ -125,16 +129,16 @@ namespace SimpleHardwareShop.Controller
 
 
 
-            var user = _db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
-            var adress = _db.Adresses.Where(a => a.CustomerUserId == userid).Where(a => a.Id == adressId).Single();
+            var user = Db.CustomerUsers.Where(a => a.Id == userid).SingleOrDefault();
+            var adress = Db.Adresses.Where(a => a.CustomerUserId == userid).Where(a => a.Id == adressId).Single();
 
-            if (user is object && adress is object)
+            if (user is not null && adress is not null)
             {
 
                 user.DefaultFiscalAdressId = adressId;
 
-                _db.ApplicationUsers.Update(user);
-                _db.SaveChanges();
+                Db.ApplicationUsers.Update(user);
+                Db.SaveChanges();
 
             }
             else
@@ -146,10 +150,50 @@ namespace SimpleHardwareShop.Controller
 
         }
 
+        public bool UpdateUserName(CustomerUser application)
+        {
+
+            //var currentUsername = _db.CustomerUsers.Where(a => a.UserName.Equals(application.UserName)).SingleOrDefault();
+            var users = Db.CustomerUsers.Where(a => a.UserName.Equals(application.UserName)).ToList();
+
+
+            if (users.Any())
+            {
+                return false;
+
+            }
+            else
+            {
+                Db.CustomerUsers.Update(application);
+                Db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool Update(CustomerUser application)
+        {
+
+            ////var currentUsername = _db.CustomerUsers.Where(a => a.UserName.Equals(application.UserName)).SingleOrDefault();
+            //var users = _db.CustomerUsers.Where(a => a.Id==application.Id).ToList();
+
+
+            //if (users.Any())
+            //{
+            //    return false;
+
+            //}
+            //else
+            //{
+                Db.CustomerUsers.Update(application);
+                Db.SaveChanges();
+                return true;
+            //}
+        }
+
         public bool Create(CustomerUser customer)
         {
 
-            var users = _db.CustomerUsers.Where(a => a.UserName.Equals(customer.UserName) || a.Email.Equals(customer.Email)).ToList();
+            var users = Db.CustomerUsers.Where(a => a.UserName.Equals(customer.UserName) || a.Email.Equals(customer.Email)).ToList();
 
             if (users.Any())
             {
@@ -159,8 +203,8 @@ namespace SimpleHardwareShop.Controller
             else
             {
 
-                _db.CustomerUsers.Add(customer);
-                _db.SaveChanges();
+                Db.CustomerUsers.Add(customer);
+                Db.SaveChanges();
                 return true;
             }
 
@@ -170,14 +214,14 @@ namespace SimpleHardwareShop.Controller
 
         public int CreateTemporal(CustomerUser newCustomerTemporal)
         {
-            var customerAlready = _db.CustomerUsers.Where(a=>a.UserName== newCustomerTemporal.UserName).SingleOrDefault();
+            var customerAlready = Db.CustomerUsers.Where(a=>a.UserName== newCustomerTemporal.UserName).SingleOrDefault();
             var customerId = 0;
             if (customerAlready == null)
             {
 
 
-                var trackingEntity = _db.CustomerUsers.Add(newCustomerTemporal);
-                _db.SaveChanges();
+                var trackingEntity = Db.CustomerUsers.Add(newCustomerTemporal);
+                Db.SaveChanges();
                 customerId = trackingEntity.Entity.Id;
             }
             else
@@ -195,7 +239,7 @@ namespace SimpleHardwareShop.Controller
         public CustomerUser? Read(int userId)
         {
 
-            var user = _db.CustomerUsers
+            var user = Db.CustomerUsers
                 .Include(a => a.BankCards)
                 .Include(a => a.Adresses)
                 .FirstOrDefault(m => userId == m.Id);

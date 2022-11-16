@@ -1,5 +1,6 @@
 ﻿using SimpleHardwareShop.Controller;
 using SimpleHardwareShop.Data;
+using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Creation;
 using System;
 
@@ -19,6 +20,7 @@ public static class InteractiveManagerView
 
         var orderDetailController = new OrderDetailController(db);
 
+        AdressController adressController = new(db);
 
 
 
@@ -55,14 +57,31 @@ public static class InteractiveManagerView
                 {
                     case 1:
 
-                        employeeUserController.Index();
+                        var employess = employeeUserController.Index();
+                        foreach (var e in employess)
+                        {
+                            Console.WriteLine("***************************************************************");
+                            Console.WriteLine(e);
+                        }
+                        
 
 
                         break;
 
                     case 2:
 
-                        employeeUserController.Create(EmployeeUserCreationView.Menu());
+                        int newEmployeeId = employeeUserController.Create(EmployeeUserCreationView.Menu());
+                        if (newEmployeeId!=0)
+                        {
+                            //was created
+                            int newAdressId = adressController.Create(AdressCreationView.Create(newEmployeeId, true));
+
+
+                            var employee = employeeUserController.Index(newEmployeeId);
+                            employee.EmployeeAdressId = newAdressId;
+                            employeeUserController.Update(employee);
+
+                        }
 
 
 
@@ -84,7 +103,7 @@ public static class InteractiveManagerView
 
                         foreach (var order in orderDetails)
                         {
-                            Console.WriteLine(order);
+                            Console.WriteLine(order.ToStringComprasAnteriores());
                             totalEarned += order.Count * order.Price;
 
                         }
@@ -107,7 +126,7 @@ public static class InteractiveManagerView
 
                             foreach (var order in orderDetailsByProduct)
                             {
-                                Console.WriteLine(order);
+                                Console.WriteLine(order.ToStringComprasAnteriores());
                                 totalEarned += order.Count * order.Price;
 
                             }
@@ -134,7 +153,15 @@ public static class InteractiveManagerView
 
                         foreach (var order in orderDetailsByShop)
                         {
-                            Console.WriteLine(order);
+                            Console.WriteLine(order.ToStringComprasAnteriores());
+                            totalEarned += order.Count * order.Price;
+                        }
+                        Console.WriteLine($"*                            Tienda - Plaza de la tecnología                                 *");
+                        orderDetailsByShop = orderDetailController.IndexByShop(RetailShop.PlazaDeLaTecnologia);
+
+                        foreach (var order in orderDetailsByShop)
+                        {
+                            Console.WriteLine(order.ToStringComprasAnteriores());
                             totalEarned += order.Count * order.Price;
                         }
 
@@ -144,13 +171,13 @@ public static class InteractiveManagerView
                         break;
                     case 7:
 
-                        Console.WriteLine($"*********************************************************************************************");
-                        Console.WriteLine($"*                             REPORTE DE COTIZACIONES                                       *");
+                        Console.WriteLine($"********************************************************************************************************************");
+                        Console.WriteLine($"*                             REPORTE DE COTIZACIONES                                                              *");
 
                         totalEarned = 0.0;
 
 
-                        Console.WriteLine($"*                            Tienda - Coyoacan                                               *");
+                        Console.WriteLine($"*                            Tienda - Coyoacan                                                                      *");
                         var cotizaciones = cotizacionDetailController.Index();
 
                         foreach (var cotizacion in cotizaciones)
@@ -160,8 +187,8 @@ public static class InteractiveManagerView
 
                         }
 
-                        Console.WriteLine($"Total de ventas esperadas............................                           ${totalEarned}*");
-                        Console.WriteLine($"***********************************************************************************************");
+                        Console.WriteLine($"Total de ventas esperadas............................                                               ${totalEarned}*");
+                        Console.WriteLine($"**********************************************************************************************************************");
 
 
                         break;

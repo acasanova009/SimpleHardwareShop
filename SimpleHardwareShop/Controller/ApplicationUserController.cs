@@ -20,23 +20,7 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public bool Update(ApplicationUser application)
-        {
-
-            var users = _db.ApplicationUsers.Where(a => a.UserName.Equals(application.UserName) || a.Email.Equals(application.Email)).ToList();
-
-            if (users.Any())
-            {
-                return false;
-
-            }
-            else
-            {
-                _db.ApplicationUsers.Update(application);
-                _db.SaveChanges();
-                return true;
-            }
-        }
+       
 
         public ApplicationUser Index(int userId)
         {

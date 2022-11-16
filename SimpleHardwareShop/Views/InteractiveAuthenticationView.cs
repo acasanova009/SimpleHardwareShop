@@ -41,6 +41,7 @@ public static class InteractiveAuthenticationView
 
 
                 Console.WriteLine("1. Ver tienda");
+                Console.WriteLine("------------------------------------------------------");
                 Console.WriteLine("2. Iniciar sesion");
                 Console.WriteLine("3. Registrarme");
 
@@ -59,19 +60,8 @@ public static class InteractiveAuthenticationView
                 switch (opcion)
                 {
                     case 1:
-                        CustomerUser temporalUser = new CustomerUser
-                        {
-                            Name = "Usuario no registrado",
-                            LastName = "",
-                            SecondLastName = "",
-                            UserName = "default01",
-                            Email = "default@mail.com",
-                            Password = "12345678",
-                        };
-
-                        var temporalId = customerUserController.CreateTemporal(temporalUser);
-                       
-                        InteractiveCustomerView.Menu(db, temporalId);
+                        
+                        InteractiveNotRegisteredUserView.Menu(db, -1);
 
                         break;
                     case 2:

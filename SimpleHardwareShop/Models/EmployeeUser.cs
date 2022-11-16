@@ -16,10 +16,32 @@ namespace SimpleHardwareShop.Models
         [Required]
         public EmployeeType EmployeeType { get; set; }
 
+        [Required]
+        public int? EmployeeAdressId { get; set; }
+
+        public ICollection<Adress>? Adresses { get; set; }
+
+       
+
 
         public override string ToString()
         {
-            var basicInfo = $"[Application User] Id:{Id} Name: {Name} UserType:{EmployeeType} UserName:{UserName}";
+            var basicInfo = $"[Application User] Id:{Id} UserType:{EmployeeType} RetailShop:{RetailShop} UserName:{UserName}";
+            basicInfo += "\n";
+
+            basicInfo += $"Nombre: {Name} {LastName} {SecondLastName} \n Email: {Email}  \n";
+
+            if (Adresses is not null)
+            foreach (var item in Adresses)
+            {
+                    if (item.Id == EmployeeAdressId)
+                    {
+                        basicInfo+= $"\n Adress: {item}";
+
+                    }
+            }
+            basicInfo+= "\n";
+
             return basicInfo;
 
         }

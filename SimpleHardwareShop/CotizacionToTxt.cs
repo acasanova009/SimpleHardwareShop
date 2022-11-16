@@ -10,14 +10,14 @@ namespace SimpleHardwareShop
     {
 
         //await CotizacionToTxt.WriteText("a");
-        public static async Task WriteText(string a)
+        public static async Task WriteText(string nameOfTextFile,string a)
         {
             string text =
-                "Cotizacion Final:" +
-                //"a class defines the data and behavior of the data type. "+
+                "Cotizacion Final:\n" +
+                
                 a;
 
-            await File.WriteAllTextAsync("WriteText.txt", text);
+            await File.WriteAllTextAsync($"{nameOfTextFile}.txt", text);
         }
     }
 

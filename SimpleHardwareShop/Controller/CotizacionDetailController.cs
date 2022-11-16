@@ -24,7 +24,11 @@ namespace SimpleHardwareShop.Controller
 
         public List<CotizacionDetail> Index()
         {
-            return _db.CotizacionDetails.ToList();
+            return _db.CotizacionDetails
+                .Where(e => e.YaSeEnvioAlCliente == false)
+                .Include(a=>a.Product)
+                .Include(a => a.CustomerUser)
+                .ToList();
 
         }
 
@@ -35,6 +39,8 @@ namespace SimpleHardwareShop.Controller
             return _db.CotizacionDetails
                                 .Where(e => e.CustomerUserId == customerid)
                                 .Where(e => e.YaSeEnvioAlCliente == false)
+                                .Include(a => a.Product)
+                                .Include(a => a.CustomerUser)
                                 .ToList();
            
 
@@ -47,8 +53,26 @@ namespace SimpleHardwareShop.Controller
 
         }
 
+        public void Update(int customerid)
+        {
+            var cotizaciones = _db.CotizacionDetails
+                                .Where(e => e.CustomerUserId == customerid)
+                                .Where(e => e.YaSeEnvioAlCliente == false)
+                                //.Include(a => a.Product)
+                                //.Include(a => a.CustomerUser)
+                                .ToList();
+            foreach (var cot in cotizaciones)
+            {
+                cot.YaSeEnvioAlCliente= true;
 
-        public void CreateDetails(CotizacionDetail od)
+
+            }
+            _db.CotizacionDetails.UpdateRange(cotizaciones);    
+            _db.SaveChanges();
+
+        }
+
+            public void CreateDetails(CotizacionDetail od)
         {
 
             if (od != null)

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SimpleHardwareShop.Models;
 
 namespace SimpleHardwareShop.Data
@@ -17,9 +19,13 @@ namespace SimpleHardwareShop.Data
         // Constructor is 'protected'
         public HardwareShopContext()
         {
+
+            
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
             DbPath = System.IO.Path.Join(path, database);
+
+           
         }
 
         static string database = "HardwareShopDatabase.db";
@@ -28,7 +34,28 @@ namespace SimpleHardwareShop.Data
         
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+        {
+
+            //SQLite
+            options.UseSqlite($"Data Source={DbPath}");
+
+
+            //MSSQL
+            //options.UseSqlServer("Server = LAISSEZFAIRE; Database = HardwareShopDatabase; Trusted_Connection = True;TrustServerCertificate=True;");
+
+
+
+            //AZURE
+            //SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            //builder.DataSource = "hardwaresqlserver.database.windows.net";
+            //builder.UserID = "azureuser";
+            //builder.Password = "@AlfaTao1234@";
+            //builder.InitialCatalog = "HardwareShopDatabase";
+            //options.UseSqlServer(builder.ConnectionString);
+
+
+
+        }
 
 
         public DbSet<Product> Products { get; set; }

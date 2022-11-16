@@ -14,7 +14,9 @@ namespace SimpleHardwareShop.Models
         public int Id { get; set; }
         //[Required]
         public int CustomerUserId { get; set; }
-        //public CustomerUser? CustomerUser { get; set; }
+        
+        
+        public CustomerUser CustomerUser { get; set; }
 
         
 
@@ -27,14 +29,15 @@ namespace SimpleHardwareShop.Models
 
         public bool YaSeEnvioAlCliente { get; set; }
 
-        //public DateOnly Date { get; set; }
+        public DateTime Fecha { get; set; }
 
-        
+
 
 
         public override string ToString()
         {
-            return "CotizacionDetail: " + " Product:" + Product + " Count:" + Count + " Price:" + Price;
+            return $"CustomerId: {CustomerUserId} Product:{Product.Name}  Count:{Count} Price: ${Price}..........Fecha: {Fecha}";
+
         }
         public static CotizacionDetail Create(int userId, int productId, int count, double price)
         {

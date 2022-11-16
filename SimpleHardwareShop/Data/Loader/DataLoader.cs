@@ -27,6 +27,9 @@ namespace SimpleHardwareShop.Data.Loader
                 CustomerUserId = 1,
                 OrderTotal = 54045,
                 DeliveryAdressId = 1,
+                OrderDate =  new DateTime(2022, 09, 01),
+
+                
 
 
 
@@ -70,6 +73,8 @@ namespace SimpleHardwareShop.Data.Loader
                 CustomerUserId = 1,
                 OrderTotal = 4 * 5399 + 2 * 3650,
                 DeliveryAdressId = 1,
+
+                OrderDate = new DateTime(2022, 11, 15),
 
 
 
@@ -397,6 +402,7 @@ namespace SimpleHardwareShop.Data.Loader
 
                 RetailShop = RetailShop.HeadQuarters,
                 EmployeeType = EmployeeType.Manager,
+                //RFC = "RASDASD13213213213",
 
                 //UserType = UserType.Application,
                 //DeliveryAdressId =10,
@@ -413,6 +419,8 @@ namespace SimpleHardwareShop.Data.Loader
                 UserName = "Pedro01",
                 Email = "pedro01@outlook.com",
                 Password = "123",
+
+                //RFC = "OKOKO456456",
 
                 RetailShop = RetailShop.PlazaDeLaTecnologia,
                 EmployeeType = EmployeeType.Employee,
@@ -445,7 +453,8 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new Adress
             {
-                CustomerUserId = 1,
+                
+                CustomerUserId= 1,
                 StreetAdress = "Insurgentse 3493",
                 PhoneNumber = "55 3409 9347",
                 AdditionalInformation = "Enfrente de La Paz",
@@ -456,6 +465,7 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new Adress
             {
+                
                 CustomerUserId = 1,
                 StreetAdress = "Copilco 3493",
                 PhoneNumber = "55 3409 9347",
@@ -486,6 +496,18 @@ namespace SimpleHardwareShop.Data.Loader
                 RFC = null
 
             });
+
+            db.Add(new Adress
+            {
+                EmployeeUserId = 6,
+                StreetAdress = "Ajusco 484",
+                PhoneNumber = "55 2707070707",
+
+                PostalCode = 14007,
+                RFC = "HALALUYA"
+
+            });
+
 
 
 

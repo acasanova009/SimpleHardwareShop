@@ -11,7 +11,7 @@ using SimpleHardwareShop.Views.Creation;
 public static class InteractiveOrderHeaderView
 {
 
-    public static HardwareShopContext _db { get; set; }
+    //public static HardwareShopContext _db { get; set; }
     //private ProductController _productController { get; set; }
     //private ShoppingCartController _shoppingCartController { get; set; }
     //private ApplicationUserController applicationUserController { get; set; }
@@ -24,7 +24,7 @@ public static class InteractiveOrderHeaderView
     //private ShoppingCartController _shoppingCartController { get; set; }
 
 
-    public static void Menu(HardwareShopContext db,int userId)
+    public static void Menu(HardwareShopContext db,int userId, bool quiereFactura)
 	{
         //_db = db;
         //var _shoppingCartController = new ShoppingCartController(db);
@@ -37,13 +37,13 @@ public static class InteractiveOrderHeaderView
 
 
         var productController = new ProductController(db);
-        var applicationUserController = new ApplicationUserController(db);
+        //var     applicationUserController = new ApplicationUserController(db);
         var customerUserController = new CustomerUserController(db);
         var orderHeaderController = new OrderHeaderController(db);
         var shoppingCartController = new ShoppingCartController(db);
 
 
-        bool userWantsFacturar = false;
+        bool userWantsFacturar = quiereFactura;
 
 
 
@@ -78,7 +78,7 @@ public static class InteractiveOrderHeaderView
 
                         
 
-                        CustomerUserEditingView.Menu(db, userId);
+                        AdressAndBankCustomerUserEditingView.Menu(db, userId);
 
                         
 
@@ -96,14 +96,14 @@ public static class InteractiveOrderHeaderView
                         var user = customerUserController.Read(userId);
 
 
-                        Console.WriteLine(user.ToStringResumenCompras());
+                        Console.WriteLine(user?.ToStringResumenCompras());
                         Console.WriteLine($"+-------------------------------------------------------------------------------------------------------------------------+");
                         Console.WriteLine($"+                                  Ariticulos por comprar                                                                 +");
 
                         var shoppingCart = shoppingCartController.Index(userId);
                         double total = 0.0;
 
-                        if(shoppingCart is object)
+                        if(shoppingCart is not null)
                         foreach (var item in shoppingCart)
                         {
 
@@ -200,7 +200,7 @@ public static class InteractiveOrderHeaderView
                         {
                             var shoppingCartAnother = shoppingCartController.Index(userId);
                             double totalAnother = 0.0;
-                            if (shoppingCartAnother is object)
+                            if (shoppingCartAnother is not null)
                                 foreach (var item in shoppingCartAnother)
                                 {
                                     
@@ -216,7 +216,7 @@ public static class InteractiveOrderHeaderView
 
 
 
-                            if (shoppingCartAnother is object)
+                            if (shoppingCartAnother is not null)
                             foreach (var item in shoppingCartAnother)
                             {
                                     orderHeaderController.CreateDetails(OrderDetail.Create(orderHeaderId, item.Product!.Id,item.Count,item.Product.Price));
@@ -235,11 +235,13 @@ public static class InteractiveOrderHeaderView
 
                             Console.WriteLine($"***************************************************************************************************************************");
                             Console.WriteLine($"*                                   COMPRA EXITOSA                                                                        *");
-                           
+
+                            Console.WriteLine($"Ticket #: {orderHeaderId}");
+                            Console.WriteLine($"Fecha: {myNewOrderHeader.OrderDate}");
 
                              total = 0.0;
 
-                            if (shoppingCart is object)
+                            if (shoppingCart is not null)
                                 foreach (var item in shoppingCart)
                                 {
 
@@ -258,7 +260,7 @@ public static class InteractiveOrderHeaderView
                         }
                         else
                         {
-                            CustomerUserEditingView.Menu(db, userId);
+                            AdressAndBankCustomerUserEditingView.Menu(db, userId);
                         }
 
 

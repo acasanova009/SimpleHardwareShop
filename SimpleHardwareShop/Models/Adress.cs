@@ -14,10 +14,16 @@ namespace SimpleHardwareShop.Models
         [Required]
         public int Id { get; set; }
 
-        public int CustomerUserId { get; set; }
+        //public int ApplicationUserId { get; set; }
 
+        public int? CustomerUserId { get; set; }
+
+        public int? EmployeeUserId { get; set; }
+
+        [Required]
         public string StreetAdress { get; set; }
-        
+
+        [Required]
         public string PhoneNumber { get; set; }
 
         public string? AdditionalInformation { get; set; }
@@ -37,7 +43,7 @@ namespace SimpleHardwareShop.Models
         public override string ToString()
         {
             string rfcString = "";
-            if (RFC is object)
+            if (RFC is not null)
             {
 
                 rfcString = $" RFC: {RFC}";

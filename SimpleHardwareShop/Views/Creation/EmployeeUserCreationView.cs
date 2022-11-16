@@ -32,12 +32,21 @@ namespace SimpleHardwareShop.Views.Creation
             Console.WriteLine("Ingresar email");
             employee.Email = Console.ReadLine() ?? "correo@gmail.com";
 
-            Console.WriteLine("Ingresar contraseña");
-            employee.Password = Console.ReadLine() ?? "123";
+            employee.Password = "";
+            while (employee.Password.Length < 8)
+            {
+
+                Console.WriteLine("Ingresar contraseña de minimo 8 caracteres");
+                employee.Password = Console.ReadLine() ?? "12345678";
+                //customer.Account = customer.Account.Replace(" ", "");
+
+            }
+
+
 
             employee.EmployeeType = EmployeeType.Employee;
 
-
+            
 
 
             try
