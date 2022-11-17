@@ -20,8 +20,11 @@ Console.WriteLine("Equipo: Individual - Alfonso");
 Console.WriteLine("Alfonso Gonzalez Casanova Gallegos");
 
 
-#if LoadInitialData
-DataLoader.Load(db);
+        //Console.WriteLine("\nLoading...\n");
+        var db = new HardwareShopContext();
+#if !LoadInitialData
+        //DataLoader.Load(db);
+
 #endif
 
 //DataLoader.LoadOrdersHeaderAndDetails( db );    
