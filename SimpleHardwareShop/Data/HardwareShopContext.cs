@@ -9,6 +9,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SimpleHardwareShop.Models;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
+
 namespace SimpleHardwareShop.Data
 {
 
@@ -20,7 +35,9 @@ namespace SimpleHardwareShop.Data
         public HardwareShopContext()
         {
 
-            
+            //var newPaht = Path.GetPathRoot
+
+
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
             DbPath = System.IO.Path.Join(path, database);
@@ -39,9 +56,10 @@ namespace SimpleHardwareShop.Data
             //SQLite
             //options.UseSqlite($"Data Source={DbPath}");
 
+            options.UseSqlite($"Data Source=HardwareShopDatabase.db");
 
             //MSSQL
-            options.UseSqlServer("Server = LAISSEZFAIRE; Database = HardwareShopDatabase; Trusted_Connection = True;TrustServerCertificate=True;");
+            //options.UseSqlServer("Server = LAISSEZFAIRE; Database = HardwareShopDatabase; Trusted_Connection = True;TrustServerCertificate=True;");
 
 
 

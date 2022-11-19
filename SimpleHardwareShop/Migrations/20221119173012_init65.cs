@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SimpleHardwareShop.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init65 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,21 +15,21 @@ namespace SimpleHardwareShop.Migrations
                 name: "ApplicationUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecondLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DefaultBankCardId = table.Column<int>(type: "int", nullable: true),
-                    DefaultDeliveryAdressId = table.Column<int>(type: "int", nullable: true),
-                    DefaultFiscalAdressId = table.Column<int>(type: "int", nullable: true),
-                    RetailShop = table.Column<int>(type: "int", nullable: true),
-                    EmployeeType = table.Column<int>(type: "int", nullable: true),
-                    EmployeeAdressId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    SecondLastName = table.Column<string>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    DefaultBankCardId = table.Column<int>(type: "INTEGER", nullable: true),
+                    DefaultDeliveryAdressId = table.Column<int>(type: "INTEGER", nullable: true),
+                    DefaultFiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true),
+                    RetailShop = table.Column<int>(type: "INTEGER", nullable: true),
+                    EmployeeType = table.Column<int>(type: "INTEGER", nullable: true),
+                    EmployeeAdressId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,16 +40,16 @@ namespace SimpleHardwareShop.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Stock = table.Column<double>(type: "float", nullable: false),
-                    DefaultStock = table.Column<double>(type: "float", nullable: false),
-                    Serie = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Inventory = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RetailShop = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false),
+                    Stock = table.Column<double>(type: "REAL", nullable: false),
+                    DefaultStock = table.Column<double>(type: "REAL", nullable: false),
+                    Serie = table.Column<string>(type: "TEXT", nullable: false),
+                    Inventory = table.Column<string>(type: "TEXT", nullable: false),
+                    RetailShop = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,15 +60,15 @@ namespace SimpleHardwareShop.Migrations
                 name: "Adresses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerUserId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeUserId = table.Column<int>(type: "int", nullable: true),
-                    StreetAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AdditionalInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode = table.Column<int>(type: "int", nullable: false),
-                    RFC = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true),
+                    EmployeeUserId = table.Column<int>(type: "INTEGER", nullable: true),
+                    StreetAdress = table.Column<string>(type: "TEXT", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    AdditionalInformation = table.Column<string>(type: "TEXT", nullable: true),
+                    PostalCode = table.Column<int>(type: "INTEGER", nullable: false),
+                    RFC = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,13 +89,13 @@ namespace SimpleHardwareShop.Migrations
                 name: "BankCards",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerUserId = table.Column<int>(type: "int", nullable: false),
-                    Account = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SecurityCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Account = table.Column<string>(type: "TEXT", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    SecurityCode = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,14 +112,14 @@ namespace SimpleHardwareShop.Migrations
                 name: "CotizacionDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerUserId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    YaSeEnvioAlCliente = table.Column<bool>(type: "bit", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Count = table.Column<int>(type: "INTEGER", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false),
+                    YaSeEnvioAlCliente = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,11 +142,11 @@ namespace SimpleHardwareShop.Migrations
                 name: "ShoppingCarts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false),
-                    CustomerUserId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Count = table.Column<int>(type: "INTEGER", nullable: false),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,13 +169,13 @@ namespace SimpleHardwareShop.Migrations
                 name: "OrderHeaders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerUserId = table.Column<int>(type: "int", nullable: true),
-                    OrderTotal = table.Column<double>(type: "float", nullable: false),
-                    DeliveryAdressId = table.Column<int>(type: "int", nullable: false),
-                    FiscalAdressId = table.Column<int>(type: "int", nullable: true),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerUserId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderTotal = table.Column<double>(type: "REAL", nullable: false),
+                    DeliveryAdressId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FiscalAdressId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,12 +202,12 @@ namespace SimpleHardwareShop.Migrations
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderHeaderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    OrderHeaderId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Count = table.Column<int>(type: "INTEGER", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

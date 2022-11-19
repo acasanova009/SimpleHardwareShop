@@ -4,13 +4,27 @@ using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views;
 using System;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Views.Creation
 {
     public static class AdressAndBankCustomerUserEditingView
     {
 
 
-
+        /// <summary>Class <c>AdressAndBankCustomerUserEditingView</c> Clase estática para editar datos especificos del cliente</summary>
         public static void Menu(HardwareShopContext db, int userId)
         {
             //Console.Clear();
@@ -78,6 +92,7 @@ namespace SimpleHardwareShop.Views.Creation
                             }
                             else
                             {
+                                
                                 Console.WriteLine("No hay direcciones registradas.");
                             }
 
@@ -125,6 +140,7 @@ namespace SimpleHardwareShop.Views.Creation
                             }
                             catch (Exception)
                             {
+                                Console.WriteLine("Error 007");
                                 Console.WriteLine("Ingresar correctamente el id de la direccion.");
 
                             }
@@ -145,6 +161,7 @@ namespace SimpleHardwareShop.Views.Creation
                             catch (Exception)
                             {
 
+                                Console.WriteLine("Error 007");
                                 Console.WriteLine("Ingresar correctamente el id de la direccion.");
                             }
 
@@ -164,6 +181,7 @@ namespace SimpleHardwareShop.Views.Creation
                                 }
                                 else
                                 {
+                                    Console.WriteLine("Error 007");
                                     Console.WriteLine("Direccion de envio no existe, ingresar Id correcto");
                                 }
 
@@ -218,7 +236,7 @@ namespace SimpleHardwareShop.Views.Creation
                             }
                             catch (Exception)
                             {
-
+                                Console.WriteLine("Error 007");
                                 Console.WriteLine("No se ingreso una opcion correctamente, intentar de nuevo.");
                             }
 
@@ -240,7 +258,8 @@ namespace SimpleHardwareShop.Views.Creation
                             }
                             catch (Exception)
                             {
-
+                                Console.WriteLine("Error 007");
+                                Console.WriteLine("No se ingreso una opcion correctamente, intentar de nuevo.");
 
                             }
 
@@ -256,6 +275,7 @@ namespace SimpleHardwareShop.Views.Creation
                             break;
                         default:
                             Console.WriteLine("Elige una opcion del menu");
+                            Console.WriteLine("Error 001");
                             break;
                     }
 

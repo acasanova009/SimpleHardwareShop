@@ -4,6 +4,21 @@ using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Creation;
 using System;
 
+
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+/// <summary>Class <c>InteractiveManagerView</c> Clase estática que representa una vista de para el Gerente</summary>
 public static class InteractiveManagerView
 {
 
@@ -201,6 +216,7 @@ public static class InteractiveManagerView
                         break;
                     default:
                         Console.WriteLine("Elige una opcion del menu");
+                        Console.WriteLine("Error 001");
                         break;
                 }
 

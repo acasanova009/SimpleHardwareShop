@@ -6,8 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Models
 {
+
+    /// <summary>Modelo-Entidad para BankCard</summary>
     public class BankCard
     {
         public int Id { get; set; }

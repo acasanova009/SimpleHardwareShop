@@ -7,11 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Views.Creation
 {
     public static class BankCardCretionView
     {
 
+        /// <summary>Class <c>BankCardCretionView</c> Clase estática para crear una nueva tarjeta bancaria</summary>
         public static BankCard Menu(int userId, bool isCreditCard = true)
         {
             Console.Clear();
@@ -34,6 +49,14 @@ namespace SimpleHardwareShop.Views.Creation
                     Console.WriteLine("Ingresar 16 digitos de TC/TD:  ");
                     card.Account = Console.ReadLine() ?? "";
                     card.Account = card.Account.Replace(" ", "");
+
+
+                    if (card.SecurityCode.Length != 16)
+                    {
+                        Console.WriteLine("Error 012");
+
+                    }
+
 
                 }
 
@@ -62,6 +85,12 @@ namespace SimpleHardwareShop.Views.Creation
                     Console.WriteLine("Ingresar codigo de seguridad");
                     card.SecurityCode = Console.ReadLine() ?? "";
                     card.SecurityCode = card.SecurityCode.Replace(" ", "");
+
+                    if (card.SecurityCode.Length !=3)
+                    {
+                        Console.WriteLine("Error 011");
+
+                    }
 
                 }
 

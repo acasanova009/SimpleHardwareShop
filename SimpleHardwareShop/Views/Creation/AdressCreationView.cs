@@ -8,8 +8,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Views
 {
+    /// <summary>Class <c>AdressCreationView</c> Clase estática para crear una nueva dirección</summary>
     public static class AdressCreationView
     {
 
@@ -68,6 +83,8 @@ namespace SimpleHardwareShop.Views
             catch (Exception ex)
             {
                 Console.WriteLine("Wrong format in Adress creation " + ex.ToString());
+
+
 
             }
             return card;

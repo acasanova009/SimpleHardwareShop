@@ -5,6 +5,22 @@ using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Editing;
 
+
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
+/// <summary>Class <c>InteractiveEmployeeView</c> Clase estática que representa una vista de para el empleado</summary>
 public static class InteractiveEmployeeView
 {
 
@@ -82,6 +98,7 @@ public static class InteractiveEmployeeView
                             if (!cotizaciones.Any())
                             {
                                 Console.WriteLine("No hay cotizacion en espera de envio");
+                                
                             }
                             else
                             {
@@ -148,6 +165,7 @@ public static class InteractiveEmployeeView
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine("Error 5");
                             Console.WriteLine("Error, se tiene que ingresar un numero. " + ex.ToString());
                         }
 
@@ -170,6 +188,7 @@ public static class InteractiveEmployeeView
                         break;
                     default:
                         Console.WriteLine("Elige una opcion del menu");
+                        Console.WriteLine("Error 001");
                         break;
                 }
 

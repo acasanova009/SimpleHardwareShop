@@ -6,8 +6,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Views.Creation
 {
+    /// <summary>Class <c>CustomerUserCreationView</c> Clase estática para crear un nuevo cliente</summary>
     public static class CustomerUserCreationView
     {
 
@@ -42,6 +58,12 @@ namespace SimpleHardwareShop.Views.Creation
                 Console.WriteLine("Ingresar contraseña de minimo 8 caracteres");
                 customer.Password = Console.ReadLine() ?? "12345678";
                 //customer.Account = customer.Account.Replace(" ", "");
+
+                if (customer.Password.Length < 8)
+                {
+                    Console.WriteLine("Error 009");
+
+                }
 
             }
 

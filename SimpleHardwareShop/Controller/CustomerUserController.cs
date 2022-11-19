@@ -7,8 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
+
 namespace SimpleHardwareShop.Controller
 {
+        /// <summary>Controlador para  CustomerUserController,
+        /// permite realizar operaciones basicas CRUD</summary>
     public class CustomerUserController
     {
 
@@ -92,6 +110,7 @@ namespace SimpleHardwareShop.Controller
             }
             else
             {
+                Console.WriteLine("Erro 007");
                 Console.WriteLine("Id de tarjeta bancaria no existe");
             }
 
@@ -118,6 +137,7 @@ namespace SimpleHardwareShop.Controller
             }
             else
             {
+                Console.WriteLine("Erro 007");
                 Console.WriteLine("Id de direccion no existe");
             }
 
@@ -144,6 +164,7 @@ namespace SimpleHardwareShop.Controller
             }
             else
             {
+                Console.WriteLine("Erro 007");
                 Console.WriteLine("Id de direccion no existe");
             }
 

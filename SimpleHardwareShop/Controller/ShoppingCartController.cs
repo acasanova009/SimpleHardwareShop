@@ -7,11 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Controller
 {
+        /// <summary>Controlador para  ShoppingCartController,
+        /// permite realizar operaciones basicas CRUD</summary>
     public class ShoppingCartController
     {
-
         public HardwareShopContext _db { get; set; }
 
         public ShoppingCartController(HardwareShopContext db)

@@ -7,6 +7,21 @@ using SimpleHardwareShop.Views.Editing;
 using System;
 using System.Runtime.CompilerServices;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
+/// <summary>Class <c>InteractiveCustomerView</c> Clase estática que representa una vista de para el cliente</summary>
 public static class InteractiveCustomerView
 {
 
@@ -85,6 +100,7 @@ public static class InteractiveCustomerView
                             int productId = Convert.ToInt32(Console.ReadLine());
                             if (productId<1||productId>16)
                             {
+                                Console.WriteLine("Error 007");
                                 Console.WriteLine("Ingresar un producto valido");
                             }
                             else
@@ -102,6 +118,7 @@ public static class InteractiveCustomerView
                         }
                         catch(Exception ex)
                         {
+                            Console.WriteLine("Error 007");
                             Console.WriteLine("Entener a valid id of a product. "+ ex.ToString());
 
                         }
@@ -170,6 +187,7 @@ public static class InteractiveCustomerView
                         {
                             Console.WriteLine("No hay productos en el carro.");
                             Console.WriteLine("o el carrito contiene mayor cantidad de la ofertada.");
+                            Console.WriteLine("Error 006");
                         }
 
 
@@ -276,6 +294,7 @@ public static class InteractiveCustomerView
                         break;
                     default:
                         Console.WriteLine("Elige una opcion del menu");
+                        Console.WriteLine("Error 001");
                         break;
                 }
 

@@ -6,8 +6,21 @@ using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Creation;
 //using System;
 
+/* 
+  Equipo Individual
+*/
+/*
 
-Program
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
+/// <summary>Class <c>InteractiveOrderHeaderView</c> Clase estática que representa una vista de confirmación de compras</summary>
 public static class InteractiveOrderHeaderView
 {
 
@@ -133,6 +146,7 @@ public static class InteractiveOrderHeaderView
                         catch (Exception)
                         {
                             userWantsFacturar = false;
+                            Console.WriteLine("Error 002");
                             Console.WriteLine("No se pudo leer correctamente, y no se va a facturar.");
                             
                         }
@@ -154,8 +168,8 @@ public static class InteractiveOrderHeaderView
                             {
                                 canCompletePurchase = false;
                                 Console.WriteLine("El usuario desea facturar, pero falta direccion Fiscal.");
-                                
 
+                                Console.WriteLine("Error 003");
                                 
 
 
@@ -163,14 +177,16 @@ public static class InteractiveOrderHeaderView
                             if (customerUser.DefaultDeliveryAdressId == null)
                             {
                                 Console.WriteLine(  "Falta seleccionar Direccion de Envio.");
-                                
+                                Console.WriteLine("Error 003");
+
 
                                 canCompletePurchase = false;
                             }
                             if (customerUser.DefaultBankCardId == null)
                             {
                                 Console.WriteLine("Falta seleccionar Tarjeta de Credito");
-                                
+
+                                Console.WriteLine("Error 003");
 
                                 canCompletePurchase = false;
 
@@ -250,6 +266,7 @@ public static class InteractiveOrderHeaderView
                         }
                         else
                         {
+                            Console.WriteLine("Error 003");
                             AdressAndBankCustomerUserEditingView.Menu(db, userId);
                         }
 
@@ -267,6 +284,8 @@ public static class InteractiveOrderHeaderView
                         break;
                     default:
                         Console.WriteLine("Elige una opcion del menu");
+
+                        Console.WriteLine("Error 001");
                         break;
                 }
 

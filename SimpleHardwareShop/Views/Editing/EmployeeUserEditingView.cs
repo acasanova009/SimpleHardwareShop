@@ -5,8 +5,23 @@ using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Creation;
 using System;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Views.Editing
 {
+    /// <summary>Class <c>EmployeeUserEditingView</c> Clase estática para editar empleados</summary>
     public static class EmployeeUserEditingView
     {
 
@@ -91,6 +106,7 @@ namespace SimpleHardwareShop.Views.Editing
                             applicationUser.UserName = Console.ReadLine() ?? "Default apellido materno";
                             if (!employeeUserController.UpdateUserName(applicationUser))
                             {
+                                Console.WriteLine("Error 010");
                                 Console.WriteLine("Nombre de usuario ya existe, intentar otra vez.");
 
                             }
@@ -117,6 +133,7 @@ namespace SimpleHardwareShop.Views.Editing
                             }
                             else
                             {
+                                Console.WriteLine("Error 009");
                                 Console.WriteLine("La contraseña es muy pequeña");
                             }
 
@@ -139,6 +156,7 @@ namespace SimpleHardwareShop.Views.Editing
                             break;
                         default:
                             Console.WriteLine("Elige una opcion del menu");
+                            Console.WriteLine("Error 001");
                             break;
                     }
 
