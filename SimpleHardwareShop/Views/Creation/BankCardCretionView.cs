@@ -12,9 +12,11 @@ namespace SimpleHardwareShop.Views.Creation
     public static class BankCardCretionView
     {
 
-        public static BankCard Menu(int userId)
+        public static BankCard Menu(int userId, bool isCreditCard = true)
         {
-            BankCard card = new BankCard();
+            Console.Clear();
+
+            BankCard card = new();
 
             try
             {
@@ -37,14 +39,21 @@ namespace SimpleHardwareShop.Views.Creation
 
 
 
+                if (isCreditCard)
+                {
 
-                Console.WriteLine("Ingresar año de vencimiento eg. 2024.");
-                int year = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Ingresar mes de vencimiento para sep eg. 9.");
-                int month = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Ingresar año de vencimiento eg. 2024.");
+                    int year = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Ingresar mes de vencimiento para sep eg. 9.");
+                    int month = Convert.ToInt32(Console.ReadLine());
 
-                card.ExpirationDate = new DateTime(year, month, 1);
+                    card.ExpirationDate = new DateTime(year, month, 1);
 
+                }
+                else
+                {
+                    card.ExpirationDate = null;
+                }
 
                 card.SecurityCode = "";
                 while (card.SecurityCode.Length != 3)

@@ -3,154 +3,162 @@ using SimpleHardwareShop.Data;
 using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views.Creation;
 
-public static class InteractiveAuthenticationView
+namespace SimpleHardwareShop.Views
 {
-
-    public static CustomerUser? AuthenticateCustomerUser(HardwareShopContext db, CustomerUserController customerUserController)
+    public static class InteractiveAuthenticationView
     {
-        Console.WriteLine("Ingresar correo/nombre de usuario.");
-        var mailOrUserName = Console.ReadLine();
-        Console.WriteLine("Ingresar contraseña");
-        var password = Console.ReadLine();
-
-        return  customerUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
 
 
-       
-
-    }
-
-    
-    public static void Menu(HardwareShopContext db)
-    {
-        var applicationUserController = new ApplicationUserController(db);
-        var customerUserController = new CustomerUserController(db);
-        var employeeUserController = new EmployeeUserController(db);
 
 
-        bool salir = false;
-
-        while (!salir)
+        public static void Menu(HardwareShopContext db)
         {
+            //var applicationUserController = new ApplicationUserController(db);
+            var customerUserController = new CustomerUserController(db);
+            var employeeUserController = new EmployeeUserController(db);
 
-            try
+
+            bool salir = false;
+
+            while (!salir)
             {
 
-                Console.WriteLine("");
-                Console.WriteLine("******************************************************");
-
-
-                Console.WriteLine("1. Ver tienda");
-                Console.WriteLine("------------------------------------------------------");
-                Console.WriteLine("2. Iniciar sesion");
-                Console.WriteLine("3. Registrarme");
-
-                Console.WriteLine("------------------------------------------------------");
-                Console.WriteLine("4. (Empleados) Iniciar sesion");
-                
-                Console.WriteLine("******************************************************");
-                Console.WriteLine("0. Salir");
-                Console.WriteLine("******************************************************");
-
-                Console.WriteLine("Elige una de las opciones");
-                int opcion = Convert.ToInt32(Console.ReadLine());
-
-                Console.Clear();
-                Console.WriteLine("Loading...");
-                switch (opcion)
+                try
                 {
-                    case 1:
-                        
-                        InteractiveNotRegisteredUserView.Menu(db, -1);
 
-                        break;
-                    case 2:
+                    Console.WriteLine("");
+                    Console.WriteLine("******************************************************");
 
 
-                        var customerUser = AuthenticateCustomerUser(db, customerUserController);
+                    Console.WriteLine("1. Ver tienda");
+                    Console.WriteLine("------------------------------------------------------");
+                    Console.WriteLine("2. Iniciar sesion");
+                    Console.WriteLine("3. Registrarme");
 
-                        if (customerUser is object)
-                        {
-                          
-                            InteractiveCustomerView.Menu(db, customerUser.Id);
+                    Console.WriteLine("------------------------------------------------------");
+                    Console.WriteLine("4. (Empleados) Iniciar sesion");
 
-                        }
-                        else
-                        {
-                            Console.WriteLine("Correo, nombre de usuario o contaseña incorrectas");
+                    Console.WriteLine("******************************************************");
+                    Console.WriteLine("10. Salir");
+                    Console.WriteLine("******************************************************");
 
-                        }
+                    Console.WriteLine("Elige una de las opciones");
+                    int opcion = Convert.ToInt32(Console.ReadLine());
 
-                        break;
+                    Console.Clear();
+                    
+                    switch (opcion)
+                    {
+                        case 1:
 
-                    case 3:
+                            
+                            InteractiveNotRegisteredUserView.Menu(db, -1);
 
-                        CustomerUserRegistration(customerUserController);
-
-                        break;
-
-                    case 4:
-
-
-                        Console.WriteLine("Ingresar correo/nombre de usuario.");
-                        var mailOrUserName = Console.ReadLine();
-                        Console.WriteLine("Ingresar contraseña");
-                         var password = Console.ReadLine();
+                            break;
+                        case 2:
 
 
-                        var employeeUser = employeeUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
+                            
+                            var customerUser = AuthenticateCustomerUser(db, customerUserController);
 
-                        if (employeeUser is object)
-                        {
-
-                            switch (employeeUser.EmployeeType)
+                            if (customerUser is object)
                             {
-                                case EmployeeType.Manager:
+                                InteractiveCustomerView.Menu(db, customerUser.Id);
 
-                                   
-                                    InteractiveManagerView.Menu(db, employeeUser.Id);
-                                    break;
-                                case EmployeeType.Employee:
+                            }
+                            else
+                            {
+                                Console.WriteLine("nombre de usuario o contaseña incorrectas");
 
-                                    
-                                    InteractiveEmployeeView.Menu(db, employeeUser.Id);
-
-
-                                    break;
-                                case EmployeeType.CFO:
-                                    break;
-                                default:
-                                    Console.WriteLine("User type not recognized");
-                                    break;
                             }
 
-                        }
-                        else
-                        {
-                            Console.WriteLine("Employee identification failed");
-                        }
+                            break;
 
-                        break;
-                    
-                   
-                    case 0:
-                        Console.Clear();
-                        Console.WriteLine("Has elegido salir de la aplicacion");
-                        salir = true;
-                        break;
-                    default:
-                        Console.WriteLine("Elige una opcion del menu");
-                        break;
+                        case 3:
+
+                            CustomerUserRegistration(customerUserController);
+
+                            break;
+
+                        case 4:
+
+
+                            Console.WriteLine("Ingresar nombre de usuario.");
+                            var mailOrUserName = Console.ReadLine();
+                            Console.WriteLine("Ingresar contraseña");
+                            var password = Console.ReadLine();
+
+
+                            Console.WriteLine("\nLoading...\n");
+                            var employeeUser = employeeUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
+
+                            if (employeeUser is object)
+                            {
+
+                                switch (employeeUser.EmployeeType)
+                                {
+                                    case EmployeeType.Manager:
+
+                                        
+                                        InteractiveManagerView.Menu(db, employeeUser.Id);
+                                        break;
+                                    case EmployeeType.Employee:
+
+                                        InteractiveEmployeeView.Menu(db, employeeUser.Id);
+
+
+                                        break;
+                                    case EmployeeType.CFO:
+                                        break;
+                                    default:
+                                        Console.WriteLine("User type not recognized");
+                                        break;
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Employee identification failed");
+                            }
+
+                            break;
+
+
+                        case 10:
+                            
+                            Console.WriteLine("Has elegido salir de la aplicacion");
+                            salir = true;
+                            break;
+                        default:
+                            Console.WriteLine("Elige una opcion del menu");
+                            break;
+                    }
+
                 }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
 
-            }
-            catch (FormatException e)
-            {
-                Console.WriteLine(e.Message);
-            }
         }
 
-        static void CustomerUserRegistration(CustomerUserController customerUserController)
+        public static CustomerUser? AuthenticateCustomerUser(HardwareShopContext db, CustomerUserController customerUserController)
+        {
+            Console.WriteLine("Ingresar nombre de usuario.");
+            var mailOrUserName = Console.ReadLine();
+            Console.WriteLine("Ingresar contraseña");
+            var password = Console.ReadLine();
+
+            Console.WriteLine("\nLoading...\n");
+
+            return customerUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
+
+
+
+
+        }
+        public static void CustomerUserRegistration(CustomerUserController customerUserController)
         {
             var customer = CustomerUserCreationView.Menu();
 

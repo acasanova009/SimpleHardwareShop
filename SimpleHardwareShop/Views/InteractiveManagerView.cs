@@ -77,7 +77,7 @@ public static class InteractiveManagerView
                             int newAdressId = adressController.Create(AdressCreationView.Create(newEmployeeId, true));
 
 
-                            var employee = employeeUserController.Index(newEmployeeId);
+                            var employee = employeeUserController.Read(newEmployeeId);
                             employee.EmployeeAdressId = newAdressId;
                             employeeUserController.Update(employee);
 
@@ -192,16 +192,9 @@ public static class InteractiveManagerView
 
 
                         break;
-                    //case 8:
-
-                    //    //orderHeaderController.Index(userId);
-
-                    //    Console.WriteLine("Has elegido cerrar sesion");
-                    //    salir = true;
-                    //    break;
-
+                  
                     case 0:
-                        Console.Clear();
+                       
                         Console.WriteLine("Has elegido regresar");
 
                         salir = true;

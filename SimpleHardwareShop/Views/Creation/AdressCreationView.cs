@@ -18,6 +18,9 @@ namespace SimpleHardwareShop.Views
 
         public static Adress Create(int userId, bool isFiscalAdress = false, bool isCustomerAdress= true)
         {
+            Console.Clear();
+
+
             Adress card = new();
 
             try

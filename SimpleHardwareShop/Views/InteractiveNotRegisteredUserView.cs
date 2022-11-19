@@ -2,6 +2,7 @@
 using SimpleHardwareShop.Controller;
 using SimpleHardwareShop.Data;
 using SimpleHardwareShop.Models;
+using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Creation;
 using System;
 using System.Runtime.CompilerServices;
@@ -9,128 +10,8 @@ using System.Runtime.CompilerServices;
 public static class InteractiveNotRegisteredUserView
 {
 
-    static void CustomerUserRegistration(CustomerUserController customerUserController)
-    {
-        var customer = CustomerUserCreationView.Menu();
+    
 
-
-        if (customerUserController.Create(customer))
-        {
-            Console.WriteLine("Usuario creado");
-        }
-        else
-        {
-            Console.WriteLine("Usuario ya existe, porfavor ingresr con su cuenta.");
-
-        }
-    }
-    public static CustomerUser? AuthenticateCustomerUser(HardwareShopContext db, CustomerUserController customerUserController)
-    {
-        Console.WriteLine("Ingresar correo/nombre de usuario.");
-        var mailOrUserName = Console.ReadLine();
-        Console.WriteLine("Ingresar contraseña");
-        var password = Console.ReadLine();
-
-        return customerUserController.AuthenticateUser(mailOrUserName ??= "", password ??= "");
-
-
-
-
-    }
-
-    //public static int CurrentOrNewUserOrLogin(ShoppingCartController shoppingCartController, ApplicationUserController applicationUserController,  CustomerUserController customerUserController, int userId, HardwareShopContext db)
-    //{
-    //    CustomerUser? userr = customerUserController.Read(userId);
-    //    if (userr!.UserName.Equals("default01"))
-    //    {
-    //        try
-    //        {
-    //            Console.WriteLine("Ya tiene cuenta registrada? Escribir 1.");
-    //            Console.WriteLine("1. Si, deseo ingresar a mi cuenta.");
-    //            Console.WriteLine("2. Soy nuevo cliente, quiero registrarme.");
-
-    //            Console.WriteLine("Elige una de las opciones");
-    //            var anotherOption = Convert.ToInt32(Console.ReadLine());
-
-    //            if (anotherOption == 1)
-    //            {
-
-    //                CustomerUser? customerUser = null;
-    //                while (customerUser is not object)
-    //                {
-    //                    customerUser = InteractiveAuthenticationView.AuthenticateCustomerUser(db, customerUserController);
-                        
-                        
-    //                    if(customerUser is object)
-    //                    {
-
-    //                        shoppingCartController.Update(userId, customerUser.Id);
-    //                        applicationUserController.Remove(userId);
-    //                        userId= customerUser.Id;
-    //                    }
-    //                    else
-    //                    {
-    //                        Console.WriteLine("Credenciales incorrectas, intentar de nuevo");
-    //                        Console.WriteLine("-------------------------------------------------");
-    //                        Console.WriteLine("Desea seguir intentando?");
-    //                        Console.WriteLine("1. Si. deseo ingresar a mi cuenta.");
-    //                        Console.WriteLine("2. No recuerdo mis datos, quiero hacer un nuevo usuario.");
-
-    //                        Console.WriteLine("Elige una de las opciones");
-    //                        var option = Convert.ToInt32(Console.ReadLine());
-    //                        if (option!=1)
-    //                        {
-    //                            NewUserReplaceDefault(applicationUserController, userr);
-
-    //                            break;
-
-    //                        }
-
-    //                    }
-
-
-    //                }
-
-
-    //            }
-    //            else
-
-    //            {
-    //                NewUserReplaceDefault(applicationUserController, userr);
-    //            }
-
-    //        }
-    //        catch (FormatException e)
-    //        {
-    //            Console.WriteLine(e.Message);
-                
-    //        }
-
-
-
-
-    //    }
-
-    //    return userId;
-
-    //    static void NewUserReplaceDefault(ApplicationUserController applicationUserController, CustomerUser? userr)
-    //    {
-    //        CustomerUser? customer = null;
-
-    //        var newUserMade = false;
-    //        do
-    //        {
-    //            Console.WriteLine("Para continuar a la compra, tienes que registrarte");
-    //            customer = CustomerUserCreationView.Menu(userr);
-    //            newUserMade = applicationUserController.Update(customer);
-    //            if (!newUserMade)
-    //            {
-    //                Console.WriteLine("Informacion del usuario ya existe.");
-
-    //            }
-    //        } while (!newUserMade);
-    //    }
-    //}
     public static void Menu(HardwareShopContext db, int userId)
 	{
         Console.Clear();
@@ -164,29 +45,30 @@ public static class InteractiveNotRegisteredUserView
                 int opcion = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
 
-                //if(opcion>4)
-                    //userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
 
                 switch (opcion)
                 {
                     case 1:
 
 
-                         productController.Index();
-                        
+                        var products = productController.Index();
+                        products.ForEach(p => Console.WriteLine(p));
+
                         break;
 
                     case 2:
 
                         Console.WriteLine("Ingresar texto a buscar: ");
 
-                        productController.Index(Console.ReadLine());
+
+                        products = productController.Index(Console.ReadLine()??"");
+                        products.ForEach(p => Console.WriteLine(p));
                         break;
 
                     case 3:
 
 
-                        var customerUser = AuthenticateCustomerUser(db, customerUserController);
+                        var customerUser = InteractiveAuthenticationView.AuthenticateCustomerUser(db, customerUserController);
 
                         if (customerUser is object)
                         {
@@ -204,7 +86,7 @@ public static class InteractiveNotRegisteredUserView
 
                     case 4:
 
-                        CustomerUserRegistration(customerUserController);
+                        InteractiveAuthenticationView.CustomerUserRegistration(customerUserController);
 
                         break;
                     

@@ -1,4 +1,4 @@
-﻿
+﻿/// <summary>Enumeraciones para detallar información de empleados</summary>
 public enum RetailShop
 {
     PlazaDeLaTecnologia,

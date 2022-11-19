@@ -22,8 +22,9 @@ namespace SimpleHardwareShop.Controller
 
         public EmployeeUser? AuthenticateUser(string emialOrUsername, string password)
         {
+
             var users = _db.EmployeeUsers
-                .Where(a => a.UserName.Equals(emialOrUsername) || a.Email.Equals(emialOrUsername))
+                .Where(a => a.UserName.Equals(emialOrUsername))
                 .Where(a => a.Password.Equals(password));
 
 
@@ -32,7 +33,7 @@ namespace SimpleHardwareShop.Controller
                 Console.WriteLine("Database Error, multiple users");
                 return null;
             }
-            else if (users.Count() == 0)
+            else if (!users.Any())
             {
 
                 return null;
@@ -43,14 +44,14 @@ namespace SimpleHardwareShop.Controller
             }
         }
 
-        public EmployeeUser Index(int userId)
-        {
+        //public EmployeeUser Index(int userId)
+        //{
 
-            var user = _db.EmployeeUsers
-                .FirstOrDefault(m => userId == m.Id);
+        //    var user = _db.EmployeeUsers
+        //        .FirstOrDefault(m => userId == m.Id);
 
-            return user!;
-        }
+        //    return user!;
+        //}
         public List<EmployeeUser> Index()
         {
             
@@ -84,7 +85,7 @@ namespace SimpleHardwareShop.Controller
 
 
         }
-        public EmployeeUser?  Read(int userId)
+        public EmployeeUser  Read(int userId)
         {
 
             var user = _db.EmployeeUsers
@@ -92,8 +93,6 @@ namespace SimpleHardwareShop.Controller
                 .FirstOrDefault(m=>userId==m.Id);
 
             return user;
-            
-         
 
         }
 
@@ -109,7 +108,7 @@ namespace SimpleHardwareShop.Controller
             
         }
 
-        public bool UpdateUpdateUserName(EmployeeUser application)
+        public bool UpdateUserName(EmployeeUser application)
         {
 
             var users = _db.ApplicationUsers.Where(a => a.UserName.Equals(application.UserName)).ToList();

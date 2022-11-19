@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace SimpleHardwareShop
 {
+    /// <summary>Class <c>Utlierias</c> Ayuda a generar una vista legible del texto en consola.</summary>
+    ///
     static class Utlierias
     {
 

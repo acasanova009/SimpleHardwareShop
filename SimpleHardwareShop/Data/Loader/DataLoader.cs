@@ -10,6 +10,24 @@ namespace SimpleHardwareShop.Data.Loader
 {
     public static class DataLoader
     {
+        public static void Load(HardwareShopContext db)
+        {
+            DataLoader.LoadProduct(db);
+            DataLoader.LoadCustomers(db);
+            DataLoader.LoadEmployess(db);
+
+
+            //Dependent entries
+            DataLoader.LoadShoppingCarts(db);
+            DataLoader.LoadAdresses(db);
+            DataLoader.LoadBankCards(db);
+
+
+            //Customer, product, and adress  dependent entities
+
+            DataLoader.LoadOrdersHeaderAndDetails(db);
+
+        }
         public static void LoadOrdersHeaderAndDetails(HardwareShopContext db)
         {
             /*
@@ -70,7 +88,7 @@ namespace SimpleHardwareShop.Data.Loader
             db.Add(new OrderHeader
             {
                 //OrderHeader id = 2 dont uncomment
-                CustomerUserId = 1,
+                CustomerUserId = 2,
                 OrderTotal = 4 * 5399 + 2 * 3650,
                 DeliveryAdressId = 1,
 
@@ -101,30 +119,74 @@ namespace SimpleHardwareShop.Data.Loader
 
             });
 
+            //SECOND
+            db.Add(new OrderHeader
+            {
+                //OrderHeader id = 3 dont uncomment
+                CustomerUserId = 3,
+                OrderTotal = 4 * 3599 + 2 * 17999,
+                DeliveryAdressId = 1,
+
+                OrderDate = new DateTime(2022, 11, 15),
+
+
+
+            });
+            db.SaveChanges();
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 3,
+                ProductId = 11,
+                Count = 4,
+                Price = 3599,
+
+
+            });
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 3,
+                ProductId = 12,
+                Count = 2,
+                Price = 17999,
+
+
+            });
+
+            //SECOND
+            db.Add(new OrderHeader
+            {
+                //OrderHeader id = 4 dont uncomment
+                CustomerUserId = 4,
+                OrderTotal =  1* 36999,
+                DeliveryAdressId = 1,
+
+                OrderDate = new DateTime(2022, 11, 15),
+
+
+
+            });
+            db.SaveChanges();
+
+            db.Add(new OrderDetail
+            {
+                OrderHeaderId = 4,
+                ProductId = 16,
+                Count = 1,
+                Price = 36999,
+
+
+            });
+
+
             db.SaveChanges();
 
 
         }
 
 
-        public static void Load(HardwareShopContext db)
-        {
-            DataLoader.LoadProduct(db);
-            DataLoader.LoadCustomers(db);
-            DataLoader.LoadEmployess(db);
-
-
-            //Dependent entries
-            DataLoader.LoadShoppingCarts(db);
-            DataLoader.LoadAdresses(db);
-            DataLoader.LoadBankCards(db);
-
-
-            //Customer, product, and adress  dependent entities
-
-            DataLoader.LoadOrdersHeaderAndDetails(db);
-            
-        }
+      
 
         public static void LoadProduct(HardwareShopContext db)
         {
@@ -328,10 +390,12 @@ namespace SimpleHardwareShop.Data.Loader
                 SecondLastName = "Garcia",
                 UserName = "Leo01",
                 Email = "leo@mac.com",
-                Password = "123",
+                Password = "123456789",
 
                 DefaultBankCardId = 1,
                 DefaultDeliveryAdressId = 1,
+
+                DefaultFiscalAdressId = 1,
 
 
             });
@@ -341,12 +405,14 @@ namespace SimpleHardwareShop.Data.Loader
                 Name = "Diego",
                 LastName = "Hernandez",
                 SecondLastName = "Iglesia",
-                UserName = "Severo01",
+                UserName = "Diego01",
                 Email = "diego01@me.com",
-                Password = "123",
-                //UserType = UserType.Application,
-                //DeliveryAdressId =10,
-                //FiscalAdressId=10
+                Password = "123456789",
+
+                DefaultBankCardId = 2,
+                DefaultDeliveryAdressId = 2,
+
+
 
 
             });
@@ -357,10 +423,12 @@ namespace SimpleHardwareShop.Data.Loader
                 SecondLastName = "Barrera",
                 UserName = "Matias01",
                 Email = "matias01@prodigy.net",
-                Password = "123",
-                //UserType = UserType.Application,
-                //DeliveryAdressId =10,
-                //FiscalAdressId=10
+                Password = "123456789",
+
+                DefaultBankCardId = 3,
+                DefaultDeliveryAdressId = 3,
+
+                DefaultFiscalAdressId = 1,
 
 
             });
@@ -371,20 +439,49 @@ namespace SimpleHardwareShop.Data.Loader
                 SecondLastName = "Cabanillas",
                 UserName = "Victoriano01",
                 Email = "victoriano01@outlook.com",
-                Password = "123",
-                //UserType = UserType.Application,
-                //DeliveryAdressId =10,
-                //FiscalAdressId=10
+                Password = "123456789",
+
+                DefaultBankCardId = 4,
+                DefaultDeliveryAdressId = 4,
 
 
             });
+
+            db.Add(new CustomerUser
+            {
+                Name = "Jimena",
+                LastName = "Gomez",
+                SecondLastName = "Iturribaria",
+                UserName = "Jime",
+                Email = "jimena007@outlook.com",
+                Password = "123456789",
+
+                DefaultBankCardId = 5,
+                DefaultDeliveryAdressId = 5,
+                DefaultFiscalAdressId = 5,
+
+
+            });
+            //db.Add(new CustomerUser
+            //{
+            //    Name = "Enique",
+            //    LastName = "Flores",
+            //    SecondLastName = "Guzman",
+            //    UserName = "Kike007",
+            //    Email = "kike007@outlook.com",
+            //    Password = "123456789",
+
+
+            //});
+
+
 
         }
 
         public static void LoadEmployess(HardwareShopContext db)
         {
 
-            /*
+           /*
            * Employess
            * 
            * 
@@ -393,44 +490,106 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new EmployeeUser
             {
-                Name = "Alfonso",
-                LastName = "Gonzalez",
-                SecondLastName = "Casanova",
-                UserName = "Alfonso01",
-                Email = "alfonso@hardware.com",
-                Password = "123",
+                Name = "David",
+                LastName = "Becker",
+                SecondLastName = "Garza",
+                UserName = "Dav01",
+                Email = "davidDo@hardware.com",
+                Password = "123456789",
 
-                RetailShop = RetailShop.HeadQuarters,
+                RetailShop = RetailShop.PlazaDeLaTecnologia,
                 EmployeeType = EmployeeType.Manager,
-                //RFC = "RASDASD13213213213",
+                EmployeeAdressId = 6,
 
-                //UserType = UserType.Application,
-                //DeliveryAdressId =10,
-                //FiscalAdressId=10
+            });
+
+            db.Add(new EmployeeUser
+            {
+                Name = "Sebastian",
+                LastName = "Ramirez",
+                SecondLastName = "Cruz",
+                UserName = "Seb01",
+                Email = "Sebastian0707@outlook.com",
+                Password = "123456789",
+
+                RetailShop = RetailShop.PlazaDeLaTecnologia,
+                EmployeeType = EmployeeType.Employee,
+                EmployeeAdressId = 7,
+
+
+
+            });
+            
+
+
+
+            db.Add(new EmployeeUser
+            {
+                Name = "Kevin",
+                LastName = "Blanton",
+                SecondLastName = "Perez",
+                UserName = "Kevin47",
+                Email = "kevin@outlook.com",
+                Password = "123456789",
+
+                RetailShop = RetailShop.PlazaDeLaTecnologia,
+                EmployeeType = EmployeeType.Employee,
+                EmployeeAdressId = 8,
+
 
 
             });
 
             db.Add(new EmployeeUser
             {
-                Name = "Pedro",
-                LastName = "Gonzalez",
-                SecondLastName = "Perez",
-                UserName = "Pedro01",
-                Email = "pedro01@outlook.com",
-                Password = "123",
+                Name = "Gabriel",
+                LastName = "Flores",
+                SecondLastName = "Sanchez",
+                UserName = "Gabriel00014",
+                Email = "Flores@hardware.com",
+                Password = "123456789",
 
-                //RFC = "OKOKO456456",
-
-                RetailShop = RetailShop.PlazaDeLaTecnologia,
-                EmployeeType = EmployeeType.Employee,
-
-                //UserType = UserType.Application,
-                //DeliveryAdressId =10,
-                //FiscalAdressId=10
+                RetailShop = RetailShop.Coyoacan,
+                EmployeeType = EmployeeType.Manager,
+                EmployeeAdressId = 9,
 
 
             });
+
+            db.Add(new EmployeeUser
+            {
+                Name = "Angel",
+                LastName = "Ramirez",
+                SecondLastName = "Gutierrez",
+                UserName = "Angeldd77",
+                Email = "Angeldd77@hardware.com",
+                Password = "123456789",
+
+                RetailShop = RetailShop.Coyoacan,
+                EmployeeType = EmployeeType.Employee,
+                EmployeeAdressId = 10,
+
+            });
+
+
+            db.Add(new EmployeeUser
+            {
+                Name = "Carlos",
+                LastName = "Mendoza",
+                SecondLastName = "Aguilar",
+                UserName = "Carlos01",
+                Email = "Carlos01@hardware.com",
+                Password = "123456789",
+
+                RetailShop = RetailShop.Coyoacan,
+                EmployeeType = EmployeeType.Employee,
+                EmployeeAdressId = 11,
+
+
+            });
+
+
+
 
 
 
@@ -439,11 +598,6 @@ namespace SimpleHardwareShop.Data.Loader
 
         public static void LoadAdresses(HardwareShopContext db)
         {
-
-
-
-
-
 
             /*
             * ADRESSES
@@ -459,14 +613,14 @@ namespace SimpleHardwareShop.Data.Loader
                 PhoneNumber = "55 3409 9347",
                 AdditionalInformation = "Enfrente de La Paz",
                 PostalCode = 15030,
-                RFC = null
+                RFC = "BGA017084FAS"
 
             });
 
             db.Add(new Adress
             {
                 
-                CustomerUserId = 1,
+                CustomerUserId = 2,
                 StreetAdress = "Copilco 3493",
                 PhoneNumber = "55 3409 9347",
                 AdditionalInformation = "UNAM",
@@ -477,36 +631,112 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new Adress
             {
-                CustomerUserId = 2,
+                CustomerUserId = 3,
                 StreetAdress = "Chapultepec 484",
                 PhoneNumber = "55 2445 4565",
 
                 PostalCode = 16507,
-                RFC = null
+                RFC = "ASD458945ASF"
+
 
             });
 
             db.Add(new Adress
             {
-                CustomerUserId = 3,
+                CustomerUserId = 4,
                 StreetAdress = "Pacifico 484",
                 PhoneNumber = "55 4848 5454",
 
                 PostalCode = 14007,
-                RFC = null
+                RFC = "FDF124578SEF"
 
             });
 
             db.Add(new Adress
             {
-                EmployeeUserId = 6,
+                CustomerUserId = 5,
                 StreetAdress = "Ajusco 484",
-                PhoneNumber = "55 2707070707",
+                PhoneNumber = "5512456598",
 
                 PostalCode = 14007,
-                RFC = "HALALUYA"
+                RFC = "FOR124578DDD"
 
             });
+
+            //Employee adresses.
+            db.Add(new Adress
+            {
+                EmployeeUserId = 6,
+                StreetAdress = "Pluton 778",
+                PhoneNumber = "54 27785968",
+
+                PostalCode = 13698,
+                RFC = "AJA154879FED"
+
+
+            });
+
+            //Employee adresses.
+            db.Add(new Adress
+            {
+                EmployeeUserId = 7,
+                StreetAdress = "Jupiter 444",
+                PhoneNumber = "54 22224444",
+
+                PostalCode = 14212,
+                RFC = "OKOK123123ASAS"
+
+            });
+
+            //Employee adresses.
+            db.Add(new Adress
+            {
+                EmployeeUserId = 8,
+                StreetAdress = "Caracoles 123",
+                PhoneNumber = "56 7894 6532",
+
+                PostalCode = 14785,
+                RFC = "WEDE457859DFSDF"
+
+            });
+
+            //Employee adresses.
+            db.Add(new Adress
+            {
+                EmployeeUserId = 9,
+                StreetAdress = "Pomada 44",
+                PhoneNumber = "777 454 6532",
+
+                PostalCode = 0778,
+                RFC = "SSD45478986"
+
+            });
+
+            //Employee adresses.
+            db.Add(new Adress
+            {
+                EmployeeUserId = 10,
+                StreetAdress = "Albondigas 101",
+                PhoneNumber = "998 5748 6542",
+
+                PostalCode = 1100,
+                RFC = "GOGR616545ASD"
+
+            });
+
+
+            //Employee adresses.
+            db.Add(new Adress
+            {
+                EmployeeUserId = 11,
+                StreetAdress = "Bermudas 95",
+                PhoneNumber = "545 6565 1234",
+
+                PostalCode = 1547,
+                RFC = "HHHF4786545"
+
+            });
+
 
 
 
@@ -526,9 +756,9 @@ namespace SimpleHardwareShop.Data.Loader
            */
             db.Add(new BankCard
             {
-                Name = "MyFavorite CreditCard",
+                Name = "Platinum Bancomer",
                 CustomerUserId = 1,
-                Account = "4565184598654859",
+                Account = "6659858754823104",
                 ExpirationDate = new DateTime(2025, 01, 01),
                 SecurityCode = "422"
 
@@ -536,7 +766,7 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new BankCard
             {
-                Name = "BlackCard for big expenses.",
+                Name = "BlackCard A.E.",
                 CustomerUserId = 2,
                 Account = "4584156418594852",
                 ExpirationDate = new DateTime(2027, 01, 01),
@@ -546,9 +776,28 @@ namespace SimpleHardwareShop.Data.Loader
 
             db.Add(new BankCard
             {
-                Name = "DigitalCard",
+                Name = "La Rappi.",
                 CustomerUserId = 3,
+                Account = "8945625431564854",
+                ExpirationDate = new DateTime(2024, 09, 05),
+                SecurityCode = "223"
+
+
+            });
+            db.Add(new BankCard
+            {
+                Name = "Banamex Recompensas.",
+                CustomerUserId = 4,
                 Account = "5849145625894785",
+                ExpirationDate = new DateTime(2024, 09, 05),
+                SecurityCode = "223"
+
+            });
+            db.Add(new BankCard
+            {
+                Name = "Tarjeta para emergencias - no usarla.",
+                CustomerUserId = 5,
+                Account = "1542548795645215",
                 ExpirationDate = new DateTime(2024, 09, 05),
                 SecurityCode = "223"
 
@@ -648,6 +897,23 @@ namespace SimpleHardwareShop.Data.Loader
                 ProductId = 6,
                 Count = 6,
                 CustomerUserId = 3,
+
+            });
+
+
+            db.Add(new ShoppingCart
+            {
+                ProductId = 15,
+                Count = 1,
+                CustomerUserId = 4,
+
+            });
+
+            db.Add(new ShoppingCart
+            {
+                ProductId = 16,
+                Count = 1,
+                CustomerUserId = 5,
 
             });
 

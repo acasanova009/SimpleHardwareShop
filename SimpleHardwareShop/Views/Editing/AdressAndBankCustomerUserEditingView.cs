@@ -9,28 +9,13 @@ namespace SimpleHardwareShop.Views.Creation
     public static class AdressAndBankCustomerUserEditingView
     {
 
-        //public static HardwareShopContext Db { get; set; }
-        //private ProductController _productController { get; set; }
-        //private ShoppingCartController _shoppingCartController { get; set; }
-        //private ApplicationUserController applicationUserController { get; set; }
-
-        //private ApplicationUser? _activeUser { get; set; }
-        //public ApplicationUserInteractiveView(HardwareShopContext db)
-        //{
-        //}
-
-        //private ShoppingCartController _shoppingCartController { get; set; }
-
 
 
         public static void Menu(HardwareShopContext db, int userId)
         {
-            Console.Clear();
-            //_db = db;
+            //Console.Clear();
             var productController = new ProductController(db);
-            //var _shoppingCartController = new ShoppingCartController(db);
             var _orderHeaderController = new OrderHeaderController(db);
-            //var applicationUserController = new ApplicationUserController(db);
             var customerUserConstroller = new CustomerUserController(db);
 
             var adressController = new AdressController(db);
@@ -42,7 +27,6 @@ namespace SimpleHardwareShop.Views.Creation
             var shoppingCartController = new ShoppingCartController(db);
 
 
-            //bool userWantsFacturar = false;
 
             var customer = customerUserConstroller.Read(userId);
 
@@ -65,9 +49,9 @@ namespace SimpleHardwareShop.Views.Creation
                     Console.WriteLine("5. Eliminar direccion.");
 
                     Console.WriteLine("------------------------------------------------------");
-                    Console.WriteLine("6. Ver tarjetas de credito actuales.");
-                    Console.WriteLine("7. Ingresar nueva tarjeta de credito.");
-                    Console.WriteLine("8. Seleccionar tarjeta de credito.");
+                    Console.WriteLine("6. Ver tarjetas actuales.");
+                    Console.WriteLine("7. Ingresar nueva tarjeta.");
+                    Console.WriteLine("8. Seleccionar tarjeta.");
 
 
                     Console.WriteLine("******************************************************");
@@ -79,6 +63,8 @@ namespace SimpleHardwareShop.Views.Creation
 
                     Console.WriteLine("Elige una de las opciones");
                     int opcion = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Clear();
 
                     switch (opcion)
                     {
@@ -206,10 +192,36 @@ namespace SimpleHardwareShop.Views.Creation
                             break;
                         case 7:
 
+                            try
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Seleccionar tipo de tarjeta deseada");
+                                Console.WriteLine("1. Ingresar targejeta de Credito");
+                                Console.WriteLine("2. Ingresar targejeta de Debito");
+                                int option = Convert.ToInt32(Console.ReadLine());
+                                BankCard? bankCard = null;
+                                if (option == 1)
+                                {
 
-                            var bankId = bankCardController.Create(BankCardCretionView.Menu(userId));
-                            customer!.DefaultBankCardId = bankId;
-                            customerUserConstroller.Update(customer);
+                                    bankCard = BankCardCretionView.Menu(userId, true);
+                                }
+                                else
+                                {
+                                    bankCard = BankCardCretionView.Menu(userId, false);
+                                }
+                                
+
+                                    var bankId = bankCardController.Create(bankCard);
+                                    customer!.DefaultBankCardId = bankId;
+                                    customerUserConstroller.Update(customer);
+
+                            }
+                            catch (Exception)
+                            {
+
+                                Console.WriteLine("No se ingreso una opcion correctamente, intentar de nuevo.");
+                            }
+
 
 
 
@@ -239,7 +251,6 @@ namespace SimpleHardwareShop.Views.Creation
 
 
                         case 0:
-                            Console.Clear();
                             Console.WriteLine("Has elegido regresar");
                             salir = true;
                             break;

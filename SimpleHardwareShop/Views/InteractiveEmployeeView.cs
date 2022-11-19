@@ -1,6 +1,7 @@
 ﻿using SimpleHardwareShop;
 using SimpleHardwareShop.Controller;
 using SimpleHardwareShop.Data;
+using SimpleHardwareShop.Models;
 using SimpleHardwareShop.Views;
 using SimpleHardwareShop.Views.Editing;
 
@@ -61,8 +62,10 @@ public static class InteractiveEmployeeView
 
                         Console.WriteLine("Ingresar algun dato del cliente para buscar. ");
 
-                        
-                        customerUserController.Index(Console.ReadLine()??"");
+                        Console.WriteLine("\nLoading...\n");
+
+                        var customerUsers = customerUserController.Index(Console.ReadLine()??"");
+                        customerUsers.ForEach(p => Console.WriteLine(p));
 
 
                         break;
@@ -71,24 +74,30 @@ public static class InteractiveEmployeeView
 
                         try
                         {
-                            //Console.WriteLine("Ingresar Id de cliente, para ver sus cotizaciones. ");
-                            //var toLookUpClientId = Convert.ToInt32(Console.ReadLine());
-                            
+
+                            Console.WriteLine("\nLoading...\n");
+
                             var cotizaciones = cotizacionDetailController.Index();
 
-                            var ordered = cotizaciones.OrderByDescending(e => e.CustomerUserId);
-
-                            int currentId = 0;
-
-                            foreach (var cot in ordered)
+                            if (!cotizaciones.Any())
                             {
-                                
-                                Console.WriteLine(cot);
-                                
+                                Console.WriteLine("No hay cotizacion en espera de envio");
                             }
-                            //cotizaciones.ForEach(p => Console.WriteLine(p));
+                            else
+                            {
 
+                                var ordered = cotizaciones.OrderByDescending(e => e.CustomerUserId);
 
+                                int currentId = 0;
+
+                                foreach (var cot in ordered)
+                                {
+                                
+                                    Console.WriteLine(cot);
+                                
+                                }
+
+                            }
 
 
 
@@ -97,8 +106,6 @@ public static class InteractiveEmployeeView
                         {
                             Console.WriteLine("Error, se tiene que ingresar un numero. " +ex.ToString());
                         }
-
-                        //employeeUserController.Create(EmployeeUserCreationView.Menu());
 
 
 
@@ -111,20 +118,26 @@ public static class InteractiveEmployeeView
                             Console.WriteLine("Ingresar Id de cliente, para enviarle sus cotizaciones ");
                             var toLookUpClientId = Convert.ToInt32(Console.ReadLine());
 
+                            Console.WriteLine("\nLoading...\n");
+
                             var cotizaciones = cotizacionDetailController.Index(toLookUpClientId);
                             var nameOfText = $"Cliente:{toLookUpClientId}Cotizacion: {DateTime.Now}".Replace(" ","").Replace(":", "").Replace("-", "");
                             var finalText = "************ Cotizaciones *************";
+                            double total = 0.0;
                             foreach (var item in cotizaciones)
                             {
                                 
                                 finalText += "\n";
-                                finalText += item.ToString();
+                                finalText += item.ToString() + "........." + item.Count * item.Price;
+                                total += item.Count * item.Price;
 
                             }
 
-                            Console.WriteLine("Cotizaciones al cliente "+ toLookUpClientId + "ya se envio.");
-                            await CotizacionToTxt.WriteText(nameOfText, finalText);
+                            finalText += $"\n Costo total...............................{total}";
+                            Console.WriteLine("Cotizaciones al cliente "+ toLookUpClientId + " se acaba de enviar.");
+                            _ = CotizacionToTxt.WriteText(nameOfText, finalText);
 
+                           
 
                             cotizacionDetailController.Update(toLookUpClientId);
 
@@ -152,8 +165,6 @@ public static class InteractiveEmployeeView
                         break;
 
                     case 0:
-
-                        Console.Clear();
                         Console.WriteLine("Has elegido regresar");
                         salir = true;
                         break;

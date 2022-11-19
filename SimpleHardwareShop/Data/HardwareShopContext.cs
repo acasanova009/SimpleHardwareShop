@@ -28,7 +28,7 @@ namespace SimpleHardwareShop.Data
            
         }
 
-        static string database = "HardwareShopDatabase.db";
+        private static string database = "HardwareShopDatabase.db";
 
         public string? DbPath { get; set; }
         
@@ -37,20 +37,20 @@ namespace SimpleHardwareShop.Data
         {
 
             //SQLite
-            options.UseSqlite($"Data Source={DbPath}");
+            //options.UseSqlite($"Data Source={DbPath}");
 
 
             //MSSQL
-            //options.UseSqlServer("Server = LAISSEZFAIRE; Database = HardwareShopDatabase; Trusted_Connection = True;TrustServerCertificate=True;");
+            options.UseSqlServer("Server = LAISSEZFAIRE; Database = HardwareShopDatabase; Trusted_Connection = True;TrustServerCertificate=True;");
 
 
 
             //AZURE
-            //SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            //builder.DataSource = "hardwaresqlserver.database.windows.net";
-            //builder.UserID = "azureuser";
-            //builder.Password = "@AlfaTao1234@";
-            //builder.InitialCatalog = "HardwareShopDatabase";
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "hardwaresqlserver.database.windows.net";
+            builder.UserID = "azureuser";
+            builder.Password = "@AlfaTao1234@";
+            builder.InitialCatalog = "HardwareShopDatabase";
             //options.UseSqlServer(builder.ConnectionString);
 
 

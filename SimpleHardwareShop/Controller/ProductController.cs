@@ -20,20 +20,20 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public void  Index(string? textFilter = null)
+        public List<Product>  Index(string? textFilter = null)
         {
-            //Console.WriteLine("Querying for a blog");
+            List<Product>? products = null;
             if (textFilter == null)
             {
 
-                var products =  _db.Products.Where(p =>
+                products =  _db.Products.Where(p =>
                 p.Stock > 0).ToList();
-                products.ForEach(p => Console.WriteLine(p));
+                return products;
             }
             else
             {
-                var products = _db.Products.Where(p =>
-                    //p.Price>15000
+                products = _db.Products.Where(p =>
+                 
                 p.Name.Contains(textFilter) ||
                 p.Description.Contains(textFilter) ||
                 p.Serie.Contains(textFilter) ||
@@ -41,9 +41,12 @@ namespace SimpleHardwareShop.Controller
                 p.Price.ToString().Contains(textFilter) 
 
                 ).ToList();
-                products.ForEach(p => Console.WriteLine(p));
+                //products.ForEach(p => Console.WriteLine(p));
+                return products;
 
             }
+
+            //return products;
 
         }
 

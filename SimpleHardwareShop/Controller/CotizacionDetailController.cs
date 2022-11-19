@@ -25,7 +25,7 @@ namespace SimpleHardwareShop.Controller
         public List<CotizacionDetail> Index()
         {
             return _db.CotizacionDetails
-                .Where(e => e.YaSeEnvioAlCliente == false)
+                //.Where(e => e.YaSeEnvioAlCliente == false)
                 .Include(a=>a.Product)
                 .Include(a => a.CustomerUser)
                 .ToList();
@@ -72,23 +72,23 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-            public void CreateDetails(CotizacionDetail od)
+        public void Create(CotizacionDetail od)
         {
 
             if (od != null)
             {
                 _db.CotizacionDetails.Add(od);
 
+                _db.SaveChanges();
                
             }
 
             
 
         }
-        public  void  Save()
-        {
-             _db.SaveChanges();
-        }
+        //public  void  Save()
+        //{
+        //}
 
 
 

@@ -42,7 +42,6 @@ namespace SimpleHardwareShop.Controller
                .ToList();
 
 
-            //shoppingCarts.ForEach(s => Console.WriteLine(s));
 
             foreach (var item in shoppingCarts)
             {
@@ -62,7 +61,7 @@ namespace SimpleHardwareShop.Controller
         }
         public void Upsert(int productId, int applicationUserId,int cantidadFinal = 1)
         {
-            if (cantidadFinal<0) cantidadFinal=0;
+            if (cantidadFinal<0 ) cantidadFinal=0;
             
 
             

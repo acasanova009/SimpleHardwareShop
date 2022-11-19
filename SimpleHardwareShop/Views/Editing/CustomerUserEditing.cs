@@ -8,42 +8,13 @@ namespace SimpleHardwareShop.Views.Editing
 {
     public static class CustomerUserEditing
     {
-
-        //public static HardwareShopContext _db { get; set; }
-        //private ProductController _productController { get; set; }
-        //private ShoppingCartController _shoppingCartController { get; set; }
-        //private ApplicationUserController applicationUserController { get; set; }
-
-        //private ApplicationUser? _activeUser { get; set; }
-        //public ApplicationUserInteractiveView(HardwareShopContext db)
-        //{
-        //}
-
-        //private ShoppingCartController _shoppingCartController { get; set; }
-
-
         public static void Menu(HardwareShopContext db, int userId)
         {
             Console.Clear();
-            //_db = db;
-            //var productController = new ProductController(db);
-            //var _shoppingCartController = new ShoppingCartController(db);
-            //var _orderHeaderController = new OrderHeaderController(db);
-            //var applicationUserController = new ApplicationUserController(db);
             var customerUserController = new CustomerUserController(db);
 
-            //var adressController = new AdressController(db);
 
-            //var bankCardController = new BankCardController(db);
-
-            //var orderHeaderController = new OrderHeaderController(db);
-
-            //var shoppingCartController = new ShoppingCartController(db);
-
-
-            //bool userWantsFacturar = false;
-
-            var applicationUser = customerUserController.Index(userId);
+            var customerUser = customerUserController.Read(userId);
 
 
             bool salir = false;
@@ -72,14 +43,15 @@ namespace SimpleHardwareShop.Views.Editing
 
                     Console.WriteLine("Elige una de las opciones");
                     int opcion = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
 
                     switch (opcion)
                     {
                         case 1:
 
                             Console.WriteLine("Ingresa nuevo nombre");
-                            applicationUser.Name = Console.ReadLine() ?? "DefaultName";
-                            customerUserController.Update(applicationUser);
+                            customerUser.Name = Console.ReadLine() ?? "DefaultName";
+                            customerUserController.Update(customerUser);
 
 
 
@@ -91,8 +63,8 @@ namespace SimpleHardwareShop.Views.Editing
 
 
                             Console.WriteLine("Ingresa nuevo apellido paterno");
-                            applicationUser.LastName = Console.ReadLine() ?? "Default apellido paterno";
-                            customerUserController.Update(applicationUser);
+                            customerUser.LastName = Console.ReadLine() ?? "Default apellido paterno";
+                            customerUserController.Update(customerUser);
 
 
 
@@ -102,16 +74,16 @@ namespace SimpleHardwareShop.Views.Editing
                         case 3:
 
                             Console.WriteLine("Ingresa nuevo apellido materno");
-                            applicationUser.SecondLastName = Console.ReadLine() ?? "Default apellido materno";
-                            customerUserController.Update(applicationUser);
+                            customerUser.SecondLastName = Console.ReadLine() ?? "Default apellido materno";
+                            customerUserController.Update(customerUser);
 
 
                             break;
                         case 4:
 
                             Console.WriteLine("Ingresa nuevo nombre de usuario.");
-                            applicationUser.UserName = Console.ReadLine() ?? "Default apellido materno";
-                            if (!customerUserController.UpdateUserName(applicationUser))
+                            customerUser.UserName = Console.ReadLine() ?? "Default apellido materno";
+                            if (!customerUserController.UpdateUserName(customerUser))
                             {
                                 Console.WriteLine("Nombre de usuario ya existe, intentar otra vez.");
 
@@ -123,8 +95,8 @@ namespace SimpleHardwareShop.Views.Editing
                         case 5:
 
                             Console.WriteLine("Ingresa nuevo correo electronico.");
-                            applicationUser.Email = Console.ReadLine() ?? "DefaultCorreo@corre.com";
-                            customerUserController.Update(applicationUser);
+                            customerUser.Email = Console.ReadLine() ?? "DefaultCorreo@corre.com";
+                            customerUserController.Update(customerUser);
 
                             break;
                         case 6:
@@ -134,8 +106,8 @@ namespace SimpleHardwareShop.Views.Editing
                             var newPass = Console.ReadLine() ?? "12345678";
                             if (newPass.Length >= 8)
                             {
-                                applicationUser.Password = newPass;
-                                customerUserController.Update(applicationUser);
+                                customerUser.Password = newPass;
+                                customerUserController.Update(customerUser);
                             }
                             else
                             {
@@ -145,7 +117,6 @@ namespace SimpleHardwareShop.Views.Editing
                             break;
 
                         case 0:
-                            Console.Clear();
                             Console.WriteLine("Has elegido regresar");
                             salir = true;
                             break;

@@ -18,7 +18,7 @@ namespace SimpleHardwareShop.Models
 
         //public ApplicationUser ApplicationUser { get; set; }
         public string Account { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         //public int Year { get; set; }
         public string SecurityCode { get; set; }
@@ -26,7 +26,7 @@ namespace SimpleHardwareShop.Models
 
         public override string ToString()
         {
-            return $"[BankCard] Id: {Id} Name: {Name} Account: {Account}";
+            return $"[BankCard] Id: {Id} Name: {Name} Account: {Account} + {ExpirationDate}";
         }
 
 

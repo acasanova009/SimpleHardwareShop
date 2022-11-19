@@ -7,37 +7,21 @@ using SimpleHardwareShop.Views.Creation;
 //using System;
 
 
-
+Program
 public static class InteractiveOrderHeaderView
 {
 
-    //public static HardwareShopContext _db { get; set; }
-    //private ProductController _productController { get; set; }
-    //private ShoppingCartController _shoppingCartController { get; set; }
-    //private ApplicationUserController applicationUserController { get; set; }
-
-    //private ApplicationUser? _activeUser { get; set; }
-    //public ApplicationUserInteractiveView(HardwareShopContext db)
-    //{
-    //}
-
-    //private ShoppingCartController _shoppingCartController { get; set; }
+   
 
 
     public static void Menu(HardwareShopContext db,int userId, bool quiereFactura)
 	{
-        //_db = db;
-        //var _shoppingCartController = new ShoppingCartController(db);
-        //var _orderHeaderController = new OrderHeaderController(db);
-        //var customerUserController = new CustomerUserController(db);
-        //var bankCardController = new BankCardController(db);
-        //var adressController = new AdressController(db);
+       
 
         Console.Clear();
 
 
         var productController = new ProductController(db);
-        //var     applicationUserController = new ApplicationUserController(db);
         var customerUserController = new CustomerUserController(db);
         var orderHeaderController = new OrderHeaderController(db);
         var shoppingCartController = new ShoppingCartController(db);
@@ -45,7 +29,7 @@ public static class InteractiveOrderHeaderView
 
         bool userWantsFacturar = quiereFactura;
 
-
+        var customerUser = customerUserController.Read(userId);
 
         bool salir = false;
 
@@ -76,7 +60,8 @@ public static class InteractiveOrderHeaderView
                 {
                     case 1:
 
-                        
+
+                        Console.Clear();
 
                         AdressAndBankCustomerUserEditingView.Menu(db, userId);
 
@@ -88,15 +73,17 @@ public static class InteractiveOrderHeaderView
 
                     case 2:
 
+                        Console.WriteLine("\nLoading...\n");
+
                         Console.WriteLine($"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine($"+                                   Resumen de la compra                                                                  +");
                         Console.WriteLine($"+-------------------------------------------------------------------------------------------------------------------------+");
                         Console.WriteLine($"+                                   Informacion Cliente                                                                   +");
 
-                        var user = customerUserController.Read(userId);
+                        //var customerUser = customerUserController.Read(userId);
 
 
-                        Console.WriteLine(user?.ToStringResumenCompras());
+                        Console.WriteLine(customerUser?.ToStringResumenCompras());
                         Console.WriteLine($"+-------------------------------------------------------------------------------------------------------------------------+");
                         Console.WriteLine($"+                                  Ariticulos por comprar                                                                 +");
 
@@ -153,16 +140,17 @@ public static class InteractiveOrderHeaderView
 
                     case 4:
 
+                        Console.WriteLine("\nLoading...\n");
 
-                        var userr = customerUserController.Read(userId);
+                        //var customerUser = customerUserController.Read(userId);
 
                         bool canCompletePurchase = true;
-                        if(userr != null)
+                        if(customerUser != null)
                         {
 
                           
 
-                            if (userWantsFacturar==true && userr.DefaultFiscalAdressId == null)
+                            if (userWantsFacturar==true && customerUser.DefaultFiscalAdressId == null)
                             {
                                 canCompletePurchase = false;
                                 Console.WriteLine("El usuario desea facturar, pero falta direccion Fiscal.");
@@ -172,14 +160,14 @@ public static class InteractiveOrderHeaderView
 
 
                             }
-                            if (userr.DefaultDeliveryAdressId == null)
+                            if (customerUser.DefaultDeliveryAdressId == null)
                             {
                                 Console.WriteLine(  "Falta seleccionar Direccion de Envio.");
                                 
 
                                 canCompletePurchase = false;
                             }
-                            if (userr.DefaultBankCardId == null)
+                            if (customerUser.DefaultBankCardId == null)
                             {
                                 Console.WriteLine("Falta seleccionar Tarjeta de Credito");
                                 
@@ -198,6 +186,8 @@ public static class InteractiveOrderHeaderView
 
                         if (canCompletePurchase == true && shoppingCartController.VerifyAvailableContents(userId))
                         {
+
+
                             var shoppingCartAnother = shoppingCartController.Index(userId);
                             double totalAnother = 0.0;
                             if (shoppingCartAnother is not null)
@@ -208,7 +198,7 @@ public static class InteractiveOrderHeaderView
 
                                 }
 
-                            var myNewOrderHeader = OrderHeader.Create(userId, totalAnother, (int)userr!.DefaultDeliveryAdressId!, userr.DefaultFiscalAdressId);
+                            var myNewOrderHeader = OrderHeader.Create(userId, totalAnother, (int)customerUser!.DefaultDeliveryAdressId!, customerUser.DefaultFiscalAdressId);
                             var orderHeaderId = orderHeaderController.Create(myNewOrderHeader);
                             
 
@@ -225,7 +215,7 @@ public static class InteractiveOrderHeaderView
 
                             }
 
-                            orderHeaderController.Save();
+                            //orderHeaderController.Save();
 
                             
                             shoppingCart = shoppingCartController.Index(userId);
@@ -272,7 +262,6 @@ public static class InteractiveOrderHeaderView
                         break;
 
                     case 0:
-                        Console.Clear();
                         Console.WriteLine("Has elegido regresar");
                         salir = true;
                         break;

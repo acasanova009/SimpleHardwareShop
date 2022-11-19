@@ -10,26 +10,13 @@ namespace SimpleHardwareShop.Views.Editing
     public static class EmployeeUserEditingView
     {
 
-        //public static HardwareShopContext _db { get; set; }
-        //private ProductController _productController { get; set; }
-        //private ShoppingCartController _shoppingCartController { get; set; }
-        //private ApplicationUserController applicationUserController { get; set; }
-
-        //private ApplicationUser? _activeUser { get; set; }
-        //public ApplicationUserInteractiveView(HardwareShopContext db)
-        //{
-        //}
-
-        //private ShoppingCartController _shoppingCartController { get; set; }
-
-
         public static void Menu(HardwareShopContext db, int userId)
         {
             Console.Clear();
 
             var employeeUserController = new EmployeeUserController(db);
 
-            var applicationUser = employeeUserController.Index(userId);
+            var applicationUser = employeeUserController.Read(userId);
 
             AdressController adressController = new(db);
 
@@ -61,6 +48,8 @@ namespace SimpleHardwareShop.Views.Editing
 
                     Console.WriteLine("Elige una de las opciones");
                     int opcion = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+
 
                     switch (opcion)
                     {
@@ -100,7 +89,7 @@ namespace SimpleHardwareShop.Views.Editing
 
                             Console.WriteLine("Ingresa nuevo nombre de usuario.");
                             applicationUser.UserName = Console.ReadLine() ?? "Default apellido materno";
-                            if (!employeeUserController.UpdateUpdateUserName(applicationUser))
+                            if (!employeeUserController.UpdateUserName(applicationUser))
                             {
                                 Console.WriteLine("Nombre de usuario ya existe, intentar otra vez.");
 
@@ -138,14 +127,13 @@ namespace SimpleHardwareShop.Views.Editing
                             int newAdressId = adressController.Create(AdressCreationView.Create(userId, true));
 
 
-                            var employee = employeeUserController.Index(userId);
+                            var employee = employeeUserController.Read(userId);
                             employee.EmployeeAdressId = newAdressId;
                             employeeUserController.Update(employee);
 
                             break;
 
                         case 0:
-                            Console.Clear();
                             Console.WriteLine("Has elegido regresar");
                             salir = true;
                             break;

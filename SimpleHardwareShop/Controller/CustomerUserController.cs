@@ -20,17 +20,17 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public CustomerUser Index(int userId)
-        {
+        //public CustomerUser Index(int userId)
+        //{
 
-            var user = Db.CustomerUsers
-                .FirstOrDefault(m => userId == m.Id);
+        //    var user = Db.CustomerUsers
+        //        .FirstOrDefault(m => userId == m.Id);
 
-            return user!;
-        }
+        //    return user!;
+        //}
 
 
-        public void Index(string textFilter = "")
+        public List<CustomerUser> Index(string textFilter = "")
         {
 
             var customerUsers = Db.CustomerUsers
@@ -45,7 +45,8 @@ namespace SimpleHardwareShop.Controller
                 )
             .ToList();
 
-            customerUsers.ForEach(p => Console.WriteLine(p));
+            return customerUsers;
+            
 
 
 
@@ -172,22 +173,9 @@ namespace SimpleHardwareShop.Controller
 
         public bool Update(CustomerUser application)
         {
-
-            ////var currentUsername = _db.CustomerUsers.Where(a => a.UserName.Equals(application.UserName)).SingleOrDefault();
-            //var users = _db.CustomerUsers.Where(a => a.Id==application.Id).ToList();
-
-
-            //if (users.Any())
-            //{
-            //    return false;
-
-            //}
-            //else
-            //{
-                Db.CustomerUsers.Update(application);
+             Db.CustomerUsers.Update(application);
                 Db.SaveChanges();
                 return true;
-            //}
         }
 
         public bool Create(CustomerUser customer)
@@ -212,31 +200,31 @@ namespace SimpleHardwareShop.Controller
 
         }
 
-        public int CreateTemporal(CustomerUser newCustomerTemporal)
-        {
-            var customerAlready = Db.CustomerUsers.Where(a=>a.UserName== newCustomerTemporal.UserName).SingleOrDefault();
-            var customerId = 0;
-            if (customerAlready == null)
-            {
+        //public int CreateTemporal(CustomerUser newCustomerTemporal)
+        //{
+        //    var customerAlready = Db.CustomerUsers.Where(a=>a.UserName== newCustomerTemporal.UserName).SingleOrDefault();
+        //    var customerId = 0;
+        //    if (customerAlready == null)
+        //    {
 
 
-                var trackingEntity = Db.CustomerUsers.Add(newCustomerTemporal);
-                Db.SaveChanges();
-                customerId = trackingEntity.Entity.Id;
-            }
-            else
-            {
-                customerId = customerAlready.Id;
-            }
+        //        var trackingEntity = Db.CustomerUsers.Add(newCustomerTemporal);
+        //        Db.SaveChanges();
+        //        customerId = trackingEntity.Entity.Id;
+        //    }
+        //    else
+        //    {
+        //        customerId = customerAlready.Id;
+        //    }
            
 
 
-            return customerId;
-        }
+        //    return customerId;
+        //}
 
 
 
-        public CustomerUser? Read(int userId)
+        public CustomerUser Read(int userId)
         {
 
             var user = Db.CustomerUsers

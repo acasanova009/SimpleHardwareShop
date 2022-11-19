@@ -30,21 +30,9 @@ namespace SimpleHardwareShop.Controller
 
             var orders = includableQueryable
                     .ThenInclude(m => m.Product).AsNoTracking().ToList();
-            //;
-
-            //    _context.Students
-            //.Include(s => s.Enrollments)
-            //    .ThenInclude(e => e.Course)
-            //.AsNoTracking()
-            //.FirstOrDefaultAsync(m => m.ID == id);
-            //OrderBy(e => e.Id == userId).
+           
 
             return orders;
-
-          
-
-            //Console.WriteLine(orders);
-
 
 
         }
@@ -66,19 +54,15 @@ namespace SimpleHardwareShop.Controller
             if (od != null)
             {
                 _db.OrderDetails.Add(od);
+                _db.SaveChanges();
 
-                
 
             }
 
             
 
         }
-        public  void  Save()
-        {
-             _db.SaveChanges();
-        }
-
+       
 
 
         

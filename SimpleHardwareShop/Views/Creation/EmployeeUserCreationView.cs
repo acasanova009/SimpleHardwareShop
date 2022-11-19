@@ -13,6 +13,10 @@ namespace SimpleHardwareShop.Views.Creation
 
         public static EmployeeUser Menu()
         {
+
+            Console.Clear();
+
+
             EmployeeUser employee = new EmployeeUser();
 
 
@@ -38,7 +42,6 @@ namespace SimpleHardwareShop.Views.Creation
 
                 Console.WriteLine("Ingresar contraseña de minimo 8 caracteres");
                 employee.Password = Console.ReadLine() ?? "12345678";
-                //customer.Account = customer.Account.Replace(" ", "");
 
             }
 

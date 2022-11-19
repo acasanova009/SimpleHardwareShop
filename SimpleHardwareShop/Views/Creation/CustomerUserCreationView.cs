@@ -13,9 +13,9 @@ namespace SimpleHardwareShop.Views.Creation
 
         public static CustomerUser Menu(CustomerUser? customer= null)
         {
+            Console.Clear();
 
-            
-            customer??= new CustomerUser();
+            customer ??= new CustomerUser();
 
 
             Console.WriteLine("Ingresar Nombre de pila");

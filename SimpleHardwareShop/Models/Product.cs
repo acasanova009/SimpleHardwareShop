@@ -5,8 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleHardwareShop.Models;
 
+/* 
+  Equipo Individual
+*/
+/*
+
+  Codigo por: Gonzalez Casanova Gallegos Renato Alfonso
+  
+
+  Fecha de cración: 19/Nov/2022
+
+  Comentario General: Este programa simula una tienda de productos de hardware, que se conecta directamente con bases de datos.
+
+*/
+
 namespace SimpleHardwareShop.Models
 {
+    /// <summary>Modelo-Entidad para Product</summary>
     public class Product
     {
         public int Id { get; set; } 
@@ -30,17 +45,15 @@ namespace SimpleHardwareShop.Models
         public override string ToString()
         {
 
-            //var retailString = $"{RetailShop.ToString()}";
-
-            //return "PRODUCT: " + " Id: " + Id+ Name + " Price:" + Price + " Stock:" + Stock + " RetailShop:" + RetailShop + " Serie:" + Serie;
+            
             return $"[Producto]: Id:{Utlierias.E(Id.ToString(), 3)} ${Utlierias.E(Price.ToString(),7)} Tienda: {Utlierias.R(RetailShop.ToString(), 20)}  Stock:{Utlierias.E(Stock.ToString(),3)}/{Utlierias.E(DefaultStock.ToString(), 3)} ** {Utlierias.R(Name, 20)} Detalles: {Utlierias.R(Description, 100)} ";
-            //return "PRODUCT " + "Name: " + Name ;
+            
         }
 
         public string ToStringMin()
         {
             return $"[Producto]: Id:{Utlierias.E(Id.ToString(), 3)} ${Utlierias.E(Price.ToString(), 7)} Tienda: {Utlierias.R(RetailShop.ToString(), 20)} ** {Utlierias.R(Name, 20)}  ";
-            //return $"[Producto]: Id:{Id} ${Price} Tienda: {RetailShop}   {Name}";
+            
         }
 
 

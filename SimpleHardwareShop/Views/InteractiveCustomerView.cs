@@ -10,107 +10,12 @@ using System.Runtime.CompilerServices;
 public static class InteractiveCustomerView
 {
 
-    
-  
-    //public static int CurrentOrNewUserOrLogin(ShoppingCartController shoppingCartController, ApplicationUserController applicationUserController,  CustomerUserController customerUserController, int userId, HardwareShopContext db)
-    //{
-    //    CustomerUser? userr = customerUserController.Read(userId);
-    //    if (userr!.UserName.Equals("default01"))
-    //    {
-    //        try
-    //        {
-    //            Console.WriteLine("Ya tiene cuenta registrada? Escribir 1.");
-    //            Console.WriteLine("1. Si, deseo ingresar a mi cuenta.");
-    //            Console.WriteLine("2. Soy nuevo cliente, quiero registrarme.");
-
-    //            Console.WriteLine("Elige una de las opciones");
-    //            var anotherOption = Convert.ToInt32(Console.ReadLine());
-
-    //            if (anotherOption == 1)
-    //            {
-
-    //                CustomerUser? customerUser = null;
-    //                while (customerUser is not object)
-    //                {
-    //                    customerUser = InteractiveAuthenticationView.AuthenticateCustomerUser(db, customerUserController);
-                        
-                        
-    //                    if(customerUser is object)
-    //                    {
-
-    //                        shoppingCartController.Update(userId, customerUser.Id);
-    //                        applicationUserController.Remove(userId);
-    //                        userId= customerUser.Id;
-    //                    }
-    //                    else
-    //                    {
-    //                        Console.WriteLine("Credenciales incorrectas, intentar de nuevo");
-    //                        Console.WriteLine("-------------------------------------------------");
-    //                        Console.WriteLine("Desea seguir intentando?");
-    //                        Console.WriteLine("1. Si. deseo ingresar a mi cuenta.");
-    //                        Console.WriteLine("2. No recuerdo mis datos, quiero hacer un nuevo usuario.");
-
-    //                        Console.WriteLine("Elige una de las opciones");
-    //                        var option = Convert.ToInt32(Console.ReadLine());
-    //                        if (option!=1)
-    //                        {
-    //                            NewUserReplaceDefault(applicationUserController, userr);
-
-    //                            break;
-
-    //                        }
-
-    //                    }
-
-
-    //                }
-
-
-    //            }
-    //            else
-
-    //            {
-    //                NewUserReplaceDefault(applicationUserController, userr);
-    //            }
-
-    //        }
-    //        catch (FormatException e)
-    //        {
-    //            Console.WriteLine(e.Message);
-                
-    //        }
-
-
-
-
-    //    }
-
-    //    return userId;
-
-    //    static void NewUserReplaceDefault(ApplicationUserController applicationUserController, CustomerUser? userr)
-    //    {
-    //        CustomerUser? customer = null;
-
-    //        var newUserMade = false;
-    //        do
-    //        {
-    //            Console.WriteLine("Para continuar a la compra, tienes que registrarte");
-    //            customer = CustomerUserCreationView.Menu(userr);
-    //            newUserMade = applicationUserController.Update(customer);
-    //            if (!newUserMade)
-    //            {
-    //                Console.WriteLine("Informacion del usuario ya existe.");
-
-    //            }
-    //        } while (!newUserMade);
-    //    }
-    //}
     public static void Menu(HardwareShopContext db, int userId)
 	{
         Console.Clear();
         var productController = new ProductController(db);
         var shoppingCartController = new ShoppingCartController(db);
-        var applicationUserController = new ApplicationUserController(db);
+        
         var customerUserController = new CustomerUserController(db);
 
         var orderHeaderController = new OrderHeaderController(db);
@@ -151,37 +56,48 @@ public static class InteractiveCustomerView
                 int opcion = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
 
-                //if(opcion>4)
-                //    userId = CurrentOrNewUserOrLogin(shoppingCartController, applicationUserController, customerUserController, userId, db);
+             
 
                 switch (opcion)
                 {
                     case 1:
 
 
-                         productController.Index();
-                        
+                         var product = productController.Index();
+                        product.ForEach(p => Console.WriteLine(p));
+
                         break;
 
                     case 2:
 
                         Console.WriteLine("Ingresar texto a buscar: ");
+                        
 
-                        productController.Index(Console.ReadLine());
+                        var products = productController.Index(Console.ReadLine()??"");
+                        products.ForEach(p => Console.WriteLine(p));
                         break;
 
                     case 3:
                         try
                         {
+
                             Console.WriteLine("Ingresar id de producto a modificar.");
                             int productId = Convert.ToInt32(Console.ReadLine());
+                            if (productId<1||productId>16)
+                            {
+                                Console.WriteLine("Ingresar un producto valido");
+                            }
+                            else
+                            {
 
-                            Console.WriteLine("Ingresar la cantidad final que deseas de este producto.");
-                            int cantidadFinal = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Ingresar la cantidad final que deseas de este producto.");
+                                int cantidadFinal = Convert.ToInt32(Console.ReadLine());
 
 
                             
-                            shoppingCartController.Upsert(productId,userId ,cantidadFinal);
+                                shoppingCartController.Upsert(productId,userId ,cantidadFinal);
+                            }
+
 
                         }
                         catch(Exception ex)
@@ -194,6 +110,8 @@ public static class InteractiveCustomerView
 
                         break;
                     case 4:
+
+                        Console.WriteLine("\nLoading...\n");
                         var shoppingCarts = shoppingCartController.Index(userId);
 
                         var total = 0.0;
@@ -267,12 +185,12 @@ public static class InteractiveCustomerView
                         if (currentShoppingCartList is not null)
                             foreach (var item in currentShoppingCartList)
                             {
-                                cotizacionDetailController.CreateDetails(CotizacionDetail.Create(userId, item.Product!.Id, item.Count, item.Product.Price));
+                                cotizacionDetailController.Create(CotizacionDetail.Create(userId, item.Product!.Id, item.Count, item.Product.Price));
                                 
 
 
                             }
-                        cotizacionDetailController.Save();
+                        //cotizacionDetailController.Save();
 
 
                         Console.WriteLine($"***************************************************************************************************************************");
@@ -284,7 +202,9 @@ public static class InteractiveCustomerView
                         break;
                     case 7:
                         //ver compras anteriores
-                       
+
+                        Console.WriteLine("\nLoading...\n");
+
                         var orderHeaders = orderHeaderController.Index(userId);
 
                         foreach (var orderHeader in orderHeaders)
@@ -319,15 +239,18 @@ public static class InteractiveCustomerView
 
 
                     case 8:
-                        
 
+                        Console.WriteLine( "Future update coming! =)");
                         //notificaciones
 
                         break;
                     case 9:
                         //ver datos
-                        var user = customerUserController.Read(userId);
-                        Console.Write(user);
+
+                        Console.WriteLine("\nLoading...\n");
+
+                        var customerUser = customerUserController.Read(userId);
+                        Console.Write(customerUser);
 
                         break;
 
@@ -338,14 +261,15 @@ public static class InteractiveCustomerView
 
                         break;
                     case 11:
-                        
+
                         //Bancarias
+                        Console.Clear();
                         AdressAndBankCustomerUserEditingView.Menu(db, userId);
 
                         break;
 
                     case 0:
-                        //Console.Clear();
+                        
                         Console.WriteLine("Has elegido regresar");
                         
                         salir = true;
