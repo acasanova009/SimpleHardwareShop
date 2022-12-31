@@ -51,7 +51,7 @@ namespace SimpleHardwareShop.Views.Creation
                     card.Account = card.Account.Replace(" ", "");
 
 
-                    if (card.SecurityCode.Length != 16)
+                    if (card.Account.Length != 16)
                     {
                         Console.WriteLine("Error 012");
 

@@ -64,6 +64,7 @@ namespace SimpleHardwareShop.Models
                 Count = count,
                 Price = price,
                 YaSeEnvioAlCliente = false,
+                Fecha = DateTime.Now,
             };
             return orderDetail;
         
